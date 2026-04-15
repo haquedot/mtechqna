@@ -1,0 +1,976 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Playfair+Display:wght@700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --surface: #181c27;
+    --surface2: #1e2336;
+    --border: #2e3450;
+    --accent: #4f9cf9;
+    --accent2: #7c6fef;
+    --gold: #f5c842;
+    --green: #3dd68c;
+    --red: #f56565;
+    --text: #e8ecf4;
+    --muted: #8892aa;
+    --code-bg: #111827;
+
+    --color-text-primary: var(--text);
+    --color-text-secondary: var(--muted);
+    --color-text-success: var(--green);
+    --color-text-info: var(--accent);
+    --color-text-warning: var(--gold);
+
+    --color-background-secondary: var(--surface2);
+    --color-background-tertiary: var(--code-bg);
+    --color-background-success: rgba(61,214,140,0.08);
+    --color-background-info: rgba(79,156,249,0.06);
+    --color-background-warning: rgba(245,200,66,0.1);
+
+    --color-border-tertiary: var(--border);
+    --color-border-secondary: var(--border);
+    --color-border-success: rgba(61,214,140,0.3);
+    --color-border-info: rgba(79,156,249,0.35);
+    --color-border-warning: rgba(245,200,66,0.35);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-bottom: 4rem;
+  }
+
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: .6rem;
+  }
+
+  .header p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .part-header {
+    margin: 3rem 0 2rem;
+    padding: 1rem 1.5rem;
+    background: var(--surface);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .marks-badge {
+    margin-left: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    background: rgba(245,200,66,0.1);
+    border: 1px solid rgba(245,200,66,0.3);
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .q-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+
+  .q-title {
+    background: var(--surface2);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  .q-title span:first-child {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .q-title span:last-child {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    background: rgba(245,200,66,0.1);
+    border: 1px solid rgba(245,200,66,0.3);
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .q-body { padding: 1.5rem; }
+  .q-body p { margin-bottom: 1rem; }
+
+  .q-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--accent);
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.4rem; }
+  strong { color: var(--text); font-weight: 600; }
+
+  .answer-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: inline-block;
+  }
+
+  .option-correct { color: var(--green); font-weight: 600; }
+
+  .mcq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 10px 0; }
+
+  .mcq-item {
+    padding: 0.5rem 1rem;
+    margin: 4px 0;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+    background: transparent;
+  }
+
+  .mcq-item.correct {
+    border-color: var(--green);
+    background: rgba(61,214,140,0.08);
+    color: var(--green);
+  }
+
+  .diagram-box {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.25rem 0;
+    overflow-x: auto;
+  }
+
+  .diagram-box svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+
+  .info-box {
+    background: rgba(79,156,249,0.06);
+    border: 1px dashed rgba(79,156,249,0.3);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    color: var(--text);
+  }
+
+  .warn-box {
+    background: rgba(124,111,239,0.08);
+    border-left: 3px solid var(--accent2);
+    padding: 0.75rem 1rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1rem 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .formula {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    margin: 1rem 0;
+    white-space: pre-line;
+  }
+
+  table.compare { width: 100%; border-collapse: collapse; font-size: 14px; margin: 1rem 0; }
+
+  table.compare th {
+    background: var(--surface2);
+    padding: 8px 12px;
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--accent);
+    border: 1px solid var(--border);
+  }
+
+  table.compare td {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  table.compare tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  .diagram-box .th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    fill: var(--text);
+  }
+
+  .diagram-box .ts {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    fill: var(--muted);
+  }
+
+  .diagram-box .arr { stroke: var(--accent); }
+
+  .diagram-box .c-teal,
+  .diagram-box .c-teal rect { --t: #3dd68c; fill: rgba(61,214,140,0.10); stroke: rgba(61,214,140,0.45); }
+  .diagram-box .c-purple,
+  .diagram-box .c-purple rect { --t: #7c6fef; fill: rgba(124,111,239,0.12); stroke: rgba(124,111,239,0.5); }
+  .diagram-box .c-amber,
+  .diagram-box .c-amber rect { --t: #f5c842; fill: rgba(245,200,66,0.12); stroke: rgba(245,200,66,0.55); }
+  .diagram-box .c-coral,
+  .diagram-box .c-coral rect { --t: #f56565; fill: rgba(245,101,101,0.10); stroke: rgba(245,101,101,0.5); }
+  .diagram-box .c-green,
+  .diagram-box .c-green rect { --t: #3dd68c; fill: rgba(61,214,140,0.12); stroke: rgba(61,214,140,0.55); }
+  .diagram-box .c-blue,
+  .diagram-box .c-blue rect { --t: #4f9cf9; fill: rgba(79,156,249,0.10); stroke: rgba(79,156,249,0.5); }
+  .diagram-box .c-red,
+  .diagram-box .c-red rect { --t: #f56565; fill: rgba(245,101,101,0.10); stroke: rgba(245,101,101,0.5); }
+  .diagram-box .c-gray,
+  .diagram-box .c-gray rect { --t: #8892aa; fill: rgba(136,146,170,0.10); stroke: rgba(136,146,170,0.45); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Blockchain Technology — M.Tech II Semester</h1>
+  <p>MTCS231PET · Maulana Azad National University · July 2023 · Complete answers with diagrams and examples</p>
+</div>
+
+<!-- ===== PART ONE ===== -->
+<div class="part-header">
+  Part 1 — Multiple Choice Questions (MCQ)
+  <span class="marks-badge">10 × 1 = 10 marks</span>
+</div>
+
+<div class="q-block">
+  <div class="q-title"><span>Q1 — All 10 MCQs with answers and brief explanations</span></div>
+  <div class="q-body">
+
+    <p><strong>i. ________ is the science and art of converting messages into secret form.</strong></p>
+    <div class="mcq-grid">
+      <div class="mcq-item correct">✓ (a) Cryptography</div>
+      <div class="mcq-item">(b) Calligraphy</div>
+      <div class="mcq-item">(c) Cryptanalysis</div>
+      <div class="mcq-item">(d) None</div>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px;"><span class="key">Explanation:</span> Cryptography = "kryptos" (hidden) + "graphia" (writing). It is both a science (mathematical algorithms) and an art (designing secure systems).</p>
+
+    <p><strong>ii. How many round computations does SHA-256 perform?</strong></p>
+    <div class="mcq-grid">
+      <div class="mcq-item">(a) 80</div>
+      <div class="mcq-item">(b) 76</div>
+      <div class="mcq-item correct">✓ (c) 64</div>
+      <div class="mcq-item">(d) 70</div>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px;"><span class="key">Explanation:</span> SHA-256 processes data in 512-bit blocks using exactly 64 compression rounds per block.</p>
+
+    <p><strong>iii. The term ________ is used when a Blockchain splits.</strong></p>
+    <div class="mcq-grid">
+      <div class="mcq-item">(a) A Merger</div>
+      <div class="mcq-item correct">✓ (b) A Fork</div>
+      <div class="mcq-item">(c) A Division</div>
+      <div class="mcq-item">(d) None</div>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px;"><span class="key">Explanation:</span> A Fork occurs when the blockchain diverges into two paths — like Bitcoin forking into Bitcoin Cash.</p>
+
+    <p><strong>iv. In Blockchain, a ________ tree preserves digital fingerprints of all transactions in a block.</strong></p>
+    <div class="mcq-grid">
+      <div class="mcq-item correct">✓ (a) Merkle</div>
+      <div class="mcq-item">(b) Binary</div>
+      <div class="mcq-item">(c) AVL</div>
+      <div class="mcq-item">(d) Red Black</div>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px;"><span class="key">Explanation:</span> A Merkle Tree hashes pairs of transactions repeatedly until one root hash (Merkle Root) represents the entire block.</p>
+
+    <p><strong>v. What is a DAPP?</strong></p>
+    <div class="mcq-grid">
+      <div class="mcq-item">(a) A blockchain network</div>
+      <div class="mcq-item">(b) Type of Cryptocurrency</div>
+      <div class="mcq-item">(c) Hardware Component</div>
+      <div class="mcq-item correct">✓ (d) Decentralized Application</div>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px;"><span class="key">Explanation:</span> DApps run on a peer-to-peer blockchain network, not on centralized servers. E.g., Uniswap, OpenSea.</p>
+
+    <p><strong>vi. The first block of a Blockchain is called?</strong></p>
+    <div class="mcq-grid">
+      <div class="mcq-item correct">✓ (a) Genesis Block</div>
+      <div class="mcq-item">(b) Origin Block</div>
+      <div class="mcq-item">(c) Block One</div>
+      <div class="mcq-item">(d) None</div>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px;"><span class="key">Explanation:</span> The Genesis Block (Block 0) is the anchor of the chain — it has no previous block hash. Bitcoin's genesis block was mined by Satoshi Nakamoto on Jan 3, 2009.</p>
+
+    <p><strong>vii. What incentive do miners get for validating transactions?</strong></p>
+    <div class="mcq-grid">
+      <div class="mcq-item">(a) Community appreciation</div>
+      <div class="mcq-item">(b) Nonce</div>
+      <div class="mcq-item correct">✓ (c) Block Rewards</div>
+      <div class="mcq-item">(d) Additional Memory</div>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px;"><span class="key">Explanation:</span> Miners receive newly created cryptocurrency (block reward) + transaction fees. Bitcoin started at 50 BTC/block, now 3.125 BTC after the 2024 halving.</p>
+
+    <p><strong>viii. The intended objective of creating Blockchain was?</strong></p>
+    <div class="mcq-grid">
+      <div class="mcq-item">(a) Research Project</div>
+      <div class="mcq-item correct">✓ (b) Peer-to-peer Electronic Cash System</div>
+      <div class="mcq-item">(c) Open-source Network for Connecting Banks</div>
+      <div class="mcq-item">(d) None</div>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px;"><span class="key">Explanation:</span> Satoshi Nakamoto's 2008 whitepaper was titled "Bitcoin: A Peer-to-Peer Electronic Cash System."</p>
+
+    <p><strong>ix. Which database does Hyperledger Fabric use for its ledger system?</strong></p>
+    <div class="mcq-grid">
+      <div class="mcq-item">(a) MySQL</div>
+      <div class="mcq-item correct">✓ (b) CouchDB</div>
+      <div class="mcq-item">(c) MS-SQL</div>
+      <div class="mcq-item">(d) LevelDB</div>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px;"><span class="key">Explanation:</span> Hyperledger Fabric supports LevelDB (default, key-value) and CouchDB (for rich JSON queries). CouchDB is commonly used when complex queries are needed.</p>
+
+    <p><strong>x. How many Peers are required to Endorse a Transaction?</strong></p>
+    <div class="mcq-grid">
+      <div class="mcq-item">(a) 10</div>
+      <div class="mcq-item">(b) 03</div>
+      <div class="mcq-item">(c) 05</div>
+      <div class="mcq-item correct">✓ (d) Depends on Endorsement Policy</div>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px;"><span class="key">Explanation:</span> In Hyperledger Fabric, the number of required endorsers is defined by the Endorsement Policy set per smart contract — it could be 1, 2, majority, or all peers.</p>
+  </div>
+</div>
+
+<!-- ===== PART TWO ===== -->
+<div class="part-header">
+  Part 2 — Short Answer Questions (choose any 5 of 8)
+  <span class="marks-badge">5 × 6 = 30 marks</span>
+</div>
+
+<!-- Q2 SHA-256 -->
+<div class="q-block">
+  <div class="q-title"><span>Q2 — Describe SHA-256 with a diagram</span><span>6 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p>SHA-256 (Secure Hash Algorithm 256-bit) is a one-way cryptographic hash function that converts any input into a fixed 256-bit (32-byte) output called a digest or hash. It is used in Bitcoin mining, digital signatures, and data integrity checks.</p>
+    <p><strong>Key properties:</strong></p>
+    <ul>
+      <li>Deterministic — same input always gives same output</li>
+      <li>Avalanche effect — changing 1 bit changes ~50% of output bits</li>
+      <li>Irreversible — cannot reverse-engineer the input from the hash</li>
+      <li>Collision resistant — virtually impossible to find two inputs with the same hash</li>
+    </ul>
+    <div class="diagram-box">
+      <svg width="100%" viewBox="0 0 680 340">
+        <defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <!-- Input -->
+        <g class="c-teal">
+          <rect x="20" y="30" width="130" height="50" rx="8" stroke-width="0.5"/>
+          <text class="th" x="85" y="52" text-anchor="middle" dominant-baseline="central">Message Input</text>
+          <text class="ts" x="85" y="68" text-anchor="middle" dominant-baseline="central">Any size</text>
+        </g>
+        <!-- Step 1 -->
+        <line x1="150" y1="55" x2="190" y2="55" class="arr" marker-end="url(#arr2)" stroke="var(--t)" stroke-width="1.2"/>
+        <g class="c-purple">
+          <rect x="190" y="30" width="150" height="50" rx="8" stroke-width="0.5"/>
+          <text class="th" x="265" y="52" text-anchor="middle" dominant-baseline="central">Pre-processing</text>
+          <text class="ts" x="265" y="68" text-anchor="middle" dominant-baseline="central">Padding to 512-bit blocks</text>
+        </g>
+        <!-- Step 2 -->
+        <line x1="340" y1="55" x2="380" y2="55" class="arr" marker-end="url(#arr2)" stroke="var(--t)" stroke-width="1.2"/>
+        <g class="c-amber">
+          <rect x="380" y="30" width="150" height="50" rx="8" stroke-width="0.5"/>
+          <text class="th" x="455" y="52" text-anchor="middle" dominant-baseline="central">Initial Hash Values</text>
+          <text class="ts" x="455" y="68" text-anchor="middle" dominant-baseline="central">H0–H7 (8 × 32-bit constants)</text>
+        </g>
+        <!-- 64 Rounds block -->
+        <line x1="265" y1="80" x2="265" y2="120" class="arr" marker-end="url(#arr2)" stroke="var(--t)" stroke-width="1.2"/>
+        <g class="c-coral">
+          <rect x="150" y="120" width="390" height="80" rx="8" stroke-width="0.5"/>
+          <text class="th" x="345" y="150" text-anchor="middle" dominant-baseline="central">Compression Function — 64 Rounds</text>
+          <text class="ts" x="345" y="170" text-anchor="middle" dominant-baseline="central">Operations: Ch, Maj, Σ0, Σ1, σ0, σ1 + Message Schedule + Round Constants (K0–K63)</text>
+        </g>
+        <!-- Output -->
+        <line x1="345" y1="200" x2="345" y2="240" class="arr" marker-end="url(#arr2)" stroke="var(--t)" stroke-width="1.2"/>
+        <g class="c-green">
+          <rect x="150" y="240" width="390" height="60" rx="8" stroke-width="0.5"/>
+          <text class="th" x="345" y="262" text-anchor="middle" dominant-baseline="central">256-bit Hash Output</text>
+          <text class="ts" x="345" y="282" text-anchor="middle" dominant-baseline="central">e.g., "hello" → 2cf24dba5fb0a30e26e83b2ac5b9e29e...</text>
+        </g>
+        <!-- Legend note -->
+        <text class="ts" x="345" y="320" text-anchor="middle" dominant-baseline="central">Each 512-bit block is processed independently; outputs are added (mod 2³²) to produce final digest</text>
+      </svg>
+    </div>
+    <div class="info-box"><strong>Real example:</strong> SHA-256("hello") = 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824 — always the same 64-character hex string regardless of where or when computed.</div>
+  </div>
+</div>
+
+<!-- Q3 Fork -->
+<div class="q-block">
+  <div class="q-title"><span>Q3 — What is a Fork? Discuss its types.</span><span>6 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p>A <strong>Fork</strong> in blockchain occurs when the protocol rules change, causing the blockchain to split into two diverging paths. Forks happen due to software upgrades, disagreements in the community, or accidental divergence.</p>
+    <div class="diagram-box">
+      <svg width="100%" viewBox="0 0 680 260">
+        <defs><marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <!-- Common chain -->
+        <g class="c-gray"><rect x="20" y="100" width="90" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="65" y="120" text-anchor="middle" dominant-baseline="central">Block N-2</text></g>
+        <line x1="110" y1="120" x2="136" y2="120" class="arr" marker-end="url(#arr3)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-gray"><rect x="136" y="100" width="90" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="181" y="120" text-anchor="middle" dominant-baseline="central">Block N-1</text></g>
+        <line x1="226" y1="120" x2="252" y2="120" class="arr" marker-end="url(#arr3)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-amber"><rect x="252" y="100" width="90" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="297" y="120" text-anchor="middle" dominant-baseline="central">Fork Point</text></g>
+        <!-- Hard fork path -->
+        <line x1="342" y1="108" x2="380" y2="70" class="arr" marker-end="url(#arr3)" stroke="#D85A30" stroke-width="1.2"/>
+        <g class="c-coral"><rect x="380" y="50" width="130" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="445" y="70" text-anchor="middle" dominant-baseline="central">Hard Fork — new chain</text></g>
+        <line x1="510" y1="70" x2="545" y2="70" class="arr" marker-end="url(#arr3)" stroke="#D85A30" stroke-width="1"/>
+        <g class="c-coral"><rect x="545" y="50" width="100" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="595" y="70" text-anchor="middle" dominant-baseline="central">E.g. Bitcoin Cash</text></g>
+        <!-- Soft fork path -->
+        <line x1="342" y1="132" x2="380" y2="170" class="arr" marker-end="url(#arr3)" stroke="#185FA5" stroke-width="1.2"/>
+        <g class="c-blue"><rect x="380" y="150" width="130" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="445" y="170" text-anchor="middle" dominant-baseline="central">Soft Fork — backward compat.</text></g>
+        <line x1="510" y1="170" x2="545" y2="170" class="arr" marker-end="url(#arr3)" stroke="#185FA5" stroke-width="1"/>
+        <g class="c-blue"><rect x="545" y="150" width="100" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="595" y="170" text-anchor="middle" dominant-baseline="central">E.g. SegWit</text></g>
+        <!-- labels -->
+        <text class="ts" x="297" y="158" text-anchor="middle" dominant-baseline="central" style="fill:var(--color-text-secondary)">Split occurs here</text>
+        <text class="ts" x="345" y="230" text-anchor="middle">Hard Fork = incompatible rules · Soft Fork = backward-compatible rules</text>
+      </svg>
+    </div>
+    <table class="compare">
+      <tr><th>Feature</th><th>Hard Fork</th><th>Soft Fork</th></tr>
+      <tr><td>Compatibility</td><td>Not backward compatible</td><td>Backward compatible</td></tr>
+      <tr><td>Result</td><td>Two separate blockchains</td><td>One chain with tighter rules</td></tr>
+      <tr><td>Node upgrade</td><td>All nodes must upgrade</td><td>Only majority miners needed</td></tr>
+      <tr><td>Example</td><td>Bitcoin → Bitcoin Cash (2017)</td><td>Bitcoin SegWit (2017)</td></tr>
+    </table>
+    <p>There is also a <strong>Accidental Fork</strong> (or temporary fork) — when two miners find a valid block simultaneously. The network resolves this by choosing the longest chain within a few blocks.</p>
+  </div>
+</div>
+
+<!-- Q4 Proof of Stake -->
+<div class="q-block">
+  <div class="q-title"><span>Q4 — Explain Proof-of-Stake (PoS) protocol with diagram</span><span>6 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p><strong>Proof-of-Stake (PoS)</strong> is a consensus mechanism where validators are chosen to create new blocks based on the amount of cryptocurrency they <em>stake</em> (lock as collateral), rather than computational power (as in PoW).</p>
+    <div class="diagram-box">
+      <svg width="100%" viewBox="0 0 680 280">
+        <defs><marker id="arr4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <!-- Step 1 -->
+        <g class="c-teal"><rect x="20" y="40" width="130" height="56" rx="8" stroke-width="0.5"/><text class="th" x="85" y="62" text-anchor="middle" dominant-baseline="central">1. Stake ETH</text><text class="ts" x="85" y="82" text-anchor="middle" dominant-baseline="central">Lock coins as collateral</text></g>
+        <line x1="150" y1="68" x2="180" y2="68" class="arr" marker-end="url(#arr4)" stroke="var(--t)" stroke-width="1"/>
+        <!-- Step 2 -->
+        <g class="c-purple"><rect x="180" y="40" width="130" height="56" rx="8" stroke-width="0.5"/><text class="th" x="245" y="62" text-anchor="middle" dominant-baseline="central">2. Validator Pool</text><text class="ts" x="245" y="82" text-anchor="middle" dominant-baseline="central">Eligible validators list</text></g>
+        <line x1="310" y1="68" x2="340" y2="68" class="arr" marker-end="url(#arr4)" stroke="var(--t)" stroke-width="1"/>
+        <!-- Step 3 -->
+        <g class="c-amber"><rect x="340" y="40" width="130" height="56" rx="8" stroke-width="0.5"/><text class="th" x="405" y="62" text-anchor="middle" dominant-baseline="central">3. Random Selection</text><text class="ts" x="405" y="82" text-anchor="middle" dominant-baseline="central">Weighted by stake size</text></g>
+        <line x1="470" y1="68" x2="500" y2="68" class="arr" marker-end="url(#arr4)" stroke="var(--t)" stroke-width="1"/>
+        <!-- Step 4 -->
+        <g class="c-coral"><rect x="500" y="40" width="150" height="56" rx="8" stroke-width="0.5"/><text class="th" x="575" y="62" text-anchor="middle" dominant-baseline="central">4. Validate Block</text><text class="ts" x="575" y="82" text-anchor="middle" dominant-baseline="central">Propose + attest block</text></g>
+        <!-- Rewards/Slash row -->
+        <line x1="575" y1="96" x2="575" y2="140" class="arr" marker-end="url(#arr4)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-green"><rect x="460" y="140" width="140" height="56" rx="8" stroke-width="0.5"/><text class="th" x="530" y="162" text-anchor="middle" dominant-baseline="central">Rewards</text><text class="ts" x="530" y="180" text-anchor="middle" dominant-baseline="central">Staking yield earned</text></g>
+        <g class="c-red"><rect x="200" y="140" width="140" height="56" rx="8" stroke-width="0.5"/><text class="th" x="270" y="162" text-anchor="middle" dominant-baseline="central">Slashing</text><text class="ts" x="270" y="180" text-anchor="middle" dominant-baseline="central">Malicious? Stake cut</text></g>
+        <!-- Recycle arrow -->
+        <path d="M530 196 Q530 240 405 240 Q280 240 270 196" fill="none" stroke="var(--t)" stroke-width="0.8" stroke-dasharray="4 3" marker-end="url(#arr4)"/>
+        <text class="ts" x="405" y="260" text-anchor="middle">Cycle repeats with remaining stake</text>
+      </svg>
+    </div>
+    <p><strong>Key advantages over PoW:</strong> 99.95% less energy (Ethereum's merge reduced energy by this amount), faster finality, no need for expensive mining hardware. Ethereum switched to PoS in Sep 2022 (The Merge). Minimum stake = 32 ETH per validator.</p>
+    <div class="info-box"><strong>Real example:</strong> If Alice stakes 64 ETH and Bob stakes 32 ETH, Alice has 2× the chance of being selected as the next block proposer.</div>
+  </div>
+</div>
+
+<!-- Q5 Web 1 2 3 -->
+<div class="q-block">
+  <div class="q-title"><span>Q5 — Differences between Web 1.0, Web 2.0, and Web 3.0</span><span>6 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <table class="compare">
+      <tr><th>Feature</th><th>Web 1.0 (1990s–2000s)</th><th>Web 2.0 (2000s–2020s)</th><th>Web 3.0 (2020s+)</th></tr>
+      <tr><td>Nature</td><td>Read-only, static pages</td><td>Read-write, dynamic, interactive</td><td>Read-write-own, decentralized</td></tr>
+      <tr><td>Control</td><td>Website owners</td><td>Platforms (Google, Facebook)</td><td>Users themselves</td></tr>
+      <tr><td>Data</td><td>Stored on servers, no user data</td><td>Centralized; companies collect data</td><td>Decentralized; user-controlled</td></tr>
+      <tr><td>Technology</td><td>HTML, FTP, HTTP</td><td>AJAX, APIs, Social Media, Cloud</td><td>Blockchain, Smart Contracts, DApps</td></tr>
+      <tr><td>Currency</td><td>None</td><td>Fiat / Centralized payments</td><td>Cryptocurrency, NFTs, DeFi</td></tr>
+      <tr><td>Identity</td><td>None / Username-password</td><td>OAuth, social login</td><td>Wallet address (self-sovereign)</td></tr>
+      <tr><td>Examples</td><td>Static HTML websites, early Yahoo</td><td>YouTube, Facebook, Google, Twitter</td><td>Uniswap, OpenSea, Aave, ENS</td></tr>
+    </table>
+    <div class="info-box"><strong>Key shift:</strong> Web 2.0 gave users voice but took their data. Web 3.0 aims to give users ownership — "don't trust, verify" using public blockchains.</div>
+  </div>
+</div>
+
+<!-- Q6 Endorsing vs Committing Peers -->
+<div class="q-block">
+  <div class="q-title"><span>Q6 — Difference between Endorsing Peers and Committing Peers</span><span>6 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p>Both are peer node types in <strong>Hyperledger Fabric</strong>, but they have different roles in the transaction lifecycle.</p>
+    <div class="diagram-box">
+      <svg width="100%" viewBox="0 0 680 200">
+        <defs><marker id="arr6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g class="c-teal"><rect x="20" y="60" width="110" height="50" rx="8" stroke-width="0.5"/><text class="th" x="75" y="82" text-anchor="middle" dominant-baseline="central">Client App</text><text class="ts" x="75" y="98" text-anchor="middle" dominant-baseline="central">Submits proposal</text></g>
+        <line x1="130" y1="85" x2="158" y2="85" class="arr" marker-end="url(#arr6)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-purple"><rect x="158" y="40" width="140" height="90" rx="8" stroke-width="0.5"/><text class="th" x="228" y="72" text-anchor="middle" dominant-baseline="central">Endorsing Peer</text><text class="ts" x="228" y="90" text-anchor="middle" dominant-baseline="central">Simulates chaincode</text><text class="ts" x="228" y="108" text-anchor="middle" dominant-baseline="central">Signs + returns RW set</text></g>
+        <line x1="298" y1="85" x2="326" y2="85" class="arr" marker-end="url(#arr6)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-amber"><rect x="326" y="40" width="140" height="90" rx="8" stroke-width="0.5"/><text class="th" x="396" y="72" text-anchor="middle" dominant-baseline="central">Orderer (OSN)</text><text class="ts" x="396" y="90" text-anchor="middle" dominant-baseline="central">Orders transactions</text><text class="ts" x="396" y="108" text-anchor="middle" dominant-baseline="central">Creates block</text></g>
+        <line x1="466" y1="85" x2="494" y2="85" class="arr" marker-end="url(#arr6)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-green"><rect x="494" y="40" width="160" height="90" rx="8" stroke-width="0.5"/><text class="th" x="574" y="68" text-anchor="middle" dominant-baseline="central">Committing Peer</text><text class="ts" x="574" y="86" text-anchor="middle" dominant-baseline="central">Validates block</text><text class="ts" x="574" y="104" text-anchor="middle" dominant-baseline="central">Appends to ledger</text></g>
+        <text class="ts" x="340" y="175" text-anchor="middle">All peers commit. Only designated peers endorse.</text>
+      </svg>
+    </div>
+    <table class="compare">
+      <tr><th>Feature</th><th>Endorsing Peer</th><th>Committing Peer</th></tr>
+      <tr><td>Role</td><td>Simulates and endorses transactions</td><td>Validates and commits blocks to ledger</td></tr>
+      <tr><td>Chaincode</td><td>Must have chaincode installed</td><td>Does not need chaincode installed</td></tr>
+      <tr><td>Who is it?</td><td>Subset of peers (per policy)</td><td>All peers in the channel</td></tr>
+      <tr><td>Timing</td><td>Before transaction ordering</td><td>After block is delivered by orderer</td></tr>
+      <tr><td>Output</td><td>Signed Read-Write set</td><td>Updated ledger state</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Q7 Deterministic vs Non-Deterministic -->
+<div class="q-block">
+  <div class="q-title"><span>Q7 — Explain Deterministic vs Non-Deterministic with examples</span><span>6 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p>In the context of blockchain smart contracts, <strong>determinism</strong> is critical because all nodes must independently execute the same code and arrive at the <em>identical</em> result to reach consensus.</p>
+    <table class="compare">
+      <tr><th>Feature</th><th>Deterministic</th><th>Non-Deterministic</th></tr>
+      <tr><td>Definition</td><td>Same input → same output always, on every node</td><td>Same input → different outputs on different nodes/times</td></tr>
+      <tr><td>Used in Blockchain?</td><td>Yes — required for consensus</td><td>No — breaks consensus</td></tr>
+      <tr><td>Examples</td><td>Hash functions (SHA-256), arithmetic (+, -, ×), string operations</td><td>Random number generation (Math.random()), system time (Date.now()), external API calls</td></tr>
+      <tr><td>Smart contract</td><td>x = a + b (always same)</td><td>x = Math.random() (varies by node)</td></tr>
+      <tr><td>Fix for non-determinism</td><td>Use oracles (Chainlink) for external data</td><td>—</td></tr>
+    </table>
+    <div class="info-box"><strong>Example:</strong> A smart contract calculating "transfer 10% of balance" — this is deterministic. But a contract needing today's ETH price must use an Oracle, because each node getting the price directly would get slightly different values, breaking consensus.</div>
+    <p>In <strong>Hyperledger Fabric</strong>, chaincode is executed by endorsing peers first (determinism check), then the result is committed — this "execute-order-validate" model helps manage non-deterministic smart contract languages like Go or Java by comparing the RW sets.</p>
+  </div>
+</div>
+
+<!-- Q8 Fabric Transaction -->
+<div class="q-block">
+  <div class="q-title"><span>Q8 — How is a Transaction included in Fabric Blockchain Network?</span><span>6 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p>Hyperledger Fabric follows an <strong>Execute-Order-Validate</strong> flow (unlike Bitcoin's Order-Execute), which enables parallel processing and privacy.</p>
+    <div class="diagram-box">
+      <svg width="100%" viewBox="0 0 680 320">
+        <defs><marker id="arr8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g class="c-gray"><rect x="20" y="20" width="110" height="50" rx="8" stroke-width="0.5"/><text class="th" x="75" y="42" text-anchor="middle" dominant-baseline="central">1. Client App</text><text class="ts" x="75" y="58" text-anchor="middle" dominant-baseline="central">Creates proposal</text></g>
+        <line x1="130" y1="45" x2="160" y2="45" class="arr" marker-end="url(#arr8)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-purple"><rect x="160" y="20" width="120" height="50" rx="8" stroke-width="0.5"/><text class="th" x="220" y="38" text-anchor="middle" dominant-baseline="central">2. Endorse</text><text class="ts" x="220" y="54" text-anchor="middle" dominant-baseline="central">Peers simulate chaincode</text></g>
+        <line x1="280" y1="45" x2="310" y2="45" class="arr" marker-end="url(#arr8)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-teal"><rect x="310" y="20" width="120" height="50" rx="8" stroke-width="0.5"/><text class="th" x="370" y="38" text-anchor="middle" dominant-baseline="central">3. Collect Sigs</text><text class="ts" x="370" y="54" text-anchor="middle" dominant-baseline="central">Client collects endorsements</text></g>
+        <line x1="430" y1="45" x2="460" y2="45" class="arr" marker-end="url(#arr8)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-amber"><rect x="460" y="20" width="120" height="50" rx="8" stroke-width="0.5"/><text class="th" x="520" y="38" text-anchor="middle" dominant-baseline="central">4. Send to Orderer</text><text class="ts" x="520" y="54" text-anchor="middle" dominant-baseline="central">Submit endorsed txn</text></g>
+        <!-- Row 2 -->
+        <line x1="520" y1="70" x2="520" y2="130" class="arr" marker-end="url(#arr8)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-coral"><rect x="390" y="130" width="130" height="50" rx="8" stroke-width="0.5"/><text class="th" x="455" y="148" text-anchor="middle" dominant-baseline="central">5. Order + Block</text><text class="ts" x="455" y="164" text-anchor="middle" dominant-baseline="central">Orderer batches transactions</text></g>
+        <line x1="390" y1="155" x2="340" y2="155" class="arr" marker-end="url(#arr8)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-blue"><rect x="200" y="130" width="140" height="50" rx="8" stroke-width="0.5"/><text class="th" x="270" y="148" text-anchor="middle" dominant-baseline="central">6. Validate</text><text class="ts" x="270" y="164" text-anchor="middle" dominant-baseline="central">All peers check endorsement</text></g>
+        <line x1="200" y1="155" x2="155" y2="155" class="arr" marker-end="url(#arr8)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-green"><rect x="20" y="130" width="135" height="50" rx="8" stroke-width="0.5"/><text class="th" x="87" y="148" text-anchor="middle" dominant-baseline="central">7. Commit to Ledger</text><text class="ts" x="87" y="164" text-anchor="middle" dominant-baseline="central">State DB + Blockchain updated</text></g>
+        <!-- Final note -->
+        <rect x="20" y="220" width="630" height="60" rx="8" class="c-gray" stroke-width="0.5"/>
+        <text class="th" x="335" y="244" text-anchor="middle" dominant-baseline="central">Transaction structure includes:</text>
+        <text class="ts" x="335" y="264" text-anchor="middle" dominant-baseline="central">Header (channel, chaincode) | Signature | Proposal | Response | Endorsements | Read-Write Set</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- Q9 Ethereum Calculation -->
+<div class="q-block">
+  <div class="q-title"><span>Q9 — Ethereum Transaction Fee Calculation</span><span>6 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p><strong>Given:</strong> Bob sends Robin 20 ETH on Ethereum Network. Gas Limit = 21,000. Gas Price = 100 gwei. Priority Fee = 5 gwei. Gas used = 5 gas (assume all gas units used = 21,000 for standard ETH transfer).</p>
+    <p><strong>Step-by-step calculation:</strong></p>
+    <div class="formula">
+      Gas Price = Base Fee + Priority Fee = 100 gwei (total)
+      Gas Used = 21,000 units (standard ETH transfer)
+
+      Transaction Fee = Gas Used × Gas Price
+                      = 21,000 × 100 gwei
+                      = 2,100,000 gwei
+                      = 2,100,000 / 1,000,000,000 ETH
+                      = 0.0021 ETH
+
+      Priority Fee portion = 21,000 × 5 gwei = 105,000 gwei = 0.000105 ETH (goes to miner/validator)
+    </div>
+    <div class="info-box">
+      <strong>Result:</strong> Bob pays <strong>0.0021 ETH</strong> as transaction fees. Robin receives exactly 20 ETH. Bob's total deduction = 20 + 0.0021 = 20.0021 ETH from his wallet.
+    </div>
+    <p><strong>Key terms:</strong> 1 ETH = 10⁹ gwei = 10¹⁸ wei. Gas Limit is the maximum gas you allow. If the transaction uses less gas, the rest is refunded. Gas Price is how much you pay per unit of gas.</p>
+  </div>
+</div>
+
+<!-- ===== PART THREE ===== -->
+<div class="part-header">
+  Part 3 — Long Answer Questions (choose any 3 of 5)
+  <span class="marks-badge">3 × 10 = 30 marks</span>
+</div>
+
+<!-- Q10 ElGamal -->
+<div class="q-block">
+  <div class="q-title"><span>Q10 — ElGamal Encryption to encrypt a Plaintext block</span><span>10 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p><strong>Given:</strong> p = 11 (prime), e₁ = 2 (primitive root / generator), d = 3 (private key). Ciphertext: C₁ = 6, C₂ = 5.</p>
+    <p><strong>Step 1 — Setup (Key Generation):</strong></p>
+    <div class="formula">
+      p = 11 (prime number)
+      g = e₁ = 2 (primitive root / generator of Z*p)
+      d = 3 (recipient's private key)
+      
+      Public key component: e₂ = g^d mod p
+                               = 2^3 mod 11
+                               = 8 mod 11
+                               = 8
+      
+      Public Key = (p=11, g=2, e₂=8)
+      Private Key = d = 3
+    </div>
+    <p><strong>Step 2 — Decryption (Finding the plaintext from C₁=6, C₂=5):</strong></p>
+    <div class="formula">
+      ElGamal Decryption formula:
+      M = C₂ × (C₁^d)^(-1) mod p
+      
+      Step A: Compute C₁^d mod p
+              = 6^3 mod 11
+              = 216 mod 11
+              = 216 - 19×11 = 216 - 209 = 7
+              C₁^d mod p = 7
+      
+      Step B: Find modular inverse of 7 mod 11
+              Need x such that 7x ≡ 1 (mod 11)
+              Try: 7 × 8 = 56 = 5×11 + 1 = 1 (mod 11) ✓
+              So (C₁^d)^(-1) mod 11 = 8
+      
+      Step C: Compute M
+              M = C₂ × 8 mod 11
+                = 5 × 8 mod 11
+                = 40 mod 11
+                = 40 - 3×11 = 40 - 33 = 7
+      
+      Plaintext M = 7
+    </div>
+    <div class="info-box"><strong>Answer:</strong> The plaintext M = <strong>7</strong>. So the ciphertext (C₁=6, C₂=5) corresponds to the original message M = 7.</div>
+    <p><strong>Verification (Encryption side):</strong> If M=7, choose random k: C₁ = g^k mod p. C₂ = M × e₂^k mod p. This confirms that ElGamal is an asymmetric encryption based on the Discrete Logarithm Problem.</p>
+  </div>
+</div>
+
+<!-- Q11 Block Types -->
+<div class="q-block">
+  <div class="q-title"><span>Q11 — Write short notes on: Double Spending, Uncle Block, Stale Block, Orphan Block</span><span>10 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p><strong>(a) Double Spending Money</strong></p>
+    <p>Double spending is the attempt to spend the same digital currency twice. Because digital data can be copied, without a blockchain, nothing stops a malicious user from duplicating a transaction. Blockchain prevents this by requiring network consensus before a transaction is confirmed — once recorded in a block with sufficient confirmations, it cannot be reversed.</p>
+    <div class="info-box"><strong>Example:</strong> Alice has 1 BTC. She broadcasts two transactions simultaneously — one sending 1 BTC to Bob, one sending 1 BTC to Charlie. The network will confirm only one; the other is rejected.</div>
+
+    <p style="margin-top:14px;"><strong>(b) Uncle Block (Ethereum specific)</strong></p>
+    <p>When two miners find a valid block at the same time, the network chooses one as the main chain block. The other valid-but-excluded block is called an Uncle Block (or Ommer Block) in Ethereum. Unlike Bitcoin (where these are simply orphaned), Ethereum includes uncle blocks in the chain and rewards uncle miners partially — improving fairness and security.</p>
+
+    <p style="margin-top:14px;"><strong>(c) Stale Block</strong></p>
+    <p>A stale block is a valid block that was mined correctly but not included in the main chain because another block at the same height was accepted first. The miner receives no reward. Stale blocks occur due to network propagation delays — by the time the block reaches the network, another block has already been accepted.</p>
+
+    <p style="margin-top:14px;"><strong>(d) Orphan Block</strong></p>
+    <p>An orphan block is a block whose parent block (previous block) is unknown to the receiving node — it hasn't received the parent yet due to network delay. Orphan blocks are temporarily stored until their parent arrives. If no parent ever arrives, they are discarded. (Note: in casual usage, "orphan" is sometimes used interchangeably with "stale", but technically they are different.)</p>
+
+    <div class="diagram-box">
+      <svg width="100%" viewBox="0 0 680 200">
+        <defs><marker id="arr11" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <!-- Main chain -->
+        <g class="c-gray"><rect x="20" y="80" width="80" height="36" rx="6" stroke-width="0.5"/><text class="ts" x="60" y="98" text-anchor="middle" dominant-baseline="central">Block N-1</text></g>
+        <line x1="100" y1="98" x2="120" y2="98" class="arr" marker-end="url(#arr11)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-green"><rect x="120" y="80" width="80" height="36" rx="6" stroke-width="0.5"/><text class="ts" x="160" y="98" text-anchor="middle" dominant-baseline="central">Block N ✓</text></g>
+        <text class="ts" x="160" y="128" text-anchor="middle">Main chain</text>
+        <line x1="200" y1="98" x2="220" y2="98" class="arr" marker-end="url(#arr11)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-gray"><rect x="220" y="80" width="80" height="36" rx="6" stroke-width="0.5"/><text class="ts" x="260" y="98" text-anchor="middle" dominant-baseline="central">Block N+1</text></g>
+        <!-- Stale block -->
+        <g class="c-amber"><rect x="120" y="20" width="80" height="36" rx="6" stroke-width="0.5"/><text class="ts" x="160" y="38" text-anchor="middle" dominant-baseline="central">Stale Block</text></g>
+        <line x1="100" y1="88" x2="118" y2="38" fill="none" stroke="var(--t)" stroke-width="0.8" stroke-dasharray="4 3" marker-end="url(#arr11)"/>
+        <text class="ts" x="160" y="12" text-anchor="middle">Found same time, not chosen</text>
+        <!-- Uncle -->
+        <g class="c-purple"><rect x="400" y="20" width="80" height="36" rx="6" stroke-width="0.5"/><text class="ts" x="440" y="38" text-anchor="middle" dominant-baseline="central">Uncle Block</text></g>
+        <text class="ts" x="440" y="12" text-anchor="middle">Ethereum: partial reward given</text>
+        <!-- Orphan -->
+        <g class="c-coral"><rect x="530" y="80" width="120" height="36" rx="6" stroke-width="0.5"/><text class="ts" x="590" y="98" text-anchor="middle" dominant-baseline="central">Orphan Block</text></g>
+        <text class="ts" x="590" y="128" text-anchor="middle">Parent unknown to node</text>
+        <text class="ts" x="340" y="175" text-anchor="middle">All three represent blocks that did not become part of the accepted main chain</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- Q12 PoW Mining -->
+<div class="q-block">
+  <div class="q-title"><span>Q12 — Explain how PoW Consensus is used in Bitcoin Mining</span><span>10 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p><strong>Proof-of-Work (PoW)</strong> is the original consensus mechanism used by Bitcoin. Miners compete to solve a computationally expensive mathematical puzzle, and the winner gets to add the next block and earn the block reward.</p>
+    <p><strong>The Puzzle:</strong> Find a value called the <em>Nonce</em> such that when combined with the block data, SHA-256(SHA-256(block_header)) produces a hash starting with a required number of leading zeros (the target difficulty).</p>
+    <div class="formula">
+      SHA-256( SHA-256( Version | PrevHash | MerkleRoot | Timestamp | Difficulty | Nonce ) ) 
+      must be ≤ Target Value
+
+      Example Target (simplified): 
+      0000000000000000029...  (many leading zeros = harder puzzle)
+      
+      Miner tries: Nonce = 0, 1, 2, 3, ... billions of times until hash matches target
+    </div>
+    <div class="diagram-box">
+      <svg width="100%" viewBox="0 0 680 320">
+        <defs><marker id="arr12" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <!-- Step 1 -->
+        <g class="c-teal"><rect x="20" y="20" width="150" height="56" rx="8" stroke-width="0.5"/><text class="th" x="95" y="42" text-anchor="middle" dominant-baseline="central">1. Collect Transactions</text><text class="ts" x="95" y="62" text-anchor="middle" dominant-baseline="central">From mempool; build block</text></g>
+        <line x1="170" y1="48" x2="200" y2="48" class="arr" marker-end="url(#arr12)" stroke="var(--t)" stroke-width="1"/>
+        <!-- Step 2 -->
+        <g class="c-purple"><rect x="200" y="20" width="150" height="56" rx="8" stroke-width="0.5"/><text class="th" x="275" y="42" text-anchor="middle" dominant-baseline="central">2. Build Block Header</text><text class="ts" x="275" y="62" text-anchor="middle" dominant-baseline="central">PrevHash, MerkleRoot, Nonce=0</text></g>
+        <line x1="350" y1="48" x2="380" y2="48" class="arr" marker-end="url(#arr12)" stroke="var(--t)" stroke-width="1"/>
+        <!-- Step 3 -->
+        <g class="c-amber"><rect x="380" y="20" width="150" height="56" rx="8" stroke-width="0.5"/><text class="th" x="455" y="42" text-anchor="middle" dominant-baseline="central">3. Hash the Header</text><text class="ts" x="455" y="62" text-anchor="middle" dominant-baseline="central">Compute SHA-256(SHA-256())</text></g>
+        <!-- Decision -->
+        <line x1="455" y1="76" x2="455" y2="110" class="arr" marker-end="url(#arr12)" stroke="var(--t)" stroke-width="1"/>
+        <g class="c-coral"><rect x="330" y="110" width="250" height="50" rx="8" stroke-width="0.5"/><text class="th" x="455" y="132" text-anchor="middle" dominant-baseline="central">4. Hash ≤ Target?</text><text class="ts" x="455" y="148" text-anchor="middle" dominant-baseline="central">Does hash start with required zeros?</text></g>
+        <!-- NO path -->
+        <line x1="330" y1="135" x2="200" y2="135" class="arr" marker-end="url(#arr12)" stroke="#D85A30" stroke-width="1"/>
+        <g class="c-gray"><rect x="50" y="110" width="150" height="50" rx="8" stroke-width="0.5"/><text class="th" x="125" y="130" text-anchor="middle" dominant-baseline="central">No → Nonce++</text><text class="ts" x="125" y="148" text-anchor="middle" dominant-baseline="central">Increment and try again</text></g>
+        <path d="M125 110 Q125 75 200 48" fill="none" stroke="#D85A30" stroke-width="0.8" stroke-dasharray="4 3" marker-end="url(#arr12)"/>
+        <!-- YES path -->
+        <line x1="455" y1="160" x2="455" y2="200" class="arr" marker-end="url(#arr12)" stroke="#0F6E56" stroke-width="1"/>
+        <g class="c-green"><rect x="330" y="200" width="250" height="50" rx="8" stroke-width="0.5"/><text class="th" x="455" y="220" text-anchor="middle" dominant-baseline="central">5. Yes → Broadcast Block</text><text class="ts" x="455" y="238" text-anchor="middle" dominant-baseline="central">Network validates; miner earns reward</text></g>
+        <!-- Difficulty note -->
+        <text class="ts" x="125" y="200" text-anchor="middle">Miners try billions of</text>
+        <text class="ts" x="125" y="216" text-anchor="middle">nonces per second</text>
+        <text class="ts" x="125" y="232" text-anchor="middle">(hashrate = TH/s)</text>
+        <!-- Label -->
+        <text class="ts" x="340" y="290" text-anchor="middle">Difficulty adjusts every 2016 blocks (~2 weeks) to keep block time ≈ 10 minutes</text>
+      </svg>
+    </div>
+    <p><strong>Key properties of PoW:</strong></p>
+    <ul>
+      <li>Asymmetric: Hard to find nonce (billions of tries), but easy to verify (just hash once)</li>
+      <li>51% attack: An attacker needs 51%+ of total hashrate to rewrite history — extremely costly</li>
+      <li>Energy intensive: Bitcoin consumes ~127 TWh/year (comparable to Norway)</li>
+      <li>Block reward halves every 210,000 blocks (~4 years) — current reward is 3.125 BTC</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Q13 Solidity -->
+<div class="q-block">
+  <div class="q-title"><span>Q13 — Features of Smart Contracts in Solidity: Variables, Variable Scope, Data Types</span><span>10 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p><strong>Solidity</strong> is a statically-typed, compiled programming language for writing smart contracts on Ethereum Virtual Machine (EVM). It looks similar to JavaScript/C++.</p>
+
+    <p style="margin-top:10px;"><strong>1. Smart Contract features in Solidity:</strong></p>
+    <ul>
+      <li>Self-executing code stored on the blockchain</li>
+      <li>Immutable after deployment (unless upgradeable proxy pattern used)</li>
+      <li>Triggered by transactions (from users or other contracts)</li>
+      <li>Can hold Ether and interact with other contracts</li>
+      <li>Has a unique address on the blockchain</li>
+    </ul>
+
+    <p style="margin-top:10px;"><strong>2. Variables in Solidity:</strong></p>
+    <table class="compare">
+      <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+      <tr><td>State Variables</td><td>Stored permanently on blockchain (in storage)</td><td>uint public count = 0;</td></tr>
+      <tr><td>Local Variables</td><td>Exist only during function execution (in memory)</td><td>uint temp = a + b;</td></tr>
+      <tr><td>Global Variables</td><td>Built-in variables (blockchain context info)</td><td>msg.sender, block.timestamp</td></tr>
+    </table>
+
+    <p style="margin-top:10px;"><strong>3. Variable Scope:</strong></p>
+    <table class="compare">
+      <tr><th>Scope</th><th>Access Level</th></tr>
+      <tr><td>public</td><td>Accessible from outside contract; auto-generates getter</td></tr>
+      <tr><td>private</td><td>Only within the same contract</td></tr>
+      <tr><td>internal</td><td>Same contract + inheriting contracts</td></tr>
+      <tr><td>external</td><td>Only called from outside (functions only)</td></tr>
+    </table>
+
+    <p style="margin-top:10px;"><strong>4. Data Types in Solidity:</strong></p>
+    <table class="compare">
+      <tr><th>Category</th><th>Types</th><th>Example</th></tr>
+      <tr><td>Value Types</td><td>bool, int, uint, address, bytes1–bytes32, enum</td><td>uint256 price = 100;</td></tr>
+      <tr><td>Reference Types</td><td>arrays, structs, mappings, strings, bytes</td><td>mapping(address => uint) balances;</td></tr>
+      <tr><td>Special Types</td><td>address, address payable</td><td>address payable owner;</td></tr>
+    </table>
+
+    <div class="formula">
+      // Example Solidity Smart Contract showing all concepts
+      pragma solidity ^0.8.0;
+      
+      contract SimpleStorage {
+          uint public storedData;        // state var, public scope
+          address private owner;          // state var, private scope
+          
+          struct Student {               // reference type: struct
+              string name;
+              uint age;
+          }
+          
+          mapping(address => uint) balances; // mapping (reference type)
+          
+          constructor() {
+              owner = msg.sender;        // global var: msg.sender
+          }
+          
+          function set(uint x) public {
+              uint temp = x * 2;         // local variable
+              storedData = temp;
+          }
+          
+          function get() public view returns (uint) {
+              return storedData;
+          }
+      }
+    </div>
+  </div>
+</div>
+
+<!-- Q14 Hyperledger Transaction Flow -->
+<div class="q-block">
+  <div class="q-title"><span>Q14 — Explain Hyperledger Transaction Flow with Diagram</span><span>10 marks</span></div>
+  <div class="q-body">
+    <span class="answer-badge">Answer</span>
+    <p>Hyperledger Fabric uses an <strong>Execute → Order → Validate</strong> (EOV) model. This is different from Ethereum's Order → Execute model. The EOV model enables parallel chaincode execution and flexible trust models.</p>
+    <div class="diagram-box">
+      <svg width="100%" viewBox="0 0 680 380">
+        <defs><marker id="arr14" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <!-- Phase labels -->
+        <g class="c-teal"><rect x="20" y="10" width="190" height="28" rx="6" stroke-width="0.5"/><text class="th" x="115" y="24" text-anchor="middle" dominant-baseline="central">Phase 1: Execute</text></g>
+        <g class="c-amber"><rect x="240" y="10" width="190" height="28" rx="6" stroke-width="0.5"/><text class="th" x="335" y="24" text-anchor="middle" dominant-baseline="central">Phase 2: Order</text></g>
+        <g class="c-purple"><rect x="460" y="10" width="200" height="28" rx="6" stroke-width="0.5"/><text class="th" x="560" y="24" text-anchor="middle" dominant-baseline="central">Phase 3: Validate &amp; Commit</text></g>
+
+        <!-- Actors -->
+        <g class="c-gray"><rect x="20" y="55" width="100" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="70" y="75" text-anchor="middle" dominant-baseline="central">Client App</text></g>
+        <g class="c-teal"><rect x="140" y="55" width="110" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="195" y="75" text-anchor="middle" dominant-baseline="central">Endorsing Peer(s)</text></g>
+        <g class="c-amber"><rect x="270" y="55" width="110" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="325" y="75" text-anchor="middle" dominant-baseline="central">Ordering Service</text></g>
+        <g class="c-purple"><rect x="400" y="55" width="110" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="455" y="75" text-anchor="middle" dominant-baseline="central">All Channel Peers</text></g>
+        <g class="c-green"><rect x="530" y="55" width="110" height="40" rx="6" stroke-width="0.5"/><text class="ts" x="585" y="75" text-anchor="middle" dominant-baseline="central">Ledger + State DB</text></g>
+
+        <!-- Step arrows with labels -->
+        <text class="ts" x="115" y="118" text-anchor="middle">1. Submit Proposal</text>
+        <line x1="70" y1="95" x2="70" y2="130" stroke="var(--t)" stroke-width="0.8"/>
+        <line x1="70" y1="130" x2="138" y2="130" class="arr" marker-end="url(#arr14)" stroke="var(--t)" stroke-width="1"/>
+
+        <text class="ts" x="195" y="168" text-anchor="middle">2. Simulate chaincode</text>
+        <text class="ts" x="195" y="184" text-anchor="middle">Generate RW set</text>
+        <rect x="140" y="140" width="110" height="50" rx="6" class="c-teal" stroke-width="0.5"/>
+        <text class="ts" x="195" y="165" text-anchor="middle" dominant-baseline="central">Execute &amp; Sign</text>
+
+        <text class="ts" x="115" y="218" text-anchor="middle">3. Return endorsed response</text>
+        <line x1="140" y1="200" x2="80" y2="200" class="arr" marker-end="url(#arr14)" stroke="var(--t)" stroke-width="1"/>
+        <line x1="80" y1="200" x2="80" y2="230" stroke="var(--t)" stroke-width="0.8"/>
+
+        <text class="ts" x="195" y="246" text-anchor="middle">4. Client checks endorsement</text>
+        <text class="ts" x="195" y="262" text-anchor="middle">policy is satisfied</text>
+
+        <text class="ts" x="295" y="290" text-anchor="middle">5. Submit tx to orderer</text>
+        <line x1="80" y1="270" x2="268" y2="270" class="arr" marker-end="url(#arr14)" stroke="var(--t)" stroke-width="1"/>
+
+        <rect x="270" y="295" width="110" height="40" rx="6" class="c-amber" stroke-width="0.5"/>
+        <text class="ts" x="325" y="315" text-anchor="middle" dominant-baseline="central">6. Order + Batch block</text>
+
+        <line x1="380" y1="315" x2="398" y2="315" class="arr" marker-end="url(#arr14)" stroke="var(--t)" stroke-width="1"/>
+        <rect x="398" y="295" width="110" height="40" rx="6" class="c-purple" stroke-width="0.5"/>
+        <text class="ts" x="453" y="315" text-anchor="middle" dominant-baseline="central">7. Validate block</text>
+
+        <line x1="508" y1="315" x2="528" y2="315" class="arr" marker-end="url(#arr14)" stroke="var(--t)" stroke-width="1"/>
+        <rect x="528" y="295" width="112" height="40" rx="6" class="c-green" stroke-width="0.5"/>
+        <text class="ts" x="584" y="315" text-anchor="middle" dominant-baseline="central">8. Commit to ledger</text>
+
+        <text class="ts" x="340" y="365" text-anchor="middle">Channel EventHub notifies client of confirmed transaction</text>
+      </svg>
+    </div>
+    <p><strong>Detailed steps:</strong></p>
+    <ol>
+      <li><strong>Client creates transaction proposal</strong> — specifies which chaincode function to call, with args, and sends to endorsing peers.</li>
+      <li><strong>Endorsing peers execute chaincode</strong> — simulate transaction against current state, generate a Read-Write (RW) set, sign the result. No ledger update yet.</li>
+      <li><strong>Client collects endorsements</strong> — verifies all required peers have signed (per endorsement policy). If not enough signatures, abort.</li>
+      <li><strong>Client sends to Ordering Service</strong> — the transaction (with signatures and RW set) is sent to orderers (Raft/Kafka based).</li>
+      <li><strong>Orderer creates block</strong> — orders transactions, batches them into a new block, delivers to all committing peers.</li>
+      <li><strong>Peers validate and commit</strong> — each peer checks endorsement policy compliance, checks for RW set conflicts (MVCC), then appends valid transactions to the blockchain and updates the world state database.</li>
+      <li><strong>Event notification</strong> — peers emit events; the client app learns if its transaction was committed or invalidated.</li>
+    </ol>
+    <div class="info-box"><strong>Key advantage:</strong> Because endorsement (execution) happens before ordering, Hyperledger Fabric can handle much higher throughput than Ethereum — thousands of transactions per second vs. ~15 TPS for Ethereum mainnet.</div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const blocks = document.querySelectorAll('.q-block');
+    blocks.forEach((block) => {
+      const title = block.querySelector('.q-title span');
+      if (!title) return;
+      const match = title.textContent.trim().match(/^Q(\d+)/i);
+      if (match) {
+        block.id = 'q' + match[1];
+      }
+    });
+
+    const hash = decodeURIComponent(window.location.hash || '').replace('#', '');
+    if (hash) {
+      const target = document.getElementById(hash);
+      if (target) {
+        setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      }
+    }
+
+    const homeBtn = document.createElement('a');
+    homeBtn.href = '../index.html';
+    homeBtn.textContent = '🏠 Home';
+    homeBtn.setAttribute('style', 'position:fixed;right:18px;bottom:18px;z-index:9999;background:#1B4F8A;color:#fff;text-decoration:none;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,0.18);');
+    document.body.appendChild(homeBtn);
+  })();
+</script>
+
+</body>
+</html>

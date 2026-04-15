@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Data Analytics – M.Tech Exam Guide (MTCS246PET)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --bg: #F7F5EF;
+    --surface: #FFFFFF;
+    --surface2: #F0EDE4;
+    --border: #D8D3C8;
+    --text: #1A1916;
+    --text2: #5A5750;
+    --text3: #8A8680;
+    --accent: #1B4F8A;
+    --accent2: #0F6E56;
+    --accent3: #993C1D;
+    --accent4: #7F77DD;
+    --yellow: #BA7517;
+    --yellow-bg: #FAEEDA;
+    --green-bg: #E1F5EE;
+    --blue-bg: #E6F1FB;
+    --red-bg: #FCEBEB;
+    --purple-bg: #EEEDFE;
+    --coral-bg: #FAECE7;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--accent);
+    color: white;
+    padding: 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 300px; height: 300px;
+    border: 40px solid rgba(255,255,255,0.07);
+    border-radius: 50%;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    margin-bottom: 6px;
+  }
+  .header p { opacity: 0.8; font-size: 14px; }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 8px;
+    margin-top: 10px;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 48px;
+  }
+  .toc h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 14px; }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 4px 24px;
+  }
+  .toc a {
+    text-decoration: none;
+    color: var(--accent);
+    font-size: 13px;
+    padding: 4px 0;
+    display: block;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .toc a:hover { color: var(--accent3); }
+  .toc a span { color: var(--text3); margin-right: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+
+  /* MAIN */
+  .main { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* SECTION */
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    background: var(--accent);
+    color: white;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-header .qnum {
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 16px; font-weight: 500; }
+
+  .section-header.green { background: var(--accent2); }
+  .section-header.orange { background: var(--accent3); }
+  .section-header.purple { background: #534AB7; }
+  .section-header.teal { background: #0F6E56; }
+  .section-header.amber { background: #854F0B; }
+
+  .section-body { padding: 24px; }
+
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    margin: 20px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--blue-bg);
+  }
+  h3:first-child { margin-top: 0; }
+
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 14px 0 6px;
+  }
+
+  p { margin-bottom: 10px; color: var(--text); }
+
+  /* DEFINITION BOX */
+  .def-box {
+    background: var(--blue-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+  }
+  .def-box strong { color: var(--accent); display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+
+  /* KEY POINTS */
+  .key-box {
+    background: var(--yellow-bg);
+    border: 1px solid #FAC775;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+  }
+  .key-box strong { color: var(--yellow); display: block; margin-bottom: 8px; font-size: 13px; }
+  .key-box ul { padding-left: 18px; }
+  .key-box li { color: var(--text); font-size: 14px; margin-bottom: 4px; }
+
+  /* CONCLUSION */
+  .conclusion {
+    background: var(--green-bg);
+    border: 1px solid #9FE1CB;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 16px;
+  }
+  .conclusion strong { color: var(--accent2); display: block; margin-bottom: 4px; font-size: 13px; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; margin: 14px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--accent);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 500;
+  }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--surface2); }
+
+  /* STEPS */
+  .steps { counter-reset: step; margin: 14px 0; }
+  .step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .step-num {
+    counter-increment: step;
+    background: var(--accent);
+    color: white;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { display: block; font-size: 14px; margin-bottom: 2px; }
+  .step-content p { font-size: 13px; color: var(--text2); margin: 0; }
+
+  /* ASCII / DIAGRAM */
+  .diagram {
+    background: #1A1916;
+    color: #A8E6CF;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    padding: 18px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 14px 0;
+    line-height: 1.6;
+    white-space: pre;
+  }
+
+  /* ALERT: ANSWER */
+  .alert {
+    background: var(--coral-bg);
+    border-left: 4px solid var(--accent3);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  .alert strong { color: var(--accent3); }
+
+  /* V CARDS */
+  .v-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .v-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .v-card .icon { font-size: 22px; margin-bottom: 6px; }
+  .v-card .label { font-weight: 600; font-size: 13px; color: var(--accent); }
+  .v-card .desc { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+  /* FLOW */
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    margin: 14px 0;
+  }
+  .flow-box {
+    background: var(--blue-bg);
+    border: 1px solid #B5D4F4;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .flow-arrow { color: var(--text3); font-size: 18px; }
+
+  .flow-box.orange { background: var(--coral-bg); border-color: #F5C4B3; color: var(--accent3); }
+  .flow-box.green { background: var(--green-bg); border-color: #9FE1CB; color: var(--accent2); }
+  .flow-box.purple { background: var(--purple-bg); border-color: #CECBF6; color: #534AB7; }
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--surface2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--accent3);
+  }
+
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { margin-bottom: 4px; font-size: 14px; }
+
+  .mark { background: #FFEAA0; padding: 0 3px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Big Data Analytics — Complete Exam Guide</h1>
+  <p>Maulana Azad National Urdu University &nbsp;|&nbsp; M.Tech 2nd Semester &nbsp;|&nbsp; MTCS246PET &nbsp;|&nbsp; April 2025</p>
+  <div style="margin-top:10px">
+    <span class="badge">70 Marks</span>
+    <span class="badge">3 Hours</span>
+    <span class="badge">18 Topics Covered</span>
+  </div>
+</div>
+
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <div class="toc-grid">
+    <a href="#q1"><span>Q1</span> Prescriptive Analytics</a>
+    <a href="#q2"><span>Q2</span> MapReduce Phases & Data Aggregation</a>
+    <a href="#q3"><span>Q3</span> Hadoop Cluster Architecture</a>
+    <a href="#q4"><span>Q4</span> HDFS & Write-Once Read-Many</a>
+    <a href="#q5"><span>Q5</span> NoSQL Databases</a>
+    <a href="#q6"><span>Q6</span> Oozie Workflow Scheduler</a>
+    <a href="#q7"><span>Q7</span> Hadoop Components</a>
+    <a href="#q8"><span>Q8</span> Big Data Analytics Techniques</a>
+    <a href="#q9"><span>Q9</span> 5 V's of Big Data</a>
+    <a href="#q10"><span>Q10</span> Nature of Data & Applications</a>
+    <a href="#q11"><span>Q11</span> Hadoop Technology</a>
+    <a href="#q12"><span>Q12</span> Sqoop, Flume & Oozie</a>
+    <a href="#q13"><span>Q13</span> Hadoop Ecosystem & Design Principles</a>
+    <a href="#q14"><span>Q14</span> Data Serialization</a>
+    <a href="#q15"><span>Q15</span> Scalability, Fault Tolerance & Storage</a>
+    <a href="#q16"><span>Q16</span> MapReduce Word Count Example</a>
+    <a href="#q17"><span>Q17</span> YARN Architecture & Components</a>
+    <a href="#q18"><span>Q18</span> NoSQL vs RDBMS</a>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- Q1 -->
+<div class="section" id="q1">
+  <div class="section-header">
+    <div class="qnum">Q1</div>
+    <h2>Prescriptive Analytics — Does it answer "What happened?"</h2>
+  </div>
+  <div class="section-body">
+    <div class="alert"><strong>Answer: FALSE.</strong> Prescriptive Analytics does NOT answer "What happened?" It answers <strong>"What should we do?"</strong></div>
+
+    <h3>The Four Types of Analytics</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Question Answered</th><th>Example</th><th>Complexity</th></tr>
+        <tr><td><strong>Descriptive</strong></td><td>"What happened?"</td><td>Monthly sales report</td><td>Low</td></tr>
+        <tr><td><strong>Diagnostic</strong></td><td>"Why did it happen?"</td><td>Why did sales drop in March?</td><td>Medium</td></tr>
+        <tr><td><strong>Predictive</strong></td><td>"What will happen?"</td><td>Sales forecast for next quarter</td><td>High</td></tr>
+        <tr><td><strong>Prescriptive</strong></td><td>"What should we do?"</td><td>Optimize delivery routes to save cost</td><td>Very High</td></tr>
+      </table>
+    </div>
+
+    <h3>What is Prescriptive Analytics?</h3>
+    <div class="def-box">
+      <strong>Definition</strong>
+      Prescriptive Analytics is the most advanced form of analytics. It uses mathematical models, machine learning, and optimization techniques to recommend specific actions to achieve the best possible outcome.
+    </div>
+    <p>It goes beyond telling you what will happen — it tells you <em>what to do</em> about it. It uses <strong>optimization</strong>, <strong>simulation</strong>, and <strong>decision logic</strong>.</p>
+
+    <h4>Real-Life Example:</h4>
+    <ul>
+      <li><strong>Netflix:</strong> Not just predicts what you might like — it recommends the exact movie to watch now.</li>
+      <li><strong>Uber:</strong> Tells drivers which area to go to in order to get more rides (surge pricing logic).</li>
+      <li><strong>Hospital:</strong> Recommends treatment plans for patients based on medical data.</li>
+    </ul>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Prescriptive Analytics = "What should we do?" — NOT "What happened?"</li>
+        <li>"What happened?" is answered by <strong>Descriptive Analytics</strong></li>
+        <li>Prescriptive uses AI, optimization, simulation, and machine learning</li>
+        <li>It is the most complex and most valuable type of analytics</li>
+        <li>It requires both Descriptive AND Predictive analytics as input</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      The statement in the question is <strong>FALSE</strong>. Prescriptive Analytics does not answer "What happened?" — that is the job of Descriptive Analytics. Prescriptive Analytics is the highest level of analytics that provides actionable recommendations.
+    </div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="section" id="q2">
+  <div class="section-header green">
+    <div class="qnum">Q2</div>
+    <h2>MapReduce Phases & Data Aggregation</h2>
+  </div>
+  <div class="section-body">
+    <div class="alert"><strong>Answer:</strong> Data Aggregation in MapReduce happens in the <strong>Reduce Phase</strong> (Option C).</div>
+
+    <h3>What is MapReduce?</h3>
+    <div class="def-box">
+      <strong>Definition</strong>
+      MapReduce is a programming model used to process large datasets in parallel across a Hadoop cluster. It breaks a big job into two main functions: Map (split and process) and Reduce (aggregate results).
+    </div>
+
+    <h3>MapReduce Phases — Step by Step</h3>
+    <div class="diagram">
+    INPUT DATA
+         |
+         v
+  ┌─────────────┐
+  │  MAP PHASE  │  ← Processes each record, emits Key-Value pairs
+  └─────────────┘
+         |
+         v
+  ┌──────────────────┐
+  │  SHUFFLE PHASE   │  ← Groups same keys together, sorts data
+  └──────────────────┘
+         |
+         v
+  ┌───────────────────┐
+  │  REDUCE PHASE     │  ← DATA AGGREGATION happens here!
+  └───────────────────┘
+         |
+         v
+    OUTPUT / HDFS</div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Phase</th><th>What Happens</th><th>Input</th><th>Output</th></tr>
+        <tr><td><strong>Map Phase</strong></td><td>Reads input, processes each record, emits (key, value) pairs</td><td>Raw data chunks</td><td>Key-Value pairs</td></tr>
+        <tr><td><strong>Shuffle Phase</strong></td><td>Groups all values with the same key together, sorts them</td><td>Map output</td><td>Grouped Key-Value pairs</td></tr>
+        <tr><td><strong>Reduce Phase</strong></td><td>Aggregates / summarizes grouped values per key</td><td>Grouped pairs</td><td>Final result</td></tr>
+      </table>
+    </div>
+
+    <h4>Why Reduce Phase = Data Aggregation?</h4>
+    <p>The Reduce phase takes all values for a given key and <strong>aggregates</strong> them — it sums, counts, averages, or combines them. This is exactly what data aggregation means: combining multiple values into one summary.</p>
+
+    <h4>Example (Word Count):</h4>
+    <div class="diagram">
+  Map Output:   ("hadoop",1), ("hadoop",1), ("data",1), ("data",1), ("data",1)
+
+  After Shuffle: "hadoop" → [1,1]
+                 "data"   → [1,1,1]
+
+  Reduce Output: ("hadoop", 2)    ← AGGREGATION: sum of [1,1]
+                 ("data",   3)    ← AGGREGATION: sum of [1,1,1]</div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>MapReduce has 3 main phases: Map → Shuffle → Reduce</li>
+        <li>Data Aggregation = Reduce Phase (combines values per key)</li>
+        <li>Shuffle Phase sorts and groups data (transfers between Map and Reduce)</li>
+        <li>Map Phase does the parallel processing on input splits</li>
+        <li>MERGE phase is NOT a standard MapReduce phase</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      In MapReduce, Data Aggregation occurs in the <strong>Reduce Phase</strong>. The Map phase processes raw input, the Shuffle phase organizes keys, and the Reduce phase aggregates all values per key to produce the final result.
+    </div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="section" id="q3">
+  <div class="section-header orange">
+    <div class="qnum">Q3</div>
+    <h2>Hadoop Cluster Architecture (NameNode, DataNode, etc.)</h2>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <strong>Definition</strong>
+      A Hadoop Cluster is a collection of computers (nodes) that work together to store and process big data. It follows a Master-Slave architecture where the Master manages resources and Slaves do the actual work.
+    </div>
+
+    <h3>Hadoop Cluster Architecture Diagram</h3>
+    <div class="diagram">
+                    ┌─────────────────────────────────┐
+                    │         MASTER NODE              │
+                    │  ┌───────────┐ ┌─────────────┐  │
+                    │  │ NameNode  │ │ResourceMgr  │  │
+                    │  │  (HDFS)   │ │  (YARN)     │  │
+                    │  └───────────┘ └─────────────┘  │
+                    └──────────────┬──────────────────┘
+                                   │
+               ┌───────────────────┼───────────────────┐
+               │                   │                   │
+    ┌──────────┴──────┐  ┌─────────┴──────┐  ┌────────┴───────┐
+    │   SLAVE NODE 1  │  │  SLAVE NODE 2  │  │  SLAVE NODE 3  │
+    │  ┌──────────┐   │  │  ┌──────────┐  │  │  ┌──────────┐  │
+    │  │DataNode  │   │  │  │DataNode  │  │  │  │DataNode  │  │
+    │  └──────────┘   │  │  └──────────┘  │  │  └──────────┘  │
+    │  ┌──────────┐   │  │  ┌──────────┐  │  │  ┌──────────┐  │
+    │  │Node Mgr  │   │  │  │Node Mgr  │  │  │  │Node Mgr  │  │
+    │  └──────────┘   │  │  └──────────┘  │  │  └──────────┘  │
+    └─────────────────┘  └────────────────┘  └────────────────┘</div>
+
+    <h3>Key Components Explained</h3>
+
+    <h4>1. NameNode (Master – HDFS)</h4>
+    <ul>
+      <li>Stores <strong>metadata</strong> only (file names, directory structure, block locations)</li>
+      <li>Does NOT store actual data</li>
+      <li>There is only <strong>one NameNode</strong> per cluster (Single Point of Failure → solved by Secondary NameNode)</li>
+      <li>Manages the file system namespace</li>
+    </ul>
+
+    <h4>2. DataNode (Slave – HDFS)</h4>
+    <ul>
+      <li>Stores the <strong>actual data blocks</strong></li>
+      <li>Sends heartbeat signals to NameNode every 3 seconds</li>
+      <li>Multiple DataNodes can exist in a cluster</li>
+      <li>Data is <strong>replicated</strong> across DataNodes (default replication factor = 3)</li>
+    </ul>
+
+    <h4>3. Secondary NameNode</h4>
+    <ul>
+      <li>NOT a backup NameNode — it's a <strong>checkpoint node</strong></li>
+      <li>Merges the edit log with the FsImage to prevent NameNode from getting too large</li>
+    </ul>
+
+    <h4>4. ResourceManager (Master – YARN)</h4>
+    <ul>
+      <li>Manages <strong>resource allocation</strong> across the cluster</li>
+      <li>Schedules jobs and allocates containers</li>
+    </ul>
+
+    <h4>5. NodeManager (Slave – YARN)</h4>
+    <ul>
+      <li>Runs on each slave node</li>
+      <li>Monitors CPU, memory, disk usage of containers</li>
+      <li>Reports to ResourceManager</li>
+    </ul>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Component</th><th>Role</th><th>Framework</th><th>Count</th></tr>
+        <tr><td>NameNode</td><td>Metadata management</td><td>HDFS</td><td>1 (Master)</td></tr>
+        <tr><td>DataNode</td><td>Data storage</td><td>HDFS</td><td>Many (Slaves)</td></tr>
+        <tr><td>Secondary NameNode</td><td>Checkpoint helper</td><td>HDFS</td><td>1</td></tr>
+        <tr><td>ResourceManager</td><td>Job/resource scheduling</td><td>YARN</td><td>1 (Master)</td></tr>
+        <tr><td>NodeManager</td><td>Node-level resource tracking</td><td>YARN</td><td>Many (Slaves)</td></tr>
+        <tr><td>ApplicationMaster</td><td>Per-job management</td><td>YARN</td><td>1 per job</td></tr>
+      </table>
+    </div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Hadoop uses Master-Slave architecture</li>
+        <li>NameNode = metadata; DataNode = actual data blocks</li>
+        <li>Secondary NameNode ≠ Backup NameNode; it does checkpointing</li>
+        <li>Default block size in HDFS = 128 MB</li>
+        <li>Default replication factor = 3 (each block stored on 3 DataNodes)</li>
+        <li>HDFS answer for the MCQ: only one NameNode per cluster (answer: D)</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      Hadoop Cluster uses a Master-Slave model. The NameNode and ResourceManager are master components that manage metadata and resource scheduling. DataNodes and NodeManagers are slave components that store data and execute tasks.
+    </div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="section" id="q4">
+  <div class="section-header purple">
+    <div class="qnum">Q4</div>
+    <h2>HDFS & Write-Once, Read-Many Principle</h2>
+  </div>
+  <div class="section-body">
+    <div class="alert"><strong>Answer: TRUE.</strong> HDFS follows the Write-Once, Read-Many (WORM) model.</div>
+
+    <div class="def-box">
+      <strong>Definition: HDFS</strong>
+      Hadoop Distributed File System (HDFS) is the storage layer of Hadoop. It stores very large files across multiple machines and provides high throughput access to data. It is designed for commodity hardware.
+    </div>
+
+    <h3>Write-Once, Read-Many (WORM) Principle</h3>
+    <p>In HDFS, once a file is written, it <strong>cannot be modified</strong>. You can only:</p>
+    <ul>
+      <li>Append to end of file (limited)</li>
+      <li>Read the file multiple times</li>
+      <li>Delete the file</li>
+    </ul>
+    <p>This is different from regular file systems where you can edit files at any point.</p>
+
+    <h4>Why WORM? Reasons:</h4>
+    <ul>
+      <li><strong>Simplicity:</strong> No complex locking mechanisms needed</li>
+      <li><strong>Performance:</strong> Sequential reads are faster than random access</li>
+      <li><strong>Fault Tolerance:</strong> Replicated blocks don't need to handle concurrent writes</li>
+      <li><strong>Batch Processing:</strong> Big Data workloads are mostly read-heavy analytics jobs</li>
+    </ul>
+
+    <h3>HDFS vs NTFS Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>HDFS</th><th>NTFS (Windows)</th></tr>
+        <tr><td>Block Size</td><td>128 MB (default)</td><td>4 KB (default)</td></tr>
+        <tr><td>Write Model</td><td>Write-Once, Read-Many</td><td>Read and Write freely</td></tr>
+        <tr><td>Purpose</td><td>Big Data storage</td><td>General OS storage</td></tr>
+        <tr><td>Hardware</td><td>Commodity servers</td><td>High-end machines</td></tr>
+        <tr><td>Replication</td><td>Yes (default 3 copies)</td><td>No built-in replication</td></tr>
+        <tr><td>Failure handling</td><td>Automatic (re-replication)</td><td>Manual backup needed</td></tr>
+        <tr><td>Random Access</td><td>Not optimized</td><td>Optimized</td></tr>
+        <tr><td>File Size</td><td>Terabytes to Petabytes</td><td>Typically smaller files</td></tr>
+      </table>
+    </div>
+
+    <h3>HDFS File Read Process</h3>
+    <div class="diagram">
+    Client         NameNode          DataNode
+       |               |                 |
+       |-- Request --> |                 |
+       |               |                 |
+       |<- Block List--|                 |
+       |               |                 |
+       |----------- Read Block --------> |
+       |<----------- Data Block ---------|
+       |                                 |
+       (Can read same blocks MANY TIMES)</div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>HDFS = Write-Once, Read-Many (TRUE — it's a core design principle)</li>
+        <li>Files cannot be randomly modified after writing</li>
+        <li>HDFS block size = 128 MB (older versions: 64 MB)</li>
+        <li>Each block is replicated to 3 DataNodes by default</li>
+        <li>Suitable for streaming data access (batch analytics), not interactive apps</li>
+        <li>HDFS works best with large files — many small files are inefficient</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      HDFS follows the Write-Once, Read-Many principle to ensure high throughput, fault tolerance, and simplicity. It is optimized for large sequential reads, making it ideal for Big Data analytics where data is written once and analyzed many times.
+    </div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="section" id="q5">
+  <div class="section-header teal">
+    <div class="qnum">Q5</div>
+    <h2>NoSQL Databases — Definition, Types & Examples</h2>
+  </div>
+  <div class="section-body">
+    <div class="alert"><strong>Answer for MCQ:</strong> MongoDB (Option C) is the most commonly used NoSQL database for handling Big Data.</div>
+
+    <div class="def-box">
+      <strong>Definition: NoSQL</strong>
+      NoSQL (Not Only SQL) is a type of database that does not use the traditional table-based relational structure. It is designed to store, retrieve, and manage unstructured or semi-structured data at very large scales with high performance.
+    </div>
+
+    <h3>Why NoSQL Over Traditional SQL?</h3>
+    <ul>
+      <li>Handles unstructured data (social media posts, images, logs)</li>
+      <li>Scales horizontally (add more servers, not bigger servers)</li>
+      <li>High availability with no single point of failure</li>
+      <li>Flexible schema — no predefined table structure needed</li>
+      <li>Faster read/write for large volumes</li>
+    </ul>
+
+    <h3>Types of NoSQL Databases</h3>
+
+    <h4>1. Key-Value Store</h4>
+    <ul>
+      <li>Data stored as simple key → value pairs</li>
+      <li>Fastest type of NoSQL</li>
+      <li><strong>Examples:</strong> Redis, DynamoDB, Riak</li>
+      <li><strong>Use case:</strong> Shopping cart, session management, caching</li>
+    </ul>
+
+    <h4>2. Document Store</h4>
+    <ul>
+      <li>Data stored as JSON/BSON documents</li>
+      <li>Each document can have different fields (flexible schema)</li>
+      <li><strong>Examples:</strong> MongoDB, CouchDB</li>
+      <li><strong>Use case:</strong> Content management, user profiles, catalogs</li>
+    </ul>
+
+    <h4>3. Column-Family Store</h4>
+    <ul>
+      <li>Data stored in columns instead of rows</li>
+      <li>Very fast for reading specific columns of large datasets</li>
+      <li><strong>Examples:</strong> Apache Cassandra, HBase</li>
+      <li><strong>Use case:</strong> IoT data, time-series data, sensor readings</li>
+    </ul>
+
+    <h4>4. Graph Database</h4>
+    <ul>
+      <li>Data stored as nodes and edges (relationships)</li>
+      <li>Best for highly connected data</li>
+      <li><strong>Examples:</strong> Neo4j, Amazon Neptune</li>
+      <li><strong>Use case:</strong> Social networks, fraud detection, recommendation engines</li>
+    </ul>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Data Model</th><th>Best Example</th><th>Use Case</th></tr>
+        <tr><td>Key-Value</td><td>key → value</td><td>Redis</td><td>Caching, Sessions</td></tr>
+        <tr><td>Document</td><td>JSON documents</td><td>MongoDB</td><td>CMS, Catalogs</td></tr>
+        <tr><td>Column</td><td>Column families</td><td>Cassandra</td><td>IoT, Analytics</td></tr>
+        <tr><td>Graph</td><td>Nodes + Edges</td><td>Neo4j</td><td>Social Networks</td></tr>
+      </table>
+    </div>
+
+    <h4>MongoDB Example (Document):</h4>
+    <div class="diagram">
+  {
+    "_id": "001",
+    "name": "Ali Hassan",
+    "age": 28,
+    "courses": ["Big Data", "Machine Learning"],
+    "address": {
+      "city": "Hyderabad",
+      "state": "Telangana"
+    }
+  }
+  ← No fixed schema! Fields can vary per document.</div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>NoSQL = Not Only SQL — it INCLUDES SQL-like querying in some DBs</li>
+        <li>4 types: Key-Value, Document, Column-Family, Graph</li>
+        <li>MongoDB is document-based and most widely used for Big Data</li>
+        <li>NoSQL is horizontally scalable (add more nodes)</li>
+        <li>NoSQL follows BASE model: Basically Available, Soft state, Eventual consistency</li>
+        <li>SQL follows ACID: Atomicity, Consistency, Isolation, Durability</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      NoSQL databases provide flexibility, scalability, and performance for Big Data workloads. MongoDB is the most popular NoSQL database for handling large volumes of unstructured data.
+    </div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="section" id="q6">
+  <div class="section-header amber">
+    <div class="qnum">Q6</div>
+    <h2>Oozie — Definition and Role in Hadoop</h2>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <strong>Definition: Oozie</strong>
+      Oozie is a workflow scheduling system for Hadoop. It is used to manage and coordinate multiple Hadoop jobs (MapReduce, Hive, Pig, HDFS, Sqoop) and execute them in the correct order based on time or data availability.
+    </div>
+
+    <h3>What Problem Does Oozie Solve?</h3>
+    <p>In real Big Data pipelines, you don't run just one job. You run <strong>a sequence of jobs</strong>:</p>
+    <div class="flow">
+      <div class="flow-box">Ingest data (Sqoop)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box orange">Clean data (Pig)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box green">Analyze (Hive)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box purple">Export results</div>
+    </div>
+    <p>Oozie manages this entire pipeline automatically.</p>
+
+    <h3>Types of Oozie Jobs</h3>
+    <h4>1. Workflow Jobs</h4>
+    <ul>
+      <li>Defines a Directed Acyclic Graph (DAG) of actions</li>
+      <li>Actions run in sequence: one after another</li>
+      <li>Defined in XML format</li>
+    </ul>
+
+    <h4>2. Coordinator Jobs</h4>
+    <ul>
+      <li>Schedule workflow jobs at specific times</li>
+      <li>Like a cron job for Hadoop</li>
+      <li>Example: Run ETL job every day at midnight</li>
+    </ul>
+
+    <h4>3. Bundle Jobs</h4>
+    <ul>
+      <li>Group of coordinator jobs managed together</li>
+      <li>Used for complex data pipelines</li>
+    </ul>
+
+    <h3>Oozie Workflow Diagram</h3>
+    <div class="diagram">
+    START
+      |
+      v
+  [Action 1: Sqoop Import]
+      |
+      v
+  [Action 2: MapReduce Job]
+      |
+     / \
+    /   \
+  OK    FAIL
+   |      |
+   v      v
+ [Action 3]  [Error Handler]
+   |
+   v
+  END</div>
+
+    <h4>Real-Life Example:</h4>
+    <p>An e-commerce company uses Oozie to:</p>
+    <ul>
+      <li>Import orders from MySQL to HDFS using Sqoop (12 AM)</li>
+      <li>Process orders with MapReduce (1 AM)</li>
+      <li>Generate daily sales report using Hive (2 AM)</li>
+      <li>Send report to dashboard (3 AM)</li>
+    </ul>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Oozie = Hadoop workflow scheduler and coordinator</li>
+        <li>Written in Java; web-based UI also available</li>
+        <li>Works as a server running inside a Java Servlet container</li>
+        <li>3 types: Workflow, Coordinator, Bundle</li>
+        <li>Workflows are defined in XML (hPDL — Hadoop Process Definition Language)</li>
+        <li>Oozie is NOT a standard Hadoop component — it is a tool in the Hadoop Ecosystem</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      Oozie is a critical workflow scheduler in the Hadoop ecosystem that automates and coordinates sequences of data processing jobs. It allows Big Data engineers to build reliable data pipelines with scheduled execution and error handling.
+    </div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="section" id="q7">
+  <div class="section-header">
+    <div class="qnum">Q7</div>
+    <h2>Hadoop Components — Core & Non-Core</h2>
+  </div>
+  <div class="section-body">
+    <div class="alert"><strong>Answer for MCQ:</strong> OLTP (Option D) is NOT a Hadoop component. OLTP is a database concept unrelated to Hadoop.</div>
+
+    <h3>Hadoop Core Components</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Component</th><th>Full Name</th><th>Function</th></tr>
+        <tr><td><strong>HDFS</strong></td><td>Hadoop Distributed File System</td><td>Distributed file storage</td></tr>
+        <tr><td><strong>MapReduce</strong></td><td>MapReduce</td><td>Parallel data processing</td></tr>
+        <tr><td><strong>YARN</strong></td><td>Yet Another Resource Negotiator</td><td>Resource management and job scheduling</td></tr>
+        <tr><td><strong>Hadoop Common</strong></td><td>Hadoop Common Utilities</td><td>Shared libraries and utilities</td></tr>
+      </table>
+    </div>
+
+    <h3>Hadoop Ecosystem Components (Not Core but Part of Hadoop)</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Tool</th><th>Purpose</th></tr>
+        <tr><td>Hive</td><td>SQL-like querying on HDFS data</td></tr>
+        <tr><td>Pig</td><td>Data transformation scripting language</td></tr>
+        <tr><td>HBase</td><td>NoSQL columnar database on HDFS</td></tr>
+        <tr><td>Sqoop</td><td>Import/export data between RDBMS and HDFS</td></tr>
+        <tr><td>Flume</td><td>Collect and transport log/streaming data to HDFS</td></tr>
+        <tr><td>Oozie</td><td>Workflow scheduler</td></tr>
+        <tr><td>Zookeeper</td><td>Coordination service for distributed systems</td></tr>
+        <tr><td>Spark</td><td>In-memory fast data processing</td></tr>
+      </table>
+    </div>
+
+    <h3>What is OLTP? (Non-Hadoop)</h3>
+    <div class="def-box">
+      <strong>OLTP = Online Transaction Processing</strong>
+      OLTP is a database processing type designed for managing real-time transactions (banking, online shopping). It uses traditional RDBMS like MySQL, Oracle. It has NOTHING to do with Hadoop.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>OLTP</th><th>Hadoop</th></tr>
+        <tr><td>Purpose</td><td>Real-time transactions</td><td>Batch Big Data processing</td></tr>
+        <tr><td>Data Volume</td><td>Small to medium</td><td>Petabytes</td></tr>
+        <tr><td>Speed</td><td>Milliseconds</td><td>Minutes to hours</td></tr>
+        <tr><td>Data Type</td><td>Structured</td><td>All types</td></tr>
+        <tr><td>Example</td><td>Bank transaction</td><td>Log file analysis</td></tr>
+      </table>
+    </div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Hadoop's 4 core components: HDFS, MapReduce, YARN, Hadoop Common</li>
+        <li>YARN, HDFS, MapReduce ARE Hadoop components</li>
+        <li>OLTP is NOT a Hadoop component — it's a traditional database concept</li>
+        <li>Hadoop ecosystem tools (Hive, Pig, HBase, etc.) are built on top of Hadoop</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      Hadoop's core is made of HDFS, MapReduce, YARN, and Hadoop Common. OLTP is not part of Hadoop — it belongs to traditional relational database systems designed for transaction processing.
+    </div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="section" id="q8">
+  <div class="section-header green">
+    <div class="qnum">Q8</div>
+    <h2>Techniques Used in Big Data Analytics</h2>
+  </div>
+  <div class="section-body">
+    <div class="alert"><strong>Answer for MCQ:</strong> Machine Learning (Option D) is the primary technique used in Big Data Analytics.</div>
+
+    <div class="def-box">
+      <strong>Definition</strong>
+      Big Data Analytics involves applying various computational techniques to extract insights from large, complex datasets. These techniques range from statistical analysis to AI-powered machine learning.
+    </div>
+
+    <h3>Key Techniques in Big Data Analytics</h3>
+
+    <h4>1. Machine Learning (Most Important)</h4>
+    <ul>
+      <li>Algorithms learn patterns from data without being explicitly programmed</li>
+      <li>Types: Supervised, Unsupervised, Reinforcement Learning</li>
+      <li><strong>Example:</strong> Netflix recommendation system, spam detection</li>
+    </ul>
+
+    <h4>2. Data Mining</h4>
+    <ul>
+      <li>Discovering hidden patterns and relationships in large datasets</li>
+      <li>Techniques: Clustering, Classification, Association Rules</li>
+      <li><strong>Example:</strong> Market basket analysis (people who buy bread also buy butter)</li>
+    </ul>
+
+    <h4>3. Predictive Analytics</h4>
+    <ul>
+      <li>Uses historical data to predict future outcomes</li>
+      <li>Uses regression models, time series analysis</li>
+      <li><strong>Example:</strong> Weather forecasting, stock price prediction</li>
+    </ul>
+
+    <h4>4. Natural Language Processing (NLP)</h4>
+    <ul>
+      <li>Analyzing text and speech data</li>
+      <li><strong>Example:</strong> Sentiment analysis of Twitter, voice assistants</li>
+    </ul>
+
+    <h4>5. Statistical Analysis</h4>
+    <ul>
+      <li>Mean, median, standard deviation, correlation analysis</li>
+      <li>Foundation for all other analytics techniques</li>
+    </ul>
+
+    <h4>6. Graph Analytics</h4>
+    <ul>
+      <li>Analyzing relationships between entities</li>
+      <li><strong>Example:</strong> Fraud detection in banking, social network analysis</li>
+    </ul>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Technique</th><th>Type</th><th>Tools Used</th><th>Real Example</th></tr>
+        <tr><td>Machine Learning</td><td>AI-based</td><td>Spark MLlib, TensorFlow</td><td>Image recognition</td></tr>
+        <tr><td>Data Mining</td><td>Pattern discovery</td><td>Weka, RapidMiner</td><td>Customer segmentation</td></tr>
+        <tr><td>Predictive Analytics</td><td>Statistical</td><td>R, Python</td><td>Sales forecasting</td></tr>
+        <tr><td>NLP</td><td>Text analysis</td><td>NLTK, SpaCy</td><td>Chatbots</td></tr>
+        <tr><td>Graph Analytics</td><td>Relationship</td><td>GraphX, Neo4j</td><td>Fraud detection</td></tr>
+      </table>
+    </div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Machine Learning is the dominant technique in Big Data Analytics</li>
+        <li>Regression analysis is a statistical method — less powerful than ML for Big Data</li>
+        <li>Gradient descent is an optimization algorithm (part of ML training, not standalone)</li>
+        <li>Linear programming is an optimization technique, not specifically for Big Data</li>
+        <li>Big Data tools: Hadoop, Spark, Hive, Flink for processing + Python/R for analytics</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      Big Data Analytics uses Machine Learning, Data Mining, Predictive Analytics, and NLP to extract valuable insights from massive datasets. Machine Learning is the most powerful and widely-used technique.
+    </div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="section" id="q9">
+  <div class="section-header purple">
+    <div class="qnum">Q9</div>
+    <h2>Characteristics of Big Data — The 5 V's</h2>
+  </div>
+  <div class="section-body">
+    <div class="alert"><strong>Answer for MCQ:</strong> "High volume" (high, not low), "Unstructured format", "High velocity" and "Unpredictable variety" are characteristics of Big Data. Option A (Low volume) is WRONG — Big Data has HIGH volume.</div>
+
+    <div class="def-box">
+      <strong>Definition: Big Data</strong>
+      Big Data refers to datasets that are so large, fast-moving, and complex that traditional databases cannot handle them. It is characterized by the 5 V's: Volume, Velocity, Variety, Veracity, and Value.
+    </div>
+
+    <h3>The 5 V's of Big Data</h3>
+    <div class="v-grid">
+      <div class="v-card">
+        <div class="icon">📦</div>
+        <div class="label">Volume</div>
+        <div class="desc">Massive amounts of data (Terabytes to Zettabytes). Ex: 2.5 quintillion bytes created daily.</div>
+      </div>
+      <div class="v-card">
+        <div class="icon">⚡</div>
+        <div class="label">Velocity</div>
+        <div class="desc">Speed at which data is generated. Ex: Twitter generates 500M tweets/day.</div>
+      </div>
+      <div class="v-card">
+        <div class="icon">🗂️</div>
+        <div class="label">Variety</div>
+        <div class="desc">Different types: structured, unstructured, semi-structured. Ex: text, video, JSON, CSV.</div>
+      </div>
+      <div class="v-card">
+        <div class="icon">✅</div>
+        <div class="label">Veracity</div>
+        <div class="desc">Accuracy and trustworthiness of data. Ex: noisy sensor data must be cleaned.</div>
+      </div>
+      <div class="v-card">
+        <div class="icon">💎</div>
+        <div class="label">Value</div>
+        <div class="desc">Business insights derived from data. Ex: Amazon uses purchase data to increase sales by 35%.</div>
+      </div>
+    </div>
+
+    <h3>Detailed Explanation</h3>
+
+    <h4>1. Volume — "How much?"</h4>
+    <ul>
+      <li>Google processes 40,000 searches per second</li>
+      <li>Facebook generates 4 petabytes of data daily</li>
+      <li>Traditional databases fail at this scale — Hadoop handles it with distributed storage</li>
+    </ul>
+
+    <h4>2. Velocity — "How fast?"</h4>
+    <ul>
+      <li>Real-time data streams: stock market, sensor data, social media</li>
+      <li>Requires streaming frameworks like Apache Kafka and Spark Streaming</li>
+    </ul>
+
+    <h4>3. Variety — "What types?"</h4>
+    <ul>
+      <li><strong>Structured:</strong> Tables in databases (rows and columns)</li>
+      <li><strong>Semi-structured:</strong> JSON, XML, CSV files</li>
+      <li><strong>Unstructured:</strong> Videos, images, emails, social media posts (80% of all data!)</li>
+    </ul>
+
+    <h4>4. Veracity — "How reliable?"</h4>
+    <ul>
+      <li>Data can be noisy, incomplete, inconsistent</li>
+      <li>Requires data quality and cleansing processes</li>
+    </ul>
+
+    <h4>5. Value — "Why does it matter?"</h4>
+    <ul>
+      <li>The whole point of Big Data — extracting actionable insights</li>
+      <li>Only ~10% of collected data is ever analyzed</li>
+    </ul>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>V</th><th>Description</th><th>Challenge</th><th>Solution</th></tr>
+        <tr><td>Volume</td><td>Huge data size</td><td>Storage at scale</td><td>HDFS, Cloud Storage</td></tr>
+        <tr><td>Velocity</td><td>High-speed data</td><td>Real-time processing</td><td>Kafka, Spark Streaming</td></tr>
+        <tr><td>Variety</td><td>Multiple data types</td><td>Different formats</td><td>NoSQL, Schema-on-read</td></tr>
+        <tr><td>Veracity</td><td>Uncertain quality</td><td>Noisy/incomplete data</td><td>Data cleansing tools</td></tr>
+        <tr><td>Value</td><td>Business insight</td><td>What to do with data</td><td>ML, Analytics</td></tr>
+      </table>
+    </div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Big Data = HIGH Volume, HIGH Velocity, HIGH Variety (NOT low)</li>
+        <li>5 V's: Volume, Velocity, Variety, Veracity, Value</li>
+        <li>Some textbooks add 2 more: Variability and Visualization (making it 7 V's)</li>
+        <li>Unstructured data forms 80% of the world's total data</li>
+        <li>Value is the GOAL of Big Data — everything else is a challenge to overcome</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      The 5 V's (Volume, Velocity, Variety, Veracity, Value) define Big Data. Hadoop and its ecosystem tools address each of these characteristics through distributed storage, parallel processing, and flexible data handling.
+    </div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="section" id="q10">
+  <div class="section-header">
+    <div class="qnum">Q10</div>
+    <h2>Nature of Data & Applications — Data Serialization</h2>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <strong>Definition: Data Serialization</strong>
+      Data Serialization is the process of converting data structures or objects into a format that can be stored or transmitted, and then reconstructed later. It's like packing your belongings into boxes to move — you pack (serialize) and unpack (deserialize).
+    </div>
+
+    <h3>Types of Data by Structure</h3>
+
+    <h4>1. Structured Data</h4>
+    <ul>
+      <li>Organized in a predefined format (rows and columns)</li>
+      <li>Stored in relational databases</li>
+      <li>Easy to search and analyze</li>
+      <li><strong>Examples:</strong> Employee table, bank transactions, spreadsheets</li>
+    </ul>
+
+    <h4>2. Semi-Structured Data</h4>
+    <ul>
+      <li>Has some organization but not in rigid table format</li>
+      <li>Uses tags or key-value pairs to separate elements</li>
+      <li><strong>Examples:</strong> JSON files, XML documents, CSV with headers, emails</li>
+    </ul>
+
+    <h4>3. Unstructured Data</h4>
+    <ul>
+      <li>No predefined format or schema</li>
+      <li>Most of the world's data (80%+) is unstructured</li>
+      <li>Requires AI/ML to extract insights</li>
+      <li><strong>Examples:</strong> Social media posts, images, videos, audio, PDFs</li>
+    </ul>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Structure</th><th>Storage</th><th>Example</th><th>Percentage</th></tr>
+        <tr><td>Structured</td><td>Rows & Columns</td><td>RDBMS (MySQL)</td><td>Employee table</td><td>~20%</td></tr>
+        <tr><td>Semi-Structured</td><td>Tags/Keys</td><td>NoSQL, Files</td><td>JSON, XML</td><td>~10%</td></tr>
+        <tr><td>Unstructured</td><td>None</td><td>HDFS, Object Store</td><td>Images, Videos</td><td>~70%</td></tr>
+      </table>
+    </div>
+
+    <h3>Data Serialization Formats</h3>
+
+    <h4>How Serialization Works:</h4>
+    <div class="diagram">
+  Original Object/Data
+          |
+          v
+    [SERIALIZATION]  ← Convert to bytes/text
+          |
+          v
+  Stored/Transmitted (JSON, XML, Avro, etc.)
+          |
+          v
+    [DESERIALIZATION]  ← Convert back to object
+          |
+          v
+  Reconstructed Data</div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Format</th><th>Type</th><th>Speed</th><th>Human Readable</th><th>Use in Hadoop</th></tr>
+        <tr><td>JSON</td><td>Text</td><td>Medium</td><td>Yes</td><td>Web APIs, MongoDB</td></tr>
+        <tr><td>XML</td><td>Text</td><td>Slow</td><td>Yes</td><td>Config files</td></tr>
+        <tr><td>CSV</td><td>Text</td><td>Fast</td><td>Yes</td><td>Simple data exchange</td></tr>
+        <tr><td>Avro</td><td>Binary</td><td>Very Fast</td><td>No</td><td>Hadoop data pipelines</td></tr>
+        <tr><td>Parquet</td><td>Binary Columnar</td><td>Very Fast</td><td>No</td><td>Hive, Spark analytics</td></tr>
+        <tr><td>ORC</td><td>Binary Columnar</td><td>Fastest</td><td>No</td><td>Hive optimization</td></tr>
+      </table>
+    </div>
+
+    <h3>Applications of Data Analytics by Data Type</h3>
+    <ul>
+      <li><strong>Structured Data:</strong> Financial reporting, inventory management, HR analytics</li>
+      <li><strong>Semi-Structured:</strong> Log analysis, web scraping, API data processing</li>
+      <li><strong>Unstructured:</strong> Sentiment analysis, image recognition, voice processing</li>
+    </ul>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>3 types: Structured, Semi-Structured, Unstructured</li>
+        <li>Serialization = convert object to storable/transmittable format</li>
+        <li>Deserialization = convert back to original form</li>
+        <li>Avro is widely used in Hadoop for schema evolution support</li>
+        <li>Parquet is column-oriented — ideal for analytics queries on specific columns</li>
+        <li>ORC (Optimized Row Columnar) is used extensively with Hive</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      Data exists in structured, semi-structured, and unstructured forms. Serialization frameworks like Avro and Parquet are essential in Hadoop to efficiently store and transfer data between distributed components.
+    </div>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="section" id="q11">
+  <div class="section-header green">
+    <div class="qnum">Q11</div>
+    <h2>Hadoop Technology — How it Supports Big Data</h2>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <strong>Definition: Hadoop</strong>
+      Apache Hadoop is an open-source framework for storing and processing large datasets across clusters of commodity (inexpensive) computers. It was inspired by Google's MapReduce and Google File System (GFS) papers.
+    </div>
+
+    <h3>Why Hadoop for Big Data?</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Big Data Challenge</th><th>How Hadoop Solves It</th></tr>
+        <tr><td>Volume (Petabytes)</td><td>HDFS distributes data across hundreds of nodes</td></tr>
+        <tr><td>Velocity (Fast data)</td><td>Parallel processing with MapReduce / Spark</td></tr>
+        <tr><td>Variety (Different formats)</td><td>Schema-on-read; handles JSON, CSV, text, binary</td></tr>
+        <tr><td>Hardware cost</td><td>Runs on cheap commodity servers (not expensive mainframes)</td></tr>
+        <tr><td>Fault tolerance</td><td>Data replicated 3 times; auto-recovery on failure</td></tr>
+        <tr><td>Scalability</td><td>Linear scaling — just add more nodes</td></tr>
+      </table>
+    </div>
+
+    <h3>Hadoop Core Architecture</h3>
+    <div class="diagram">
+    ┌──────────────────────────────────────────────────────┐
+    │                  HADOOP ECOSYSTEM                     │
+    │  ┌──────────┐ ┌───────┐ ┌──────┐ ┌───────┐          │
+    │  │  Hive    │ │  Pig  │ │HBase │ │Sqoop  │ ...       │
+    │  └──────────┘ └───────┘ └──────┘ └───────┘          │
+    │  ┌─────────────────────────────────────────────────┐ │
+    │  │              YARN (Resource Management)          │ │
+    │  └─────────────────────────────────────────────────┘ │
+    │  ┌──────────────────┐  ┌───────────────────────────┐ │
+    │  │  MapReduce       │  │  Other Processing Engines  │ │
+    │  │  (Processing)    │  │  (Spark, Tez, etc.)        │ │
+    │  └──────────────────┘  └───────────────────────────┘ │
+    │  ┌─────────────────────────────────────────────────┐ │
+    │  │            HDFS (Distributed Storage)            │ │
+    │  └─────────────────────────────────────────────────┘ │
+    └──────────────────────────────────────────────────────┘</div>
+
+    <h3>Hadoop Implementation Steps</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Data Ingestion</strong>
+          <p>Collect data from multiple sources using Sqoop (databases), Flume (logs), Kafka (streams) and store in HDFS.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Data Storage</strong>
+          <p>HDFS divides files into 128 MB blocks and distributes them across DataNodes with 3x replication.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Data Processing</strong>
+          <p>YARN allocates resources; MapReduce or Spark processes data in parallel across all nodes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Data Analysis</strong>
+          <p>Hive for SQL queries, Pig for data transformation, Spark MLlib for machine learning.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <strong>Data Export / Visualization</strong>
+          <p>Results exported using Sqoop; visualized with Tableau, Power BI, or custom dashboards.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4>Real-Life Example: Yahoo!</h4>
+    <p>Yahoo! was one of the first companies to use Hadoop at scale — running one of the world's largest Hadoop clusters with over 42,000 nodes to process petabytes of web clickstream data for advertising optimization.</p>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Hadoop was created by Doug Cutting and Mike Cafarella in 2006 (named after a toy elephant)</li>
+        <li>Inspired by Google's GFS and MapReduce papers (2003-2004)</li>
+        <li>Runs on Java — written in Java, runs on JVM</li>
+        <li>Commodity hardware = cheap servers (~$1000-2000 each) vs. mainframes (~$1M+)</li>
+        <li>Data locality: process data WHERE it is stored (move computation, not data)</li>
+        <li>Apache Hadoop is FREE and open-source</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      Hadoop provides a complete framework for Big Data through its four core components. Its key advantage is processing data locally on each node (data locality), which avoids expensive network transfers and enables massive parallel processing.
+    </div>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="section" id="q12">
+  <div class="section-header orange">
+    <div class="qnum">Q12</div>
+    <h2>Sqoop, Flume, and Oozie — Detailed Explanation</h2>
+  </div>
+  <div class="section-body">
+
+    <h3>1. Apache Sqoop</h3>
+    <div class="def-box">
+      <strong>Definition: Sqoop</strong>
+      Sqoop (SQL-to-Hadoop) is a tool for efficiently transferring bulk data between relational databases (MySQL, Oracle, PostgreSQL) and Hadoop HDFS. It works bidirectionally — Import to HDFS and Export from HDFS.
+    </div>
+
+    <h4>How Sqoop Works:</h4>
+    <div class="diagram">
+    IMPORT:
+    MySQL / Oracle                         HDFS
+    ┌──────────────┐   sqoop import    ┌──────────────┐
+    │  employees   │ ─────────────────>│  /data/emp   │
+    │  (RDBMS)     │                   │  (HDFS)      │
+    └──────────────┘                   └──────────────┘
+
+    EXPORT:
+    HDFS                                MySQL / Oracle
+    ┌──────────────┐   sqoop export    ┌──────────────┐
+    │  /results    │ ─────────────────>│  results_tbl │
+    │  (HDFS)      │                   │  (RDBMS)     │
+    └──────────────┘                   └──────────────┘</div>
+
+    <h4>Sqoop Commands:</h4>
+    <div class="diagram">
+  # Import from MySQL to HDFS
+  sqoop import --connect jdbc:mysql://localhost/company
+               --table employees
+               --target-dir /hdfs/employees
+
+  # Export from HDFS to MySQL
+  sqoop export --connect jdbc:mysql://localhost/company
+               --table employees_result
+               --export-dir /hdfs/results</div>
+
+    <h4>Key Features:</h4>
+    <ul>
+      <li>Parallel import using multiple mappers (default 4)</li>
+      <li>Supports incremental imports (only new data)</li>
+      <li>Can import to Hive tables directly</li>
+    </ul>
+
+    <h3>2. Apache Flume</h3>
+    <div class="def-box">
+      <strong>Definition: Flume</strong>
+      Apache Flume is a distributed service for collecting, aggregating, and moving large amounts of log/event data from various sources (web servers, applications) into HDFS in real-time.
+    </div>
+
+    <h4>Flume Architecture:</h4>
+    <div class="diagram">
+    Web Server Logs
+         |
+         v
+    ┌──────────────────────────────────────────┐
+    │          FLUME AGENT                      │
+    │  ┌────────┐  ┌─────────┐  ┌───────────┐ │
+    │  │ Source │->│ Channel │->│   Sink    │ │
+    │  │(reads  │  │(buffer  │  │(writes to │ │
+    │  │ data)  │  │storage) │  │  HDFS)    │ │
+    │  └────────┘  └─────────┘  └───────────┘ │
+    └──────────────────────────────────────────┘
+         |
+         v
+        HDFS</div>
+
+    <h4>Flume Components:</h4>
+    <ul>
+      <li><strong>Source:</strong> Reads data from input (log files, Syslog, HTTP, Twitter, etc.)</li>
+      <li><strong>Channel:</strong> Temporary buffer (Memory Channel or File Channel)</li>
+      <li><strong>Sink:</strong> Writes data to destination (HDFS, HBase, Kafka)</li>
+    </ul>
+
+    <h4>Real-Life Example:</h4>
+    <p>E-commerce website generates 10 GB of access logs per hour. Flume continuously collects these logs from web servers and streams them into HDFS for real-time analysis.</p>
+
+    <h3>3. Apache Oozie (Review)</h3>
+    <div class="def-box">
+      <strong>Definition: Oozie</strong>
+      Oozie is a workflow scheduler system that coordinates and manages the execution of Hadoop jobs in a defined sequence.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Tool</th><th>Purpose</th><th>Direction</th><th>Data Type</th><th>When to Use</th></tr>
+        <tr><td>Sqoop</td><td>RDBMS ↔ HDFS transfer</td><td>Batch, bidirectional</td><td>Structured (DB tables)</td><td>When you need to move relational data</td></tr>
+        <tr><td>Flume</td><td>Log/event data → HDFS</td><td>Unidirectional (to HDFS)</td><td>Unstructured (logs, events)</td><td>When streaming real-time logs</td></tr>
+        <tr><td>Oozie</td><td>Job scheduling/coordination</td><td>Controls job flow</td><td>Any</td><td>When orchestrating multi-step pipelines</td></tr>
+      </table>
+    </div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Sqoop = SQL + Hadoop; for RDBMS ↔ HDFS data movement</li>
+        <li>Flume = real-time log collection (Source → Channel → Sink)</li>
+        <li>Oozie = job orchestration using XML workflows (DAG)</li>
+        <li>Sqoop uses JDBC drivers to connect to databases</li>
+        <li>Flume Agent = Source + Channel + Sink (one agent per node)</li>
+        <li>They are all part of Hadoop Ecosystem, not core Hadoop</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      Sqoop, Flume, and Oozie are complementary tools in the Hadoop ecosystem. Sqoop moves batch data from/to databases, Flume streams real-time log data, and Oozie coordinates the entire workflow pipeline.
+    </div>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="section" id="q13">
+  <div class="section-header purple">
+    <div class="qnum">Q13</div>
+    <h2>Hadoop Ecosystem, Requirements & Design Principles</h2>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <strong>Definition: Hadoop Ecosystem</strong>
+      The Hadoop Ecosystem is a collection of open-source tools and frameworks that work together with core Hadoop to provide complete Big Data solutions — from ingestion to storage, processing, querying, and visualization.
+    </div>
+
+    <h3>Hadoop Ecosystem Map</h3>
+    <div class="diagram">
+    ┌───────────────────── HADOOP ECOSYSTEM ─────────────────────┐
+    │                                                             │
+    │  DATA INGESTION      DATA STORAGE       DATA PROCESSING     │
+    │  ┌──────────────┐   ┌─────────────┐   ┌───────────────┐   │
+    │  │ Sqoop (DB)   │   │    HDFS     │   │  MapReduce    │   │
+    │  │ Flume (Logs) │   │    HBase    │   │  Apache Spark │   │
+    │  │ Kafka (Stream│   │    Hive DW  │   │  Pig          │   │
+    │  └──────────────┘   └─────────────┘   └───────────────┘   │
+    │                                                             │
+    │  QUERY & ANALYSIS    COORDINATION      MANAGEMENT          │
+    │  ┌──────────────┐   ┌─────────────┐   ┌───────────────┐   │
+    │  │ Hive (SQL)   │   │ Zookeeper   │   │  Ambari       │   │
+    │  │ Pig (Script) │   │ Oozie       │   │  YARN         │   │
+    │  │ Mahout (ML)  │   │ HCatalog    │   │  Ganglia      │   │
+    │  └──────────────┘   └─────────────┘   └───────────────┘   │
+    └─────────────────────────────────────────────────────────────┘</div>
+
+    <h3>Requirements for Hadoop Framework</h3>
+    <ul>
+      <li><strong>Fault Tolerance:</strong> System must continue working even when some nodes fail</li>
+      <li><strong>Scalability:</strong> Easily add more nodes as data grows</li>
+      <li><strong>High Throughput:</strong> Process large amounts of data quickly</li>
+      <li><strong>Data Locality:</strong> Move computation to data, not data to computation</li>
+      <li><strong>Commodity Hardware:</strong> Run on inexpensive standard servers</li>
+      <li><strong>Open Source:</strong> Free, community-supported software</li>
+      <li><strong>Reliability:</strong> Data must be safely replicated and recoverable</li>
+    </ul>
+
+    <h3>Hadoop Design Principles</h3>
+
+    <h4>1. Data Locality Principle</h4>
+    <ul>
+      <li>Move the computation (code) to the data, not the data to computation</li>
+      <li>Reduces network bandwidth usage drastically</li>
+      <li><strong>Example:</strong> If data is on Node 3, run the MapReduce task on Node 3</li>
+    </ul>
+
+    <h4>2. Fault Tolerance Principle</h4>
+    <ul>
+      <li>Assume hardware WILL fail — design for it</li>
+      <li>Data is replicated to 3 nodes by default</li>
+      <li>Failed tasks are automatically re-run on another node</li>
+    </ul>
+
+    <h4>3. Simple Consistency Model</h4>
+    <ul>
+      <li>Write-Once, Read-Many (WORM) simplifies consistency</li>
+      <li>No complex lock management needed</li>
+    </ul>
+
+    <h4>4. Horizontal Scalability</h4>
+    <ul>
+      <li>Add more nodes instead of upgrading existing ones</li>
+      <li>Linear scaling — 2x nodes = 2x capacity (roughly)</li>
+    </ul>
+
+    <h4>5. Schema-on-Read</h4>
+    <ul>
+      <li>Data schema is applied when reading, not when writing</li>
+      <li>Allows storing any data first, then deciding the format later</li>
+    </ul>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Hadoop Ecosystem has 15+ tools (Hive, Pig, HBase, Sqoop, Flume, Oozie, Zookeeper, Kafka, etc.)</li>
+        <li>Core design principle: Data Locality (bring code to data)</li>
+        <li>Hadoop is designed to handle hardware failures gracefully</li>
+        <li>Schema-on-read = flexibility; Schema-on-write = RDBMS</li>
+        <li>YARN enables multiple processing engines on same cluster (MapReduce, Spark, etc.)</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      The Hadoop Ecosystem provides a complete solution for Big Data by combining specialized tools for ingestion, storage, processing, and analysis. Its design principles of data locality, fault tolerance, and horizontal scalability make it the gold standard for Big Data infrastructure.
+    </div>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="section" id="q14">
+  <div class="section-header teal">
+    <div class="qnum">Q14</div>
+    <h2>Data Serialization — Types, Formats & Comparison</h2>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <strong>Definition: Data Serialization</strong>
+      Serialization is the process of converting an object or data structure into a byte stream so it can be stored on disk or sent over a network. Deserialization is the reverse — converting bytes back to the original object.
+    </div>
+
+    <h3>Why Serialization Matters in Hadoop?</h3>
+    <ul>
+      <li>MapReduce jobs write intermediate results to disk between Map and Reduce phases</li>
+      <li>Data is transferred between nodes over the network</li>
+      <li>Efficient serialization = faster processing and less storage</li>
+    </ul>
+
+    <h3>Serialization in MapReduce Flow</h3>
+    <div class="diagram">
+    Mapper Output             (SERIALIZED to disk)
+          |
+    [Intermediate Key-Value Pairs written as bytes]
+          |
+    Shuffle Phase        (transferred over network)
+          |
+    Reducer Input             (DESERIALIZED from disk)
+          |
+    Final Output           (SERIALIZED to HDFS output)</div>
+
+    <h3>Data Serialization Formats Compared</h3>
+
+    <h4>1. Text Formats (Human-Readable)</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Format</th><th>Structure</th><th>Pros</th><th>Cons</th><th>Use Case</th></tr>
+        <tr><td>JSON</td><td>Key-value pairs</td><td>Easy to read/write, flexible</td><td>Verbose, slow parsing</td><td>REST APIs, MongoDB</td></tr>
+        <tr><td>XML</td><td>Tagged elements</td><td>Self-descriptive, widely supported</td><td>Very verbose, slow</td><td>Config, SOAP web services</td></tr>
+        <tr><td>CSV</td><td>Comma separated</td><td>Simple, widely used</td><td>No schema, no nesting</td><td>Spreadsheets, simple data</td></tr>
+      </table>
+    </div>
+
+    <h4>2. Binary Formats (Hadoop-Optimized)</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Format</th><th>Type</th><th>Pros</th><th>Best For</th><th>Hadoop Tool</th></tr>
+        <tr><td>Avro</td><td>Row-based binary</td><td>Schema evolution, compact, fast</td><td>Data pipelines</td><td>Sqoop, Kafka</td></tr>
+        <tr><td>Parquet</td><td>Columnar binary</td><td>Very fast column reads, compression</td><td>Analytics queries</td><td>Hive, Spark</td></tr>
+        <tr><td>ORC</td><td>Columnar binary</td><td>Best compression, ACID support</td><td>Hive tables</td><td>Hive</td></tr>
+        <tr><td>SequenceFile</td><td>Binary key-value</td><td>Native Hadoop format</td><td>MapReduce output</td><td>MapReduce</td></tr>
+      </table>
+    </div>
+
+    <h4>Avro vs Parquet — Key Difference:</h4>
+    <div class="diagram">
+  ROW-BASED (Avro):           COLUMNAR (Parquet):
+  ┌────────────────────┐      ┌──┬──┬──┬──────────┐
+  │ Row1: A, 25, Male  │      │A │B │25│...       │
+  │ Row2: B, 30, Female│      │25│30│28│...       │
+  │ Row3: C, 28, Male  │      │M │F │M │...       │
+  └────────────────────┘      └──┴──┴──┴──────────┘
+  Good for writing all         Good for reading specific
+  fields of a record           columns (e.g., only "Age")</div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Serialization = convert object to bytes; Deserialization = bytes to object</li>
+        <li>Hadoop uses Writable interface for serialization (IntWritable, Text, etc.)</li>
+        <li>Avro = schema-based, row-oriented, supports schema evolution</li>
+        <li>Parquet = columnar, best for OLAP/analytics workloads</li>
+        <li>ORC = best compression ratio, used with Hive for transactional tables</li>
+        <li>SequenceFile = native Hadoop binary key-value format</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      Data Serialization is critical in Hadoop for efficient disk storage and network transfer. Binary formats (Avro, Parquet, ORC) are far superior to text formats for Big Data because they are compact, fast, and support compression.
+    </div>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="section" id="q15">
+  <div class="section-header amber">
+    <div class="qnum">Q15</div>
+    <h2>Scalability, Fault Tolerance & Efficient Storage in Hadoop</h2>
+  </div>
+  <div class="section-body">
+
+    <h3>1. Scalability in Hadoop</h3>
+    <div class="def-box">
+      <strong>Definition: Scalability</strong>
+      Scalability is the ability of Hadoop to handle increasing amounts of data or jobs by adding more nodes to the cluster without changing the existing infrastructure.
+    </div>
+
+    <h4>Types of Scaling:</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Method</th><th>Hadoop Approach</th><th>Cost</th></tr>
+        <tr><td>Vertical Scaling (Scale Up)</td><td>Add more CPU/RAM to existing server</td><td>NOT Hadoop's approach</td><td>Very Expensive</td></tr>
+        <tr><td>Horizontal Scaling (Scale Out)</td><td>Add more nodes to cluster</td><td>Hadoop's primary method</td><td>Affordable</td></tr>
+      </table>
+    </div>
+    <ul>
+      <li>Hadoop started with 2 nodes — Facebook's cluster grew to 4,000+ nodes</li>
+      <li>Adding nodes is transparent to the application</li>
+      <li>YARN automatically discovers and uses new nodes</li>
+    </ul>
+
+    <h3>2. Fault Tolerance in Hadoop</h3>
+    <div class="def-box">
+      <strong>Definition: Fault Tolerance</strong>
+      Fault Tolerance is Hadoop's ability to continue working correctly even when some hardware or software components fail, without losing data or stopping jobs.
+    </div>
+
+    <h4>Fault Tolerance Mechanisms:</h4>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Data Replication</strong>
+          <p>Every block is stored on 3 different DataNodes. If one fails, data is still available on 2 others.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Heartbeat Mechanism</strong>
+          <p>DataNodes send heartbeat to NameNode every 3 seconds. If heartbeat stops → node is marked dead → re-replication begins.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Task Re-execution</strong>
+          <p>If a MapReduce task fails, YARN automatically reruns it on a healthy node. Tasks have retry limits (default 4 retries).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Speculative Execution</strong>
+          <p>If a task is running slow, YARN launches a duplicate "speculative" task on another node. Whoever finishes first wins.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="diagram">
+  FAULT TOLERANCE EXAMPLE:
+  
+  Block A → DataNode 1, DataNode 2, DataNode 3 (3 replicas)
+  
+  DataNode 2 FAILS!
+  
+  NameNode detects: heartbeat from DataNode 2 stopped
+  
+  Action: Copy Block A to DataNode 4 (new replica)
+  
+  Result: Block A → DataNode 1, DataNode 3, DataNode 4
+  
+  DATA NEVER LOST!</div>
+
+    <h3>3. Efficient Storage in HDFS</h3>
+    <div class="def-box">
+      <strong>How HDFS Ensures Efficient Storage</strong>
+      HDFS uses block-based storage (128 MB blocks), compression, and intelligent replication placement to maximize storage efficiency.
+    </div>
+
+    <ul>
+      <li><strong>Large Block Size (128 MB):</strong> Reduces NameNode metadata overhead; fewer blocks to manage</li>
+      <li><strong>Compression:</strong> Snappy, GZip, LZO compression reduces storage by 50-75%</li>
+      <li><strong>Data Locality:</strong> Keeps data close to compute; reduces network I/O</li>
+      <li><strong>Rack Awareness:</strong> Replicas placed on different racks to survive rack failures</li>
+      <li><strong>Columnar Formats (ORC/Parquet):</strong> Store only needed columns; reduce I/O for queries</li>
+    </ul>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Scalability in Hadoop = Horizontal (add nodes, not upgrade existing)</li>
+        <li>Fault Tolerance: 3-replica rule + heartbeat + task re-execution</li>
+        <li>Heartbeat: every 3 seconds from DataNode to NameNode</li>
+        <li>Speculative execution: runs duplicate slow tasks on fresh nodes</li>
+        <li>Rack Awareness: 1st replica on same node, 2nd on different rack, 3rd on different rack</li>
+        <li>Replication factor can be changed per file with: <code>hdfs dfs -setrep</code></li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      Hadoop's horizontal scalability allows cost-effective growth, its fault tolerance mechanisms ensure zero data loss even during hardware failures, and its block-based storage with compression ensures efficient use of disk space.
+    </div>
+  </div>
+</div>
+
+<!-- Q16 -->
+<div class="section" id="q16">
+  <div class="section-header">
+    <div class="qnum">Q16</div>
+    <h2>MapReduce — Word Count Problem (Step-by-Step)</h2>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <strong>Definition: MapReduce</strong>
+      MapReduce is a parallel processing programming model in Hadoop. It divides a large job into two functions: Map (parallel processing) and Reduce (aggregation). It processes data in distributed manner across cluster nodes.
+    </div>
+
+    <h3>Word Count Problem</h3>
+    <p><strong>Goal:</strong> Count how many times each word appears in a large text file.</p>
+    <p><strong>Input:</strong> <code>"hadoop is great hadoop is fast"</code></p>
+
+    <h3>Step-by-Step Word Count Flow</h3>
+
+    <h4>Step 1: Input Splitting</h4>
+    <div class="diagram">
+  Input Text: "hadoop is great hadoop is fast"
+
+  HDFS splits the file into chunks (input splits):
+  Split 1: "hadoop is great"
+  Split 2: "hadoop is fast"</div>
+
+    <h4>Step 2: Map Phase</h4>
+    <div class="diagram">
+  Mapper 1 processes "hadoop is great":
+  hadoop → (hadoop, 1)
+  is     → (is, 1)
+  great  → (great, 1)
+
+  Mapper 2 processes "hadoop is fast":
+  hadoop → (hadoop, 1)
+  is     → (is, 1)
+  fast   → (fast, 1)</div>
+
+    <h4>Step 3: Combiner (Optional — Mini Reducer)</h4>
+    <div class="diagram">
+  Combiner runs on each Mapper node BEFORE shuffle:
+  Mapper 1: (hadoop,1),(is,1),(great,1)  → no change (each appears once)
+  
+  This reduces network data transferred during shuffle.</div>
+
+    <h4>Step 4: Shuffle & Sort Phase</h4>
+    <div class="diagram">
+  All (key, value) pairs are:
+  1. Grouped by key
+  2. Sorted alphabetically
+
+  After Shuffle:
+  "fast"   → [1]
+  "great"  → [1]
+  "hadoop" → [1, 1]
+  "is"     → [1, 1]</div>
+
+    <h4>Step 5: Reduce Phase</h4>
+    <div class="diagram">
+  Reducer processes each key:
+
+  "fast"   → sum([1])     = 1
+  "great"  → sum([1])     = 1
+  "hadoop" → sum([1, 1])  = 2
+  "is"     → sum([1, 1])  = 2</div>
+
+    <h4>Step 6: Final Output (written to HDFS)</h4>
+    <div class="diagram">
+  Output:
+  fast    1
+  great   1
+  hadoop  2
+  is      2</div>
+
+    <h3>Complete MapReduce Diagram</h3>
+    <div class="diagram">
+  Input: "hadoop is great hadoop is fast"
+          |
+          | (Split)
+     ┌────┴────┐
+     |         |
+  Split 1    Split 2
+     |         |
+  [MAP 1]   [MAP 2]
+     |         |
+  (h,1)(i,1)  (h,1)(i,1)
+  (g,1)       (f,1)
+     |         |
+     └────┬────┘
+          |
+     [SHUFFLE]  → Sort by key + Group by key
+          |
+  h→[1,1] i→[1,1] g→[1] f→[1]
+          |
+      [REDUCE]  → Sum each list
+          |
+  hadoop:2  is:2  great:1  fast:1
+          |
+      [OUTPUT → HDFS]</div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Phase</th><th>Input</th><th>Processing</th><th>Output</th></tr>
+        <tr><td>Input Split</td><td>Full text file</td><td>Split into chunks</td><td>Text chunks</td></tr>
+        <tr><td>Map</td><td>Text lines</td><td>Tokenize, emit (word,1)</td><td>(word,1) pairs</td></tr>
+        <tr><td>Combiner</td><td>(word,1) pairs</td><td>Local aggregation</td><td>Reduced pairs</td></tr>
+        <tr><td>Shuffle</td><td>All (word,1) pairs</td><td>Group + Sort by key</td><td>word→[1,1,1...]</td></tr>
+        <tr><td>Reduce</td><td>word→[list of 1s]</td><td>Sum the list</td><td>(word, count)</td></tr>
+        <tr><td>Output</td><td>Final pairs</td><td>Write to HDFS</td><td>Text file</td></tr>
+      </table>
+    </div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>Map function: <code>map(key, value) → list of (key2, value2)</code></li>
+        <li>Reduce function: <code>reduce(key2, list[value2]) → list of (key3, value3)</code></li>
+        <li>Combiner = Mini Reducer on the Mapper node (reduces network traffic)</li>
+        <li>Shuffle is automatic — handled by the Hadoop framework, not programmer</li>
+        <li>Number of Mappers = Number of Input Splits</li>
+        <li>Number of Reducers is configured by the programmer</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      The Word Count problem illustrates how MapReduce processes data in three phases. The Map phase tokenizes input, the Shuffle phase organizes keys, and the Reduce phase aggregates counts — all running in parallel across the cluster.
+    </div>
+  </div>
+</div>
+
+<!-- Q17 -->
+<div class="section" id="q17">
+  <div class="section-header green">
+    <div class="qnum">Q17</div>
+    <h2>YARN — Architecture, Components & Working</h2>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <strong>Definition: YARN</strong>
+      YARN (Yet Another Resource Negotiator) is the resource management layer of Hadoop (introduced in Hadoop 2.x). It separates resource management from data processing, allowing multiple processing frameworks (MapReduce, Spark, Flink) to share the same cluster.
+    </div>
+
+    <h3>Why YARN was Needed?</h3>
+    <p>In Hadoop 1.x, JobTracker did everything — resource management AND job scheduling. This caused a <strong>bottleneck</strong> (single point of failure and limited scalability). YARN splits these responsibilities.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Hadoop 1.x (Without YARN)</th><th>Hadoop 2.x (With YARN)</th></tr>
+        <tr><td>JobTracker = resource manager + job scheduler</td><td>ResourceManager = only resource management</td></tr>
+        <tr><td>TaskTracker = task executor</td><td>NodeManager + ApplicationMaster</td></tr>
+        <tr><td>Only MapReduce supported</td><td>Any framework (Spark, Tez, Flink) supported</td></tr>
+        <tr><td>Limited to ~4000 nodes</td><td>Scales to 10,000+ nodes</td></tr>
+      </table>
+    </div>
+
+    <h3>YARN Architecture Diagram</h3>
+    <div class="diagram">
+    ┌─────────────────────────────────────────────────────┐
+    │                  MASTER NODE                         │
+    │  ┌───────────────────────────────────────────────┐  │
+    │  │           RESOURCE MANAGER                    │  │
+    │  │  ┌────────────────────┐  ┌──────────────────┐ │  │
+    │  │  │  Scheduler         │  │  Applications    │ │  │
+    │  │  │  (allocates        │  │  Manager         │ │  │
+    │  │  │   resources)       │  │  (manages apps)  │ │  │
+    │  │  └────────────────────┘  └──────────────────┘ │  │
+    │  └───────────────────────────────────────────────┘  │
+    └────────────────────────┬────────────────────────────┘
+                             |
+            ┌────────────────┼────────────────┐
+            |                |                |
+    ┌───────┴──────┐ ┌───────┴──────┐ ┌───────┴──────┐
+    │  SLAVE NODE  │ │  SLAVE NODE  │ │  SLAVE NODE  │
+    │ ┌──────────┐ │ │ ┌──────────┐ │ │ ┌──────────┐ │
+    │ │Node Mgr  │ │ │ │Node Mgr  │ │ │ │Node Mgr  │ │
+    │ └──────────┘ │ │ └──────────┘ │ │ └──────────┘ │
+    │ ┌──────────┐ │ │              │ │              │
+    │ │App Master│ │ │              │ │              │
+    │ └──────────┘ │ │              │ │              │
+    │ ┌──┐  ┌──┐  │ │ ┌──┐  ┌──┐  │ │ ┌──┐  ┌──┐  │
+    │ │C1│  │C2│  │ │ │C3│  │C4│  │ │ │C5│  │C6│  │
+    │ └──┘  └──┘  │ │ └──┘  └──┘  │ │ └──┘  └──┘  │
+    │(Containers)  │ │(Containers)  │ │(Containers)  │
+    └──────────────┘ └──────────────┘ └──────────────┘</div>
+
+    <h3>YARN Components</h3>
+
+    <h4>1. ResourceManager (RM) — Master</h4>
+    <ul>
+      <li>Central authority for resource allocation in the cluster</li>
+      <li>Has two main sub-components:
+        <ul>
+          <li><strong>Scheduler:</strong> Allocates resources (containers) to applications</li>
+          <li><strong>Applications Manager:</strong> Manages application lifecycles (accept, schedule, monitor)</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h4>2. NodeManager (NM) — Slave</h4>
+    <ul>
+      <li>Runs on every slave node</li>
+      <li>Manages containers (CPU, memory, disk) on that node</li>
+      <li>Reports available resources to ResourceManager</li>
+      <li>Monitors container health and resource usage</li>
+    </ul>
+
+    <h4>3. ApplicationMaster (AM) — Per Job</h4>
+    <ul>
+      <li>One ApplicationMaster per submitted application/job</li>
+      <li>Negotiates resources (containers) from ResourceManager</li>
+      <li>Works with NodeManagers to execute tasks</li>
+      <li>Monitors task progress and restarts failed tasks</li>
+    </ul>
+
+    <h4>4. Container</h4>
+    <ul>
+      <li>A bundle of resources (CPU + Memory) allocated for a single task</li>
+      <li>Each container runs one Map task or one Reduce task</li>
+    </ul>
+
+    <h3>YARN Job Submission Flow</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Client submits job to ResourceManager</strong>
+          <p>Client sends job request, JAR file, and configuration to ResourceManager.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>ResourceManager creates ApplicationMaster</strong>
+          <p>RM allocates a container on a NodeManager and starts the ApplicationMaster in it.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>ApplicationMaster registers with ResourceManager</strong>
+          <p>AM tells RM it's alive and requests containers for Map tasks.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Containers allocated for Map/Reduce tasks</strong>
+          <p>RM allocates containers on different NodeManagers. AM launches tasks in containers.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <strong>Tasks run and report progress to ApplicationMaster</strong>
+          <p>Each container runs one task and reports status back to AM regularly.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <strong>Job completes → ApplicationMaster unregisters</strong>
+          <p>AM notifies RM that job is done and releases all containers.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>YARN = Yet Another Resource Negotiator (Hadoop 2.x)</li>
+        <li>4 main components: ResourceManager, NodeManager, ApplicationMaster, Container</li>
+        <li>ResourceManager = Master (1 per cluster)</li>
+        <li>NodeManager = Slave (1 per node, many per cluster)</li>
+        <li>ApplicationMaster = 1 per job/application</li>
+        <li>Container = resource bundle (CPU + RAM) for one task</li>
+        <li>YARN enables multi-tenancy: Spark and MapReduce can run on same cluster</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      YARN revolutionized Hadoop by separating resource management from data processing. This enabled multiple processing frameworks to run on the same Hadoop cluster, maximizing resource utilization and making Hadoop a true general-purpose Big Data platform.
+    </div>
+  </div>
+</div>
+
+<!-- Q18 -->
+<div class="section" id="q18">
+  <div class="section-header orange">
+    <div class="qnum">Q18</div>
+    <h2>NoSQL Database — Types, Differences from RDBMS</h2>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <strong>Definition: NoSQL Database</strong>
+      NoSQL (Not Only SQL) is a database management system that provides a mechanism for storage and retrieval of data modeled in means other than the tabular relations used in relational databases. It is designed for big data, distributed systems, and high scalability.
+    </div>
+
+    <h3>RDBMS vs NoSQL — Complete Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>RDBMS</th><th>NoSQL</th></tr>
+        <tr><td>Data Model</td><td>Tables (rows and columns)</td><td>Document, Key-Value, Graph, Column</td></tr>
+        <tr><td>Schema</td><td>Fixed schema (predefined)</td><td>Flexible/Dynamic schema</td></tr>
+        <tr><td>Query Language</td><td>SQL (Structured Query Language)</td><td>No standard language (varies)</td></tr>
+        <tr><td>Scalability</td><td>Vertical (scale up)</td><td>Horizontal (scale out)</td></tr>
+        <tr><td>ACID/BASE</td><td>ACID (strong consistency)</td><td>BASE (eventual consistency)</td></tr>
+        <tr><td>Joins</td><td>Supports complex joins</td><td>No joins (data is denormalized)</td></tr>
+        <tr><td>Data Type</td><td>Structured only</td><td>Structured, Semi, Unstructured</td></tr>
+        <tr><td>Performance</td><td>Good for complex queries</td><td>Better for simple, large queries</td></tr>
+        <tr><td>Examples</td><td>MySQL, Oracle, PostgreSQL</td><td>MongoDB, Cassandra, Redis, Neo4j</td></tr>
+        <tr><td>Best For</td><td>Banking, ERP, CRM</td><td>Social Media, IoT, Big Data</td></tr>
+      </table>
+    </div>
+
+    <h3>4 Types of NoSQL Databases (Detailed)</h3>
+
+    <h4>Type 1: Key-Value Store</h4>
+    <div class="diagram">
+  Structure:
+  Key         → Value
+  "user:001"  → {"name": "Ali", "age": 25}
+  "session:A" → "login_token_xyz"
+  
+  Examples: Redis, Amazon DynamoDB, Riak
+  Use: Caching, session storage, shopping carts</div>
+
+    <h4>Type 2: Document Store</h4>
+    <div class="diagram">
+  Structure: JSON/BSON documents
+  {
+    "_id": "001",
+    "name": "Sara",
+    "orders": [
+      {"item": "Laptop", "price": 50000},
+      {"item": "Mouse", "price": 500}
+    ]
+  }
+  
+  Examples: MongoDB, CouchDB, Firestore
+  Use: Content management, user profiles, e-commerce</div>
+
+    <h4>Type 3: Column-Family Store (Wide Column)</h4>
+    <div class="diagram">
+  Structure: Rows identified by row key, grouped in column families:
+  
+  Row Key | Column Family: Info      | Column Family: Orders
+  --------|--------------------------|----------------------
+  user001 | name:Ali, city:Hyd       | order1:500, order2:200
+  user002 | name:Riya, city:Mumbai   | order1:1200
+  
+  Examples: Apache Cassandra, Apache HBase
+  Use: Time-series data, IoT, analytics</div>
+
+    <h4>Type 4: Graph Database</h4>
+    <div class="diagram">
+  Structure: Nodes (entities) and Edges (relationships)
+  
+  (Ali) --[FRIENDS WITH]--> (Sara)
+  (Ali) --[LIKES]----------> (Python)
+  (Sara)--[WORKS AT]-------> (Google)
+  
+  Examples: Neo4j, Amazon Neptune, JanusGraph
+  Use: Social networks, fraud detection, recommendation</div>
+
+    <h3>ACID vs BASE</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>ACID (RDBMS)</th><th>Meaning</th><th>BASE (NoSQL)</th><th>Meaning</th></tr>
+        <tr><td>Atomicity</td><td>All or nothing</td><td>Basically Available</td><td>System is always available</td></tr>
+        <tr><td>Consistency</td><td>Data always valid</td><td>Soft State</td><td>State may change over time</td></tr>
+        <tr><td>Isolation</td><td>Transactions don't interfere</td><td>Eventual Consistency</td><td>Data becomes consistent eventually</td></tr>
+        <tr><td>Durability</td><td>Committed data persists</td><td>—</td><td>—</td></tr>
+      </table>
+    </div>
+
+    <h3>CAP Theorem (Applicable to NoSQL)</h3>
+    <div class="diagram">
+  CAP Theorem: A distributed system can only guarantee 2 of 3:
+  
+       Consistency
+           /\
+          /  \
+         /    \
+        /      \
+       /_______ \
+  Availability  Partition Tolerance
+  
+  CA - RDBMS (gives up partition tolerance)
+  CP - HBase, MongoDB (gives up availability)
+  AP - Cassandra, CouchDB (gives up consistency)</div>
+
+    <div class="key-box">
+      <strong>⭐ Key Points for Revision</strong>
+      <ul>
+        <li>NoSQL = Not Only SQL (it can have SQL-like querying too)</li>
+        <li>4 types: Key-Value, Document, Column-Family, Graph</li>
+        <li>RDBMS = ACID; NoSQL = BASE</li>
+        <li>NoSQL is horizontally scalable; RDBMS is vertically scalable</li>
+        <li>CAP Theorem: Consistency, Availability, Partition Tolerance (pick 2)</li>
+        <li>MongoDB is best for flexible, document-based data (most popular NoSQL)</li>
+        <li>Cassandra is best for highly available, write-heavy workloads</li>
+        <li>HBase = Column-family, built on HDFS, integrates with Hadoop</li>
+        <li>Redis is fastest (in-memory key-value store) — used for caching</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <strong>Conclusion</strong>
+      NoSQL databases provide the flexibility, scalability, and performance needed for modern Big Data applications. While RDBMS excels at structured, transactional data with strong consistency, NoSQL handles massive volumes of diverse data with high availability and horizontal scalability. The choice depends on the use case and data characteristics.
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center; padding: 40px 0 20px; color: var(--text3); font-size: 13px;">
+  <p>Big Data Analytics — MTCS246PET &nbsp;|&nbsp; M.Tech 2nd Semester &nbsp;|&nbsp; Complete Exam Guide</p>
+  <p style="margin-top:6px;">Covers all 18 questions from Section A, B & C &nbsp;|&nbsp; Maximum Marks: 70</p>
+</div>
+
+</div><!-- /main -->
+<a href="../index.html" style="position:fixed;right:18px;bottom:18px;z-index:9999;background:#1B4F8A;color:#fff;text-decoration:none;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,0.18);">🏠 Home</a>
+</body>
+</html>

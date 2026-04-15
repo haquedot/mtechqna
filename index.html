@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M.Tech Q&A Hub</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <h1>M.Tech Q&A Web App</h1>
+      <p>Subject-wise navigation, syllabus-first access, and global question search across all uploaded papers.</p>
+      <div class="hero-meta">
+        <span class="badge">Semester 2</span>
+        <span class="badge">Big Data + Blockchain</span>
+        <span class="badge">Fast Search: Press /</span>
+      </div>
+    </section>
+
+    <section class="search-wrap">
+      <div class="search-label">Global Search</div>
+      <input id="global-search" class="global-search" type="search" placeholder="Search all questions and topics (e.g. Spark, YARN, NoSQL, RAFT, Merkle...)" autocomplete="off">
+      <div class="stats" id="stats"></div>
+    </section>
+
+    <section class="grid" id="subject-grid"></section>
+
+    <section class="results-wrap">
+      <div class="results-head">Search Results — <span id="result-count">0 results</span></div>
+      <div class="results" id="results"></div>
+    </section>
+  </main>
+
+  <script src="search-index.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
