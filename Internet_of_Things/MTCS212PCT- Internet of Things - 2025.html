@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IoT Exam Guide — MTCS212PCT</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #060c18;
+  --surface: #0d1526;
+  --surface2: #121e34;
+  --surface3: #18273f;
+  --border: #1e3154;
+  --border2: #243a62;
+  --accent: #00d4ff;
+  --accent2: #0099cc;
+  --accent3: #00ffcc;
+  --accent4: #ff6b35;
+  --text: #e2eaf5;
+  --text2: #8fa8cc;
+  --text3: #5572a0;
+  --green: #00e5a0;
+  --orange: #ff8c42;
+  --purple: #a78bfa;
+  --red: #ff4d6d;
+  --yellow: #ffd166;
+  --nav-w: 300px;
+  --hdr-h: 64px;
+  --radius: 12px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ───────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
+
+/* ── HEADER ──────────────────────────────────── */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--hdr-h);
+  background: rgba(6,12,24,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 16px; padding: 0 20px;
+}
+
+#menu-toggle {
+  background: none; border: none; cursor: pointer;
+  color: var(--text2); padding: 8px; border-radius: 8px;
+  transition: color .2s, background .2s;
+  display: flex; flex-direction: column; gap: 5px; align-items: center;
+}
+#menu-toggle:hover { color: var(--accent); background: var(--surface2); }
+#menu-toggle span {
+  display: block; width: 22px; height: 2px;
+  background: currentColor; border-radius: 2px;
+  transition: transform .3s, opacity .3s;
+}
+body.nav-open #menu-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+body.nav-open #menu-toggle span:nth-child(2) { opacity: 0; }
+body.nav-open #menu-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.hdr-logo {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem;
+  color: var(--accent); letter-spacing: -0.5px; white-space: nowrap;
+  text-decoration: none;
+}
+.hdr-logo span { color: var(--accent3); }
+
+.hdr-sub {
+  font-size: 0.72rem; color: var(--text3);
+  font-family: 'Space Mono', monospace;
+  display: none;
+}
+
+/* ── SEARCH ──────────────────────────────────── */
+#search-wrap {
+  flex: 1; max-width: 480px; margin-left: auto;
+  position: relative;
+}
+#search-input {
+  width: 100%; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 10px;
+  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  padding: 9px 16px 9px 42px; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+#search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.12);
+}
+#search-input::placeholder { color: var(--text3); }
+.search-icon {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  color: var(--text3); pointer-events: none; font-size: 1rem;
+}
+#search-clear {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; color: var(--text3);
+  font-size: 1.1rem; display: none; transition: color .2s;
+}
+#search-clear:hover { color: var(--accent); }
+
+#search-results {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  max-height: 400px; overflow-y: auto; z-index: 200;
+  display: none;
+}
+#search-results.active { display: block; }
+.sr-item {
+  padding: 12px 16px; cursor: pointer; border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.sr-item:last-child { border-bottom: none; }
+.sr-item:hover { background: var(--surface3); }
+.sr-title { font-weight: 600; font-size: 0.9rem; color: var(--accent); }
+.sr-preview { font-size: 0.78rem; color: var(--text2); margin-top: 3px; line-height: 1.4; }
+.sr-section { font-size: 0.7rem; color: var(--text3); margin-top: 4px; font-family: 'Space Mono', monospace; }
+.sr-empty { padding: 24px 16px; text-align: center; color: var(--text3); font-size: 0.875rem; }
+.highlight { background: rgba(0,212,255,0.25); color: var(--accent); border-radius: 3px; padding: 0 2px; }
+
+/* ── SIDEBAR ─────────────────────────────────── */
+#nav-overlay {
+  position: fixed; inset: 0; z-index: 89;
+  background: rgba(0,0,0,0.5); opacity: 0;
+  pointer-events: none; transition: opacity .3s;
+}
+body.nav-open #nav-overlay { opacity: 1; pointer-events: all; }
+
+#sidebar {
+  position: fixed; top: var(--hdr-h); left: 0; bottom: 0;
+  width: var(--nav-w); z-index: 90;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  transform: translateX(-100%);
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+  overflow-y: auto; display: flex; flex-direction: column;
+}
+body.nav-open #sidebar { transform: translateX(0); }
+
+.nav-header {
+  padding: 20px 20px 12px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 2px;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-section {
+  padding: 12px 12px 4px;
+  font-size: 0.65rem; font-family: 'Space Mono', monospace;
+  color: var(--text3); text-transform: uppercase; letter-spacing: 1.5px;
+}
+
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 16px; cursor: pointer;
+  color: var(--text2); font-size: 0.84rem;
+  border-radius: 8px; margin: 1px 8px;
+  transition: background .15s, color .15s;
+  text-decoration: none; border: none; background: none;
+  width: calc(100% - 16px); text-align: left;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active { background: rgba(0,212,255,0.1); color: var(--accent); }
+.nav-item .nav-num {
+  font-family: 'Space Mono', monospace; font-size: 0.68rem;
+  color: var(--text3); min-width: 24px;
+}
+.nav-item.active .nav-num { color: var(--accent2); }
+.nav-badge {
+  margin-left: auto; font-size: 0.62rem; font-family: 'Space Mono', monospace;
+  padding: 2px 6px; border-radius: 4px; background: var(--border);
+  color: var(--text3);
+}
+.nav-badge.a { background: rgba(0,229,160,0.15); color: var(--green); }
+.nav-badge.b { background: rgba(0,153,204,0.15); color: var(--accent2); }
+.nav-badge.c { background: rgba(167,139,250,0.15); color: var(--purple); }
+
+/* ── MAIN CONTENT ────────────────────────────── */
+#main {
+  margin-top: var(--hdr-h);
+  padding: 40px 32px;
+  max-width: 900px;
+  margin-left: auto; margin-right: auto;
+  transition: margin-left .3s;
+}
+
+/* ── HERO ─────────────────────────────────────── */
+#hero {
+  text-align: center; padding: 60px 20px 48px;
+  position: relative; overflow: hidden;
+}
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Space Mono', monospace; font-size: 0.72rem;
+  color: var(--accent3); background: rgba(0,255,204,0.08);
+  border: 1px solid rgba(0,255,204,0.2); border-radius: 100px;
+  padding: 6px 16px; margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+.hero-tag::before { content: '●'; font-size: 0.5rem; animation: blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+.hero-title {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1; margin-bottom: 16px;
+  background: linear-gradient(135deg, #e2eaf5 0%, #00d4ff 50%, #00ffcc 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 1rem; color: var(--text2); margin-bottom: 32px;
+  max-width: 500px; margin-left: auto; margin-right: auto;
+  line-height: 1.6;
+}
+.hero-stats {
+  display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+}
+.stat {
+  text-align: center;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 24px;
+  min-width: 100px;
+}
+.stat-num {
+  font-family: 'Space Mono', monospace; font-size: 1.6rem;
+  font-weight: 700; color: var(--accent); display: block;
+}
+.stat-lbl { font-size: 0.75rem; color: var(--text3); margin-top: 4px; }
+
+/* ── SECTION DIVIDERS ────────────────────────── */
+.section-banner {
+  display: flex; align-items: center; gap: 16px;
+  margin: 48px 0 28px; padding: 16px 24px;
+  border-radius: var(--radius); border-left: 4px solid;
+}
+.section-banner.sec-a { border-color: var(--green); background: rgba(0,229,160,0.06); }
+.section-banner.sec-b { border-color: var(--accent); background: rgba(0,212,255,0.06); }
+.section-banner.sec-c { border-color: var(--purple); background: rgba(167,139,250,0.06); }
+.sb-icon { font-size: 1.6rem; }
+.sb-body {}
+.sb-title {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem;
+}
+.sec-a .sb-title { color: var(--green); }
+.sec-b .sb-title { color: var(--accent); }
+.sec-c .sb-title { color: var(--purple); }
+.sb-desc { font-size: 0.82rem; color: var(--text2); margin-top: 2px; }
+
+/* ── QUESTION CARDS ──────────────────────────── */
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+  scroll-margin-top: calc(var(--hdr-h) + 24px);
+}
+.q-card:hover { border-color: var(--border2); box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+.q-card.highlighted {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0,212,255,0.2), var(--shadow);
+}
+
+.q-header {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 20px 24px; cursor: pointer;
+  user-select: none; position: relative;
+  transition: background .15s;
+}
+.q-header:hover { background: var(--surface2); }
+
+.q-num {
+  font-family: 'Space Mono', monospace; font-size: 0.7rem;
+  padding: 4px 10px; border-radius: 6px; white-space: nowrap;
+  margin-top: 2px; flex-shrink: 0;
+}
+.sec-a-num { background: rgba(0,229,160,0.12); color: var(--green); border: 1px solid rgba(0,229,160,0.25); }
+.sec-b-num { background: rgba(0,212,255,0.12); color: var(--accent); border: 1px solid rgba(0,212,255,0.25); }
+.sec-c-num { background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+
+.q-title-wrap { flex: 1; }
+.q-title {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+  color: var(--text); line-height: 1.3;
+}
+.q-marks {
+  font-size: 0.72rem; color: var(--text3);
+  font-family: 'Space Mono', monospace; margin-top: 4px;
+}
+
+.q-toggle {
+  color: var(--text3); font-size: 1.1rem; transition: transform .3s, color .2s;
+  margin-top: 2px; flex-shrink: 0;
+}
+.q-card.open .q-toggle { transform: rotate(180deg); color: var(--accent); }
+
+/* ── ANSWER BODY ─────────────────────────────── */
+.q-body {
+  display: none; padding: 0 24px 24px;
+  border-top: 1px solid var(--border);
+}
+.q-card.open .q-body { display: block; }
+
+/* Answer box for MCQ */
+.answer-box {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 16px 0;
+  background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.25);
+  border-radius: 8px; padding: 10px 16px;
+  font-size: 0.875rem; color: var(--green);
+}
+.answer-box strong { color: var(--green); }
+
+/* Subheadings */
+.h2 {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+  color: var(--accent); margin: 24px 0 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.h2::before {
+  content: ''; width: 4px; height: 18px;
+  background: var(--accent); border-radius: 2px; display: block;
+}
+.h3 {
+  font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.92rem;
+  color: var(--orange); margin: 20px 0 8px;
+}
+
+/* Paragraphs */
+.p {
+  font-size: 0.9rem; line-height: 1.75; color: var(--text2); margin-bottom: 10px;
+}
+.p strong { color: var(--text); font-weight: 600; }
+
+/* Bullet list */
+.ul { list-style: none; margin: 8px 0 12px; }
+.ul li {
+  font-size: 0.875rem; color: var(--text2); line-height: 1.6;
+  padding: 4px 0 4px 20px; position: relative;
+}
+.ul li::before {
+  content: '▸'; position: absolute; left: 0;
+  color: var(--accent3); font-size: 0.7rem; top: 6px;
+}
+
+/* Code / Diagram block */
+.code-block {
+  background: #080e1c; border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 20px; margin: 12px 0;
+  font-family: 'Space Mono', monospace; font-size: 0.75rem;
+  color: #7dd3fc; line-height: 1.8; overflow-x: auto;
+  white-space: pre;
+}
+.code-block .cm { color: #475569; }
+.code-block .kw { color: #e879f9; }
+.code-block .st { color: #86efac; }
+.code-block .nm { color: #fbbf24; }
+
+/* Info box */
+.info-box {
+  background: rgba(0,212,255,0.06); border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0;
+  font-size: 0.875rem; color: var(--text2); line-height: 1.6;
+  font-style: italic;
+}
+.tip-box {
+  background: rgba(255,209,102,0.06); border-left: 3px solid var(--yellow);
+  border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0;
+  font-size: 0.875rem; color: var(--text2); line-height: 1.6;
+}
+.tip-box strong { color: var(--yellow); }
+
+/* ── TABLES ──────────────────────────────────── */
+.tbl-wrap { overflow-x: auto; margin: 12px 0; border-radius: 10px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+thead tr { background: var(--surface3); }
+thead th {
+  padding: 10px 14px; text-align: left;
+  color: var(--text); font-weight: 600;
+  font-family: 'Syne', sans-serif; font-size: 0.8rem;
+  border-bottom: 1px solid var(--border2);
+  white-space: nowrap;
+}
+tbody tr { transition: background .12s; }
+tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+tbody tr:hover { background: rgba(0,212,255,0.04); }
+tbody td {
+  padding: 9px 14px; color: var(--text2);
+  border-bottom: 1px solid var(--border); line-height: 1.5;
+  vertical-align: top;
+}
+tbody tr:last-child td { border-bottom: none; }
+
+/* ── CONCLUSION ──────────────────────────────── */
+.conclusion {
+  margin-top: 20px; padding: 16px 20px;
+  background: var(--surface2); border-radius: 10px;
+  border: 1px solid var(--border2);
+}
+.conclusion-lbl {
+  font-family: 'Space Mono', monospace; font-size: 0.65rem;
+  color: var(--accent3); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;
+}
+.conclusion p { font-size: 0.875rem; color: var(--text2); line-height: 1.7; }
+
+/* ── BACK TO TOP ─────────────────────────────── */
+#back-top {
+  position: fixed; bottom: 28px; right: 28px; z-index: 80;
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text2); cursor: pointer; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; opacity: 0; pointer-events: none;
+  box-shadow: var(--shadow);
+}
+#back-top.visible { opacity: 1; pointer-events: all; }
+#back-top:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); transform: translateY(-2px); }
+
+/* ── PROGRESS BAR ────────────────────────────── */
+#progress-bar {
+  position: fixed; top: var(--hdr-h); left: 0; right: 0; z-index: 99;
+  height: 2px; background: var(--border);
+}
+#progress-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent3));
+  transition: width .1s;
+}
+
+/* ── NO RESULTS ──────────────────────────────── */
+#no-results {
+  text-align: center; padding: 80px 20px; display: none;
+}
+#no-results.show { display: block; }
+#no-results h3 { font-family: 'Syne', sans-serif; font-size: 1.3rem; color: var(--text3); margin-bottom: 8px; }
+#no-results p { color: var(--text3); font-size: 0.875rem; }
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media (min-width: 900px) {
+  .hdr-sub { display: block; }
+  body.nav-open #main { margin-left: var(--nav-w); }
+}
+
+@media (max-width: 600px) {
+  #main { padding: 24px 16px; }
+  .q-header { padding: 16px; }
+  .q-body { padding: 0 16px 16px; }
+  .hero-stats { gap: 16px; }
+  .stat { padding: 12px 16px; }
+}
+
+/* ── PRINT ───────────────────────────────────── */
+@media print {
+  #header, #sidebar, #nav-overlay, #back-top, #progress-bar { display: none !important; }
+  #main { margin: 0 !important; padding: 24px !important; max-width: 100% !important; }
+  .q-card { break-inside: avoid; }
+  .q-body { display: block !important; }
+}
+
+/* ── ANIMATIONS ──────────────────────────────── */
+@keyframes fadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+.q-card { animation: fadeIn .4s ease both; }
+.q-card:nth-child(2) { animation-delay: .04s; }
+.q-card:nth-child(3) { animation-delay: .08s; }
+.q-card:nth-child(4) { animation-delay: .12s; }
+
+/* ── SEARCH HIGHLIGHT ────────────────────────── */
+.search-highlight { background: rgba(0,212,255,0.2); color: var(--accent); border-radius: 3px; padding: 0 2px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <button id="menu-toggle" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+  <a class="hdr-logo" href="#">IoT<span>Guide</span></a>
+  <span class="hdr-sub">MTCS212PCT · M.Tech Sem-II</span>
+  <div id="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="search-input" placeholder="Search questions, topics, protocols…" autocomplete="off"/>
+    <button id="search-clear" title="Clear">✕</button>
+    <div id="search-results"></div>
+  </div>
+</header>
+
+<!-- PROGRESS -->
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<!-- NAV OVERLAY -->
+<div id="nav-overlay"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="nav-header">📡 Table of Contents</div>
+  <div class="nav-section">Section A — Short Answers</div>
+  <button class="nav-item" onclick="goTo('q1')"><span class="nav-num">Q1</span> Zigbee Protocol <span class="nav-badge a">1M</span></button>
+  <button class="nav-item" onclick="goTo('q2')"><span class="nav-num">Q2</span> Edge Computing <span class="nav-badge a">1M</span></button>
+  <button class="nav-item" onclick="goTo('q3')"><span class="nav-num">Q3</span> MQTT, CoAP, HTTPS <span class="nav-badge a">1M</span></button>
+  <button class="nav-item" onclick="goTo('q4')"><span class="nav-num">Q4</span> IoT System Requirements <span class="nav-badge a">1M</span></button>
+  <button class="nav-item" onclick="goTo('q5')"><span class="nav-num">Q5</span> IoT Gateway <span class="nav-badge a">1M</span></button>
+  <button class="nav-item" onclick="goTo('q6')"><span class="nav-num">Q6</span> Why MQTT is Popular <span class="nav-badge a">1M</span></button>
+  <button class="nav-item" onclick="goTo('q7')"><span class="nav-num">Q7</span> Smart Homes <span class="nav-badge a">1M</span></button>
+  <button class="nav-item" onclick="goTo('q8')"><span class="nav-num">Q8</span> Real-Time IoT Apps <span class="nav-badge a">1M</span></button>
+  <div class="nav-section">Section B — Medium (6 Marks)</div>
+  <button class="nav-item" onclick="goTo('q9')"><span class="nav-num">Q9</span> M2M & SDN <span class="nav-badge b">6M</span></button>
+  <button class="nav-item" onclick="goTo('q10')"><span class="nav-num">Q10</span> Smart Devices & Data <span class="nav-badge b">6M</span></button>
+  <button class="nav-item" onclick="goTo('q11')"><span class="nav-num">Q11</span> Communication Protocols <span class="nav-badge b">6M</span></button>
+  <button class="nav-item" onclick="goTo('q12')"><span class="nav-num">Q12</span> Connected Vehicles <span class="nav-badge b">6M</span></button>
+  <button class="nav-item" onclick="goTo('q13')"><span class="nav-num">Q13</span> Sensors & Actuators <span class="nav-badge b">6M</span></button>
+  <button class="nav-item" onclick="goTo('q14')"><span class="nav-num">Q14</span> IoT Architecture <span class="nav-badge b">6M</span></button>
+  <button class="nav-item" onclick="goTo('q15')"><span class="nav-num">Q15</span> Data Analytics <span class="nav-badge b">6M</span></button>
+  <div class="nav-section">Section C — Long Answers (10 Marks)</div>
+  <button class="nav-item" onclick="goTo('q16')"><span class="nav-num">Q16</span> Cloud, Fog & Sensor Cloud <span class="nav-badge c">10M</span></button>
+  <button class="nav-item" onclick="goTo('q17')"><span class="nav-num">Q17</span> IoT in Multiple Domains <span class="nav-badge c">10M</span></button>
+  <button class="nav-item" onclick="goTo('q18')"><span class="nav-num">Q18</span> IoT Case Studies <span class="nav-badge c">10M</span></button>
+  <button class="nav-item" onclick="goTo('q19')"><span class="nav-num">Q19</span> Interoperability <span class="nav-badge c">10M</span></button>
+  <button class="nav-item" onclick="goTo('q20')"><span class="nav-num">Q20</span> NodeMCU vs Arduino <span class="nav-badge c">10M</span></button>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-tag">LIVE EXAM GUIDE</div>
+    <h1 class="hero-title">Internet of Things</h1>
+    <p class="hero-sub">M.Tech Semester II · Paper MTCS212PCT · Maulana Azad National Urdu University · April–May 2025</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">20</span><div class="stat-lbl">Questions</div></div>
+      <div class="stat"><span class="stat-num">70</span><div class="stat-lbl">Max Marks</div></div>
+      <div class="stat"><span class="stat-num">3</span><div class="stat-lbl">Sections</div></div>
+      <div class="stat"><span class="stat-num">3hr</span><div class="stat-lbl">Duration</div></div>
+    </div>
+  </section>
+
+  <div id="no-results">
+    <h3>No matches found</h3>
+    <p>Try different keywords like "MQTT", "sensor", "gateway", or "NodeMCU"</p>
+  </div>
+
+  <!-- ═══════════════ SECTION A ═══════════════ -->
+  <div class="section-banner sec-a" id="sec-a">
+    <div class="sb-icon">🟢</div>
+    <div class="sb-body">
+      <div class="sb-title">Section A — Short Answer Questions</div>
+      <div class="sb-desc">10 MCQs · 1 mark each · All compulsory · Total: 10 Marks</div>
+    </div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="q1">
+    <div class="q-header" onclick="toggleCard('q1')">
+      <span class="q-num sec-a-num">Q01</span>
+      <div class="q-title-wrap">
+        <div class="q-title">Zigbee Protocol and Its Applications</div>
+        <div class="q-marks">Section A · 1 Mark · MCQ Answer + Full Explanation</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="answer-box">✅ <strong>Correct Answer: c. Home automation devices</strong> — Zigbee is primarily used for smart home IoT.</div>
+
+      <div class="h2">Definition</div>
+      <p class="p">Zigbee is a <strong>low-power, low-data-rate wireless communication standard</strong> based on IEEE 802.15.4. It is designed for short-range, battery-operated IoT devices that do not require high bandwidth.</p>
+
+      <div class="h2">Key Features</div>
+      <ul class="ul">
+        <li><strong>Frequency:</strong> 2.4 GHz (global), 868/915 MHz (regional)</li>
+        <li><strong>Range:</strong> 10–100 meters per hop; mesh extends further</li>
+        <li><strong>Data Rate:</strong> 250 kbps maximum</li>
+        <li><strong>Power:</strong> Extremely low — devices last years on small batteries</li>
+        <li><strong>Topology:</strong> Mesh, star, and cluster-tree networks</li>
+        <li><strong>Network size:</strong> Up to 65,000 devices in one network</li>
+      </ul>
+
+      <div class="h2">Zigbee Network Diagram</div>
+      <div class="code-block">[Coordinator]
+      |        \
+ [Router1]  [Router2]
+   |    |        |
+[ED1] [ED2]   [ED3]
+
+ED = End Device (sensor/actuator)
+Data flows from devices → routers → coordinator → cloud</div>
+
+      <div class="h2">Zigbee Applications</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Application Area</th><th>Example Device</th><th>Why Zigbee?</th></tr></thead>
+        <tbody>
+          <tr><td>Home Automation ✓</td><td>Smart lights, thermostats, door locks</td><td>Low power + mesh range</td></tr>
+          <tr><td>Healthcare</td><td>Patient monitoring sensors</td><td>Battery-friendly</td></tr>
+          <tr><td>Industrial</td><td>Factory floor sensors</td><td>Reliable mesh network</td></tr>
+          <tr><td>Agriculture</td><td>Soil moisture sensors</td><td>Multi-year battery life</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Why NOT Other Options?</div>
+      <ul class="ul">
+        <li><strong>Smart thermostats</strong> — Correct but incomplete. Thermostats are part of home automation (c), making c the better answer.</li>
+        <li><strong>Wearable fitness trackers</strong> — Use Bluetooth Low Energy (BLE), not Zigbee.</li>
+        <li><strong>GPS trackers</strong> — Use cellular (4G/LTE), not Zigbee — need long range.</li>
+      </ul>
+
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>Zigbee is ideal for home automation because it supports hundreds of devices in a mesh network, uses very little power, and reliably covers short distances needed in smart homes.</p></div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-header" onclick="toggleCard('q2')">
+      <span class="q-num sec-a-num">Q02</span>
+      <div class="q-title-wrap">
+        <div class="q-title">Edge Computing in IoT — Benefits</div>
+        <div class="q-marks">Section A · 1 Mark · MCQ Answer + Full Explanation</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="answer-box">✅ <strong>Correct Answer: b. Data processing close to the source</strong> — Edge computing moves processing near the IoT device itself.</div>
+
+      <div class="h2">Definition</div>
+      <p class="p"><strong>Edge Computing</strong> means processing IoT data at or near the device itself (the "edge" of the network) instead of sending all raw data to a distant cloud server. This reduces delay, saves bandwidth, and improves real-time response.</p>
+
+      <div class="h2">Edge Computing Architecture</div>
+      <div class="code-block">[IoT Sensor] → [Edge Device/Gateway] → [Cloud]
+      ↑                    ↑
+Collects data       Processes locally
+                    Sends only important data</div>
+
+      <div class="h2">Benefits of Edge Computing</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Benefit</th><th>Explanation</th><th>Real Example</th></tr></thead>
+        <tbody>
+          <tr><td>Low Latency</td><td>Decisions made in milliseconds locally</td><td>Self-driving car brakes instantly</td></tr>
+          <tr><td>Bandwidth Saving</td><td>Only important data sent to cloud</td><td>Factory sends alerts, not raw video</td></tr>
+          <tr><td>Privacy</td><td>Sensitive data stays local</td><td>Hospital patient data stays on-site</td></tr>
+          <tr><td>Offline Operation</td><td>Works without internet</td><td>Smart home works during outage</td></tr>
+          <tr><td>Cost Reduction</td><td>Less cloud storage/bandwidth needed</td><td>Lower AWS/Azure bills</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Edge vs Fog vs Cloud</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Feature</th><th>Cloud</th><th>Fog</th><th>Edge</th></tr></thead>
+        <tbody>
+          <tr><td>Location</td><td>Remote data center</td><td>Between edge & cloud</td><td>At/near device</td></tr>
+          <tr><td>Latency</td><td>High (100ms+)</td><td>Medium</td><td>Very low (&lt;10ms)</td></tr>
+          <tr><td>Bandwidth use</td><td>High</td><td>Moderate</td><td>Low</td></tr>
+          <tr><td>Best for</td><td>Big data analytics</td><td>Regional processing</td><td>Real-time IoT</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>Edge computing is critical for IoT because it processes data close to the source, enables real-time decision-making, reduces cloud dependency, and saves network bandwidth — making IoT systems faster, cheaper, and more reliable.</p></div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-header" onclick="toggleCard('q3')">
+      <span class="q-num sec-a-num">Q03</span>
+      <div class="q-title-wrap">
+        <div class="q-title">MQTT, CoAP, and HTTPS Protocols in IoT</div>
+        <div class="q-marks">Section A · 1 Mark · MCQ + Full Protocol Comparison</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="answer-box">✅ <strong>Correct Answer: a. MQTT</strong> — Most common secure protocol for IoT machine-to-machine communication.</div>
+
+      <div class="h2">MQTT — Message Queuing Telemetry Transport</div>
+      <p class="p">MQTT is a <strong>lightweight publish-subscribe messaging protocol</strong> designed for constrained devices and low-bandwidth, unreliable networks.</p>
+      <ul class="ul">
+        <li><strong>Port:</strong> 1883 (plain), 8883 (TLS/SSL secure)</li>
+        <li><strong>Transport:</strong> TCP/IP</li>
+        <li><strong>QoS Levels:</strong> 0 (at most once), 1 (at least once), 2 (exactly once)</li>
+      </ul>
+      <div class="code-block">[Publisher/Sensor] ──publish──→ [MQTT Broker] ──deliver──→ [Subscriber/App]
+    Topic: "home/temp"          (Mosquitto)           Topic: "home/temp"</div>
+
+      <div class="h2">CoAP — Constrained Application Protocol</div>
+      <p class="p">CoAP is a lightweight <strong>HTTP-like protocol for ultra-constrained IoT devices</strong> communicating over UDP.</p>
+      <ul class="ul">
+        <li><strong>Transport:</strong> UDP (faster, no connection overhead)</li>
+        <li><strong>Methods:</strong> GET, PUT, POST, DELETE (REST-like)</li>
+        <li>Best for: devices with very limited CPU and memory (8-bit MCUs)</li>
+      </ul>
+
+      <div class="h2">HTTPS in IoT</div>
+      <p class="p">HTTPS is <strong>encrypted HTTP</strong> used for IoT dashboards and APIs. Heavier than MQTT/CoAP but needed for web compatibility.</p>
+
+      <div class="h2">Protocol Comparison Table</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Feature</th><th>MQTT</th><th>CoAP</th><th>HTTPS</th></tr></thead>
+        <tbody>
+          <tr><td>Transport</td><td>TCP</td><td>UDP</td><td>TCP</td></tr>
+          <tr><td>Architecture</td><td>Pub/Subscribe</td><td>Request/Response</td><td>Request/Response</td></tr>
+          <tr><td>Message Size</td><td>2 bytes header</td><td>~4 bytes header</td><td>Large (KB)</td></tr>
+          <tr><td>Power Use</td><td>Very low</td><td>Low</td><td>High</td></tr>
+          <tr><td>Security</td><td>TLS/SSL</td><td>DTLS</td><td>TLS/SSL</td></tr>
+          <tr><td>Best for</td><td>Low-bandwidth IoT ✓</td><td>Constrained devices</td><td>Web APIs/Dashboards</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>MQTT is preferred for IoT because it is lightweight, pub/sub based, works on unreliable networks, and has minimal power consumption. CoAP suits ultra-constrained devices; HTTPS is used when web compatibility is needed.</p></div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-header" onclick="toggleCard('q4')">
+      <span class="q-num sec-a-num">Q04</span>
+      <div class="q-title-wrap">
+        <div class="q-title">Common IoT System Requirements &amp; Challenges</div>
+        <div class="q-marks">Section A · 1 Mark</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="answer-box">✅ <strong>Correct Answer: c. Large amounts of data that are hard to process</strong></div>
+      <div class="h2">IoT System Requirements</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Requirement</th><th>Description</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Connectivity</td><td>Network access via Wi-Fi, Zigbee, 4G/5G</td><td>Wi-Fi in smart home</td></tr>
+          <tr><td>Data Processing ⚠️</td><td>Process enormous sensor data in real-time — biggest challenge</td><td>Factory: millions of readings/hour</td></tr>
+          <tr><td>Security</td><td>Encryption, authentication, secure protocols</td><td>TLS, AES-256</td></tr>
+          <tr><td>Scalability</td><td>Handle millions of devices</td><td>Smart city: 1M sensors</td></tr>
+          <tr><td>Low Power</td><td>Battery-operated devices</td><td>Zigbee sensor: 5+ years battery</td></tr>
+          <tr><td>Interoperability</td><td>Multi-vendor device compatibility</td><td>Matter smart home standard</td></tr>
+        </tbody>
+      </table></div>
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>The biggest challenge in IoT is processing and storing the massive volumes of data generated by millions of devices continuously — requiring edge computing, big data platforms, and cloud analytics.</p></div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-header" onclick="toggleCard('q5')">
+      <span class="q-num sec-a-num">Q05</span>
+      <div class="q-title-wrap">
+        <div class="q-title">IoT Gateway — Definition &amp; Functions</div>
+        <div class="q-marks">Section A · 1 Mark</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="answer-box">✅ <strong>Correct Answer: a. Device that collects data from IoT devices and pushes to cloud</strong></div>
+      <div class="h2">Definition</div>
+      <p class="p">An <strong>IoT Gateway</strong> is an intermediate hardware device that connects IoT sensors/devices to the cloud or internet. It bridges local device protocols to internet protocols.</p>
+      <div class="code-block">[Sensors/Devices] ←→ [IoT Gateway] ←→ [Cloud/Server]
+(Zigbee, BLE)      (Protocol Bridge,    (AWS, Azure)
+                    Edge Processing,
+                    Security Layer)</div>
+      <div class="h2">Gateway Functions</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Function</th><th>What It Does</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Protocol Translation</td><td>Zigbee → MQTT/HTTP</td><td>Smart home hub</td></tr>
+          <tr><td>Data Aggregation</td><td>Collects from 100s of sensors</td><td>Industrial gateway</td></tr>
+          <tr><td>Edge Processing</td><td>Local filtering &amp; analytics</td><td>Smart factory</td></tr>
+          <tr><td>Security</td><td>Encrypt, authenticate devices</td><td>VPN tunnel to cloud</td></tr>
+          <tr><td>Device Management</td><td>Remote firmware updates</td><td>AWS IoT Greengrass</td></tr>
+        </tbody>
+      </table></div>
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>IoT gateways bridge the gap between local device protocols and the internet, enabling cloud connectivity, security, and edge processing in IoT systems.</p></div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-header" onclick="toggleCard('q6')">
+      <span class="q-num sec-a-num">Q06</span>
+      <div class="q-title-wrap">
+        <div class="q-title">Why MQTT is Preferred in IoT?</div>
+        <div class="q-marks">Section A · 1 Mark</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="answer-box">✅ <strong>Correct Answer: b. Energy-efficient and lightweight</strong></div>
+      <div class="h2">Reasons MQTT is Popular</div>
+      <ul class="ul">
+        <li><strong>Lightweight:</strong> Header is only 2 bytes minimum — much smaller than HTTP (hundreds of bytes)</li>
+        <li><strong>Energy-Efficient:</strong> Less data = less radio activity = longer battery life</li>
+        <li><strong>Pub/Subscribe Model:</strong> Broker pushes data automatically — no polling needed</li>
+        <li><strong>Works on Bad Networks:</strong> QoS levels ensure delivery even with packet loss</li>
+        <li><strong>Scales to Millions:</strong> One broker handles millions of simultaneous connections</li>
+        <li><strong>Open Standard:</strong> Free, well-documented, massive community</li>
+      </ul>
+      <div class="h2">MQTT vs HTTP</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Parameter</th><th>MQTT</th><th>HTTP</th></tr></thead>
+        <tbody>
+          <tr><td>Header Size</td><td>2 bytes minimum</td><td>Hundreds of bytes</td></tr>
+          <tr><td>Communication</td><td>Pub/Sub (push)</td><td>Request/Response (pull)</td></tr>
+          <tr><td>Connection</td><td>Persistent TCP</td><td>New connection each time</td></tr>
+          <tr><td>Power Use</td><td>Very low ✓</td><td>High</td></tr>
+          <tr><td>Real-time delivery</td><td>Yes (broker push)</td><td>No (must poll)</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-header" onclick="toggleCard('q7')">
+      <span class="q-num sec-a-num">Q07</span>
+      <div class="q-title-wrap">
+        <div class="q-title">Smart Homes — Concept &amp; Architecture</div>
+        <div class="q-marks">Section A · 1 Mark</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="answer-box">✅ <strong>Correct Answer: a. Automate devices to save energy and improve security</strong></div>
+      <div class="h2">Definition</div>
+      <p class="p">A <strong>Smart Home</strong> is a residence equipped with IoT devices that automate and control lighting, temperature, security, appliances, and energy — accessible remotely via smartphone or voice.</p>
+      <div class="code-block">[Smart Devices] → [Home Hub/Gateway] → [Cloud] → [Smartphone App]
+(Lights, Locks,    (Protocol Bridge)    (AWS)     (User Control)
+ Thermostat, AC)</div>
+
+      <div class="h2">Key Components</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Device</th><th>Function</th><th>Protocol</th></tr></thead>
+        <tbody>
+          <tr><td>Smart Thermostat</td><td>Auto temperature adjustment</td><td>Z-Wave / Wi-Fi</td></tr>
+          <tr><td>Smart Lights</td><td>Remote control, scheduling</td><td>Zigbee / Wi-Fi</td></tr>
+          <tr><td>Smart Door Lock</td><td>Keyless entry, notifications</td><td>Z-Wave / Bluetooth</td></tr>
+          <tr><td>Smart Camera</td><td>Security surveillance, alerts</td><td>Wi-Fi</td></tr>
+          <tr><td>Energy Monitor</td><td>Track &amp; reduce power usage</td><td>Zigbee</td></tr>
+        </tbody>
+      </table></div>
+      <div class="h2">Benefits</div>
+      <ul class="ul">
+        <li>Energy saving — auto-off when no one is home</li>
+        <li>Security — real-time alerts, smart locks</li>
+        <li>Comfort — automatic temperature, lighting scenes</li>
+        <li>Voice control — Alexa, Google Home, Siri</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-header" onclick="toggleCard('q8')">
+      <span class="q-num sec-a-num">Q08</span>
+      <div class="q-title-wrap">
+        <div class="q-title">Real-Time IoT Applications</div>
+        <div class="q-marks">Section A · 1 Mark</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="answer-box">✅ <strong>Correct Answer: a. Remote health monitoring</strong> — Requires immediate data delivery and real-time response.</div>
+      <div class="h2">Major Real-Time IoT Applications</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Application</th><th>IoT Devices</th><th>Real-Time Action</th></tr></thead>
+        <tbody>
+          <tr><td>Remote Health Monitoring ✓</td><td>ECG, SpO2, BP sensors</td><td>Alert doctor if heart rate abnormal</td></tr>
+          <tr><td>Autonomous Vehicles</td><td>LIDAR, Camera, Radar</td><td>Brake instantly to avoid collision</td></tr>
+          <tr><td>Smart Traffic</td><td>Traffic cameras, sensors</td><td>Adjust signal timing dynamically</td></tr>
+          <tr><td>Industrial Monitoring</td><td>Vibration, temp sensors</td><td>Stop machine before it overheats</td></tr>
+          <tr><td>Fire Detection</td><td>Smoke, heat, CO2 sensors</td><td>Trigger alarm and sprinkler</td></tr>
+        </tbody>
+      </table></div>
+      <div class="h2">Technologies Enabling Real-Time IoT</div>
+      <ul class="ul">
+        <li><strong>Edge Computing</strong> — process at the device, not cloud</li>
+        <li><strong>5G Networks</strong> — ultra-low latency connectivity</li>
+        <li><strong>MQTT Protocol</strong> — instant message delivery</li>
+        <li><strong>Stream Processing</strong> — Apache Kafka, AWS Kinesis</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION B ═══════════════ -->
+  <div class="section-banner sec-b" id="sec-b">
+    <div class="sb-icon">🔵</div>
+    <div class="sb-body">
+      <div class="sb-title">Section B — Medium Answer Questions</div>
+      <div class="sb-desc">8 questions · Answer any 5 · 6 marks each · Total: 30 Marks</div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9">
+    <div class="q-header" onclick="toggleCard('q9')">
+      <span class="q-num sec-b-num">Q09</span>
+      <div class="q-title-wrap">
+        <div class="q-title">M2M Communication and Software-Defined Networking (SDN)</div>
+        <div class="q-marks">Section B · 6 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">Part A: Machine-to-Machine (M2M) Communication</div>
+      <div class="h3">Definition</div>
+      <p class="p"><strong>M2M</strong> is a technology that enables devices to communicate directly with each other <strong>without human intervention</strong>. Devices collect data, transmit it, and trigger actions automatically.</p>
+      <div class="code-block">[Device 1] ←── M2M Network ──→ [Device 2]
+(Sensor)      (Cellular/LAN)    (Server)
+    ↓                                ↓
+Collect Data                   Take Action</div>
+
+      <div class="h3">M2M Examples</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Industry</th><th>Application</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Healthcare</td><td>Remote patient monitoring</td><td>ECG → Hospital server</td></tr>
+          <tr><td>Utilities</td><td>Smart meter reading</td><td>Electricity meter → Billing system</td></tr>
+          <tr><td>Logistics</td><td>Fleet tracking</td><td>Truck GPS → Dispatch center</td></tr>
+          <tr><td>Manufacturing</td><td>Machine monitoring</td><td>CNC → Maintenance system</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Part B: Software-Defined Networking (SDN)</div>
+      <div class="h3">Definition</div>
+      <p class="p">SDN is a network architecture that <strong>separates the control plane</strong> (routing decisions) from the <strong>data plane</strong> (packet forwarding), making networks centrally programmable via software.</p>
+      <div class="code-block">┌──────────────────────────┐
+│     Application Layer    │  ← IoT Apps / Analytics
+├──────────────────────────┤
+│     Control Layer        │  ← SDN Controller (centralized)
+├──────────────────────────┤
+│  Infrastructure Layer    │  ← Physical switches, IoT devices
+└──────────────────────────┘</div>
+
+      <div class="h3">SDN Benefits in IoT</div>
+      <ul class="ul">
+        <li><strong>Dynamic Traffic Management:</strong> Route IoT data flows optimally in real time</li>
+        <li><strong>Scalability:</strong> Easily add thousands of new IoT devices</li>
+        <li><strong>Security:</strong> Centrally block malicious IoT device traffic</li>
+        <li><strong>QoS:</strong> Prioritize critical IoT data (medical alerts) over routine data</li>
+      </ul>
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>M2M enables device-to-device automation; SDN provides intelligent, programmable network management. Together they enable scalable, efficient, and secure IoT infrastructure.</p></div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10">
+    <div class="q-header" onclick="toggleCard('q10')">
+      <span class="q-num sec-b-num">Q10</span>
+      <div class="q-title-wrap">
+        <div class="q-title">Smart IoT Devices and Data Exchange in Smart Applications</div>
+        <div class="q-marks">Section B · 6 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">What Makes a Device 'Smart'?</div>
+      <p class="p">A smart IoT device is a physical object with <strong>sensors, processor, and connectivity</strong> that can collect, send, receive, and act on data — making autonomous decisions or responding to remote commands.</p>
+
+      <div class="h2">Components of a Smart Device</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Component</th><th>Function</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Sensor</td><td>Collect environmental data</td><td>Temperature, humidity, GPS</td></tr>
+          <tr><td>Processor (MCU)</td><td>Process data locally</td><td>Arduino, NodeMCU, Raspberry Pi</td></tr>
+          <tr><td>Communication Module</td><td>Send/receive wirelessly</td><td>Wi-Fi chip, Zigbee, BLE</td></tr>
+          <tr><td>Actuator</td><td>Physical action from data</td><td>Motor, relay, LED, pump</td></tr>
+          <tr><td>Power Supply</td><td>Energy source</td><td>Battery, solar, USB</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Data Exchange Flow — Step by Step</div>
+      <ul class="ul">
+        <li><strong>Step 1 — Sense:</strong> Sensor reads raw data (temperature = 38°C)</li>
+        <li><strong>Step 2 — Process:</strong> MCU filters &amp; formats data as JSON</li>
+        <li><strong>Step 3 — Transmit:</strong> Data sent via MQTT/HTTP to cloud</li>
+        <li><strong>Step 4 — Analyze:</strong> Cloud runs analytics &amp; machine learning</li>
+        <li><strong>Step 5 — Act:</strong> Command sent back to actuator or notification to user</li>
+      </ul>
+      <div class="code-block">[Sensor] → [MCU] → [Wi-Fi/MQTT] → [Cloud] → [Dashboard]
+                                             ↓
+                                       [Analytics]
+                                             ↓
+                                  [Command → Actuator]</div>
+
+      <div class="h2">Data Exchange Challenges</div>
+      <ul class="ul">
+        <li><strong>Volume:</strong> Millions of devices generate terabytes daily</li>
+        <li><strong>Velocity:</strong> Data arrives at very high speed — needs real-time processing</li>
+        <li><strong>Variety:</strong> Numbers, images, audio, GPS — all different formats</li>
+        <li><strong>Security:</strong> All data in transit must be encrypted</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="q11">
+    <div class="q-header" onclick="toggleCard('q11')">
+      <span class="q-num sec-b-num">Q11</span>
+      <div class="q-title-wrap">
+        <div class="q-title">IoT Communication Protocols — Full Comparison</div>
+        <div class="q-marks">Section B · 6 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">Why IoT Needs Special Protocols?</div>
+      <p class="p">IoT devices are small, battery-powered, and often on slow/unreliable networks. Traditional HTTP/TCP is too heavy. IoT protocols are optimized for these constraints.</p>
+
+      <div class="h2">Application Layer Protocols</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Protocol</th><th>Transport</th><th>Architecture</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr><td>MQTT</td><td>TCP</td><td>Pub/Subscribe</td><td>Smart meters, sensors</td></tr>
+          <tr><td>CoAP</td><td>UDP</td><td>Request/Response</td><td>Ultra-constrained devices</td></tr>
+          <tr><td>AMQP</td><td>TCP</td><td>Pub/Subscribe</td><td>Enterprise IoT messaging</td></tr>
+          <tr><td>HTTP/HTTPS</td><td>TCP</td><td>Request/Response</td><td>IoT dashboards, APIs</td></tr>
+          <tr><td>WebSocket</td><td>TCP</td><td>Full-duplex</td><td>Real-time dashboards</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Network Layer Protocols</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Protocol</th><th>Range</th><th>Data Rate</th><th>Power</th><th>Application</th></tr></thead>
+        <tbody>
+          <tr><td>Wi-Fi (802.11)</td><td>~50m</td><td>54–600 Mbps</td><td>High</td><td>Smart home, cameras</td></tr>
+          <tr><td>Bluetooth/BLE</td><td>~10m</td><td>1–3 Mbps</td><td>Very Low</td><td>Wearables, beacons</td></tr>
+          <tr><td>Zigbee</td><td>~100m</td><td>250 kbps</td><td>Very Low</td><td>Home automation</td></tr>
+          <tr><td>Z-Wave</td><td>~30m</td><td>100 kbps</td><td>Low</td><td>Smart home devices</td></tr>
+          <tr><td>LoRaWAN</td><td>~15 km</td><td>0.3–50 kbps</td><td>Extremely Low</td><td>Agriculture, smart city</td></tr>
+          <tr><td>NB-IoT</td><td>Nationwide</td><td>~200 kbps</td><td>Low</td><td>Smart meters, tracking</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Protocol Selection Guide</div>
+      <ul class="ul">
+        <li>Short range + Low power → <strong>Zigbee or BLE</strong></li>
+        <li>Long range + Very low data rate → <strong>LoRaWAN or NB-IoT</strong></li>
+        <li>High bandwidth at home → <strong>Wi-Fi</strong></li>
+        <li>Lightweight cloud messaging → <strong>MQTT</strong></li>
+        <li>Ultra-constrained devices → <strong>CoAP</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="q12">
+    <div class="q-header" onclick="toggleCard('q12')">
+      <span class="q-num sec-b-num">Q12</span>
+      <div class="q-title-wrap">
+        <div class="q-title">IoT in Connected Vehicles (V2X)</div>
+        <div class="q-marks">Section B · 6 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">Definition</div>
+      <p class="p"><strong>Connected Vehicles</strong> use IoT sensors to communicate with other vehicles (V2V), infrastructure (V2I), pedestrians (V2P), and the cloud (V2C) — collectively called <strong>V2X (Vehicle-to-Everything)</strong>.</p>
+
+      <div class="h2">IoT Technologies Used</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Technology</th><th>Purpose</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>GPS/GNSS</td><td>Location &amp; navigation</td><td>Real-time route optimization</td></tr>
+          <tr><td>LIDAR/Radar/Camera</td><td>Environment sensing</td><td>Obstacle detection</td></tr>
+          <tr><td>OBD-II Sensors</td><td>Engine diagnostics</td><td>Fault code reading</td></tr>
+          <tr><td>DSRC (802.11p)</td><td>V2V communication</td><td>Crash warning at intersection</td></tr>
+          <tr><td>4G/5G Cellular</td><td>Cloud connectivity</td><td>Over-the-air updates (Tesla)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Architecture</div>
+      <div class="code-block">[Vehicle Sensors] → [ECU/Edge] → [5G/DSRC] → [V2X Server]
+     ↓                   ↓                          ↓
+ LIDAR/Camera      Local processing          Traffic Mgmt
+ GPS/OBD           Safety decisions          Navigation</div>
+
+      <div class="h2">Key IoT Applications</div>
+      <ul class="ul">
+        <li><strong>Navigation:</strong> Google Maps uses crowdsourced vehicle data for real-time traffic</li>
+        <li><strong>Predictive Maintenance:</strong> OBD sensors alert driver before breakdown (Tesla diagnostics)</li>
+        <li><strong>Autonomous Driving:</strong> LIDAR + AI processes millions of data points/second</li>
+        <li><strong>Emergency Response:</strong> eCall auto-contacts emergency services in a crash</li>
+        <li><strong>Fleet Management:</strong> Track delivery trucks, optimize routes in real time</li>
+      </ul>
+
+      <div class="h2">Benefits vs Challenges</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Benefits</th><th>Challenges</th></tr></thead>
+        <tbody>
+          <tr><td>Reduced accidents via V2V warnings</td><td>Cybersecurity — vehicle hacking risks</td></tr>
+          <tr><td>Better fuel efficiency via smart routing</td><td>High latency must be solved (5G needed)</td></tr>
+          <tr><td>Real-time emergency response</td><td>Data privacy concerns</td></tr>
+          <tr><td>Predictive maintenance saves costs</td><td>Standardization across manufacturers</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="q13">
+    <div class="q-header" onclick="toggleCard('q13')">
+      <span class="q-num sec-b-num">Q13</span>
+      <div class="q-title-wrap">
+        <div class="q-title">Sensors and Actuators in IoT</div>
+        <div class="q-marks">Section B · 6 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">Sensors — Definition</div>
+      <p class="p">A <strong>sensor</strong> detects a physical property (temperature, light, pressure) and converts it into an electrical signal for the microcontroller to read.</p>
+
+      <div class="h2">Types of Sensors</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Sensor Type</th><th>Measures</th><th>Module</th><th>Application</th></tr></thead>
+        <tbody>
+          <tr><td>Temperature</td><td>Heat in °C</td><td>DHT11, DS18B20</td><td>Smart thermostat</td></tr>
+          <tr><td>Humidity</td><td>Moisture %RH</td><td>DHT22, SHT31</td><td>Greenhouse monitoring</td></tr>
+          <tr><td>Motion (PIR)</td><td>Infrared from bodies</td><td>HC-SR501</td><td>Security alarm</td></tr>
+          <tr><td>Distance</td><td>Ultrasonic range</td><td>HC-SR04</td><td>Parking sensors, robots</td></tr>
+          <tr><td>Gas/Air Quality</td><td>CO2, smoke ppm</td><td>MQ-2, MQ-135</td><td>Fire detection</td></tr>
+          <tr><td>Light (LDR)</td><td>Lux intensity</td><td>LDR, TSL2561</td><td>Auto street lights</td></tr>
+          <tr><td>Accelerometer</td><td>Motion, tilt, vibration</td><td>MPU6050</td><td>Wearables, crash detection</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Actuators — Definition</div>
+      <p class="p">An <strong>actuator</strong> receives an electrical signal from the controller and converts it into a <strong>physical action</strong> — the output side of IoT.</p>
+
+      <div class="h2">Types of Actuators</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Actuator</th><th>Physical Action</th><th>Application</th></tr></thead>
+        <tbody>
+          <tr><td>Relay</td><td>Switch ON/OFF electrical devices</td><td>Auto light control</td></tr>
+          <tr><td>DC Motor</td><td>Rotation/movement</td><td>Robot, conveyor belt</td></tr>
+          <tr><td>Servo Motor</td><td>Precise angle rotation</td><td>Smart lock, robot arm</td></tr>
+          <tr><td>Solenoid Valve</td><td>Control fluid/gas flow</td><td>Smart irrigation</td></tr>
+          <tr><td>Buzzer/Speaker</td><td>Sound output</td><td>Alert system, alarm</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Sensor-Actuator Feedback Loop</div>
+      <div class="code-block">[Environment] → [Sensor] → [MCU/Controller] → [Actuator] → [Environment]
+                   (reads)      (decides)          (acts)
+
+Example:
+Room temp 35°C → Sensor reads → Arduino detects >30°C → Relay ON → AC starts → Room cools</div>
+
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>Sensors bring the physical world into the digital domain; actuators bring digital decisions back to physical reality. Together they form the complete IoT perception-action loop.</p></div>
+    </div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="q14">
+    <div class="q-header" onclick="toggleCard('q14')">
+      <span class="q-num sec-b-num">Q14</span>
+      <div class="q-title-wrap">
+        <div class="q-title">IoT Architecture Layers — Diagram &amp; Explanation</div>
+        <div class="q-marks">Section B · 6 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">3-Layer IoT Architecture</div>
+      <div class="code-block">┌─────────────────────────────────────────┐
+│         APPLICATION LAYER               │
+│  Smart Home | Healthcare | Industry     │
+├─────────────────────────────────────────┤
+│         NETWORK LAYER                   │
+│  Internet | Wi-Fi | 4G | MQTT | CoAP    │
+├─────────────────────────────────────────┤
+│         PERCEPTION LAYER                │
+│  Sensors | Actuators | RFID | GPS       │
+└─────────────────────────────────────────┘
+     Data flows UP ↑ | Commands flow DOWN ↓</div>
+
+      <div class="h2">5-Layer Architecture (Advanced)</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Layer</th><th>Name</th><th>Function</th><th>Technologies</th></tr></thead>
+        <tbody>
+          <tr><td>5 (Top)</td><td>Application Layer</td><td>End-user IoT apps</td><td>Smart Home, Healthcare apps</td></tr>
+          <tr><td>4</td><td>Service Layer</td><td>APIs, device management</td><td>AWS IoT, Azure IoT Hub</td></tr>
+          <tr><td>3</td><td>Processing Layer</td><td>Storage, analytics, ML</td><td>Big Data, Kafka, Spark</td></tr>
+          <tr><td>2</td><td>Network Layer</td><td>Data transmission</td><td>TCP/IP, MQTT, Wi-Fi, 4G/5G</td></tr>
+          <tr><td>1 (Bottom)</td><td>Perception Layer</td><td>Physical sensing</td><td>Sensors, RFID, Actuators, GPS</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Layer Functions</div>
+      <ul class="ul">
+        <li><strong>Perception Layer:</strong> Physical layer — sensors collect data (temperature, GPS, motion)</li>
+        <li><strong>Network Layer:</strong> Transmit data via Wi-Fi, Zigbee, 4G/5G; protocols MQTT, CoAP</li>
+        <li><strong>Processing Layer:</strong> Store and analyze massive data; edge computing happens here</li>
+        <li><strong>Service Layer:</strong> Cloud IoT platforms, device registration, data APIs</li>
+        <li><strong>Application Layer:</strong> User-facing apps — smart home dashboard, hospital monitoring</li>
+      </ul>
+
+      <div class="tip-box"><strong>💡 Exam Drawing Tip:</strong> Draw 5 horizontal boxes stacked vertically. Label bottom to top: Perception → Network → Processing → Service → Application. Draw arrows on side: data flows UP, commands flow DOWN.</div>
+    </div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="q15">
+    <div class="q-header" onclick="toggleCard('q15')">
+      <span class="q-num sec-b-num">Q15</span>
+      <div class="q-title-wrap">
+        <div class="q-title">IoT Data Analytics — Importance &amp; Pipeline</div>
+        <div class="q-marks">Section B · 6 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">Definition</div>
+      <p class="p"><strong>IoT data analytics</strong> is the process of examining and modeling massive sensor data volumes to discover useful information, draw conclusions, and support decision-making — converting raw data into actionable insights.</p>
+
+      <div class="h2">Types of IoT Analytics</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Type</th><th>What It Does</th><th>IoT Example</th></tr></thead>
+        <tbody>
+          <tr><td>Descriptive</td><td>What happened? — Historical analysis</td><td>Average temperature last month</td></tr>
+          <tr><td>Diagnostic</td><td>Why did it happen? — Root cause</td><td>Why did machine fail on Monday?</td></tr>
+          <tr><td>Predictive</td><td>What will happen? — ML forecasting</td><td>Predict machine failure 2 days ahead</td></tr>
+          <tr><td>Prescriptive</td><td>What should we do? — Auto action</td><td>Auto-adjust factory to prevent failure</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Analytics Pipeline</div>
+      <div class="code-block">[IoT Sensors] → [Ingestion] → [Processing] → [Analytics] → [Visualization]
+                  (MQTT/Kafka)  (Spark/Edge)  (ML Models)   (Dashboard)</div>
+
+      <div class="h2">Tools and Technologies</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Stage</th><th>Tools</th></tr></thead>
+        <tbody>
+          <tr><td>Data Ingestion</td><td>Apache Kafka, AWS Kinesis, MQTT Broker</td></tr>
+          <tr><td>Stream Processing</td><td>Apache Spark, Apache Flink, Azure Stream Analytics</td></tr>
+          <tr><td>Storage</td><td>InfluxDB (time-series), MongoDB, AWS S3</td></tr>
+          <tr><td>Analytics/ML</td><td>Python (Pandas, Scikit-learn), TensorFlow, SageMaker</td></tr>
+          <tr><td>Visualization</td><td>Grafana, Kibana, Power BI, AWS QuickSight</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Real Example — Predictive Maintenance</div>
+      <p class="p"><strong>Problem:</strong> Factory equipment fails unexpectedly, causing $100,000/hour downtime.<br><strong>Solution:</strong> Vibration + temperature sensors → ML model trained on past failures → predicts failure 48 hours ahead with 90% accuracy → maintenance scheduled proactively → zero unexpected downtime.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION C ═══════════════ -->
+  <div class="section-banner sec-c" id="sec-c">
+    <div class="sb-icon">🟣</div>
+    <div class="sb-body">
+      <div class="sb-title">Section C — Long Answer Questions</div>
+      <div class="sb-desc">5 questions · Answer any 3 · 10 marks each · Total: 30 Marks</div>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="q16">
+    <div class="q-header" onclick="toggleCard('q16')">
+      <span class="q-num sec-c-num">Q16</span>
+      <div class="q-title-wrap">
+        <div class="q-title">Cloud IoT, Fog Computing, and Sensor Cloud</div>
+        <div class="q-marks">Section C · 10 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">Part A: IoT-Based Cloud Computing</div>
+      <p class="p">Cloud Computing in IoT means storing and processing IoT data on remote servers accessible over the internet. Cloud platforms provide scalable, on-demand infrastructure without local hardware.</p>
+      <div class="code-block">[IoT Devices] → [Internet/Gateway] → [Cloud Platform]
+                                       ├─ AWS IoT Core
+                                       ├─ Azure IoT Hub
+                                       ├─ Google Cloud IoT
+                                       └─ IBM Watson IoT</div>
+
+      <div class="h3">Cloud IoT Services</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Service</th><th>Description</th><th>AWS</th><th>Azure</th></tr></thead>
+        <tbody>
+          <tr><td>Device Management</td><td>Register, monitor devices</td><td>IoT Device Manager</td><td>IoT Hub</td></tr>
+          <tr><td>Data Ingestion</td><td>Receive from millions of devices</td><td>IoT Core (MQTT)</td><td>IoT Hub</td></tr>
+          <tr><td>Analytics</td><td>Process IoT data streams</td><td>IoT Analytics</td><td>Stream Analytics</td></tr>
+          <tr><td>Storage</td><td>Time-series data storage</td><td>Amazon Timestream</td><td>Time Series Insights</td></tr>
+          <tr><td>Rules Engine</td><td>Trigger actions from sensor data</td><td>IoT Rules</td><td>IoT Edge</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Part B: Fog Computing</div>
+      <p class="p">Fog Computing extends cloud computing closer to IoT devices — processing at <strong>intermediate nodes</strong> (gateways, local servers) rather than sending everything to the distant cloud.</p>
+      <div class="code-block">[IoT Devices] → [Fog Nodes] → [Cloud]
+(Sensors,         (Local          (Central
+ Actuators)        gateways,       data center)
+                   edge servers)</div>
+
+      <div class="h3">Fog vs Cloud vs Edge Comparison</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Feature</th><th>Cloud</th><th>Fog</th><th>Edge</th></tr></thead>
+        <tbody>
+          <tr><td>Location</td><td>Remote data center</td><td>Network edge (LAN)</td><td>At the device</td></tr>
+          <tr><td>Latency</td><td>High (100ms+)</td><td>Medium (10–50ms)</td><td>Very low (&lt;10ms)</td></tr>
+          <tr><td>Processing</td><td>Very high</td><td>Moderate</td><td>Limited</td></tr>
+          <tr><td>Best for</td><td>Big data, ML training</td><td>Regional processing</td><td>Real-time control</td></tr>
+          <tr><td>Example</td><td>AWS cloud analytics</td><td>Hospital LAN server</td><td>Pacemaker processing</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Part C: Sensor-Cloud</div>
+      <p class="p">Sensor-Cloud <strong>virtualizes physical sensors</strong> as cloud services. Users access sensor data without owning devices — "Sensing as a Service" (SeaaS).</p>
+      <div class="code-block">[Physical Sensors] → [Virtual Sensor Layer] → [Cloud Services] → [Users/Apps]
+(Temp, Humidity,    (Sensor abstraction,    (API endpoints,    (Pay-per-use
+ GPS, Air Quality)   pooling, management)    data storage)       sensor data)</div>
+
+      <div class="h3">Sensor Cloud Applications</div>
+      <ul class="ul">
+        <li><strong>Smart Cities:</strong> Multiple apps share the same traffic sensor data</li>
+        <li><strong>Environment:</strong> Companies buy air quality data as a service</li>
+        <li><strong>Agriculture:</strong> Farmers subscribe to soil &amp; weather sensor data</li>
+        <li><strong>Healthcare:</strong> Hospitals share patient monitoring infrastructure</li>
+      </ul>
+
+      <div class="h2">Summary Table</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Concept</th><th>Key Idea</th><th>Benefit</th></tr></thead>
+        <tbody>
+          <tr><td>Cloud IoT</td><td>Process IoT data in remote cloud</td><td>Unlimited storage &amp; compute</td></tr>
+          <tr><td>Fog Computing</td><td>Process at intermediate nodes</td><td>Lower latency than cloud</td></tr>
+          <tr><td>Sensor Cloud</td><td>Virtualize sensors as a service</td><td>Share sensor infrastructure</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>Cloud IoT, Fog Computing, and Sensor-Cloud are complementary. Cloud provides unlimited compute; Fog reduces latency; Sensor-Cloud enables sensor virtualization. Together they form a complete, layered IoT infrastructure.</p></div>
+    </div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="q17">
+    <div class="q-header" onclick="toggleCard('q17')">
+      <span class="q-num sec-c-num">Q17</span>
+      <div class="q-title-wrap">
+        <div class="q-title">IoT Applications in Multiple Domains</div>
+        <div class="q-marks">Section C · 10 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">IoT Applications Across Domains</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Domain</th><th>IoT Devices</th><th>Application</th><th>Benefit</th></tr></thead>
+        <tbody>
+          <tr><td>Smart Grid</td><td>Smart meters, sensors</td><td>Real-time energy monitoring</td><td>25% energy saving</td></tr>
+          <tr><td>Smart Manufacturing</td><td>Machine sensors, robots</td><td>Predictive maintenance</td><td>40% reduced downtime</td></tr>
+          <tr><td>Agriculture</td><td>Soil, weather, drone sensors</td><td>Precision irrigation</td><td>30% water saving</td></tr>
+          <tr><td>Connected Vehicles</td><td>GPS, LIDAR, OBD</td><td>Navigation, V2X safety</td><td>Reduced accidents</td></tr>
+          <tr><td>Healthcare</td><td>Wearables, monitors</td><td>Remote patient monitoring</td><td>Early disease detection</td></tr>
+          <tr><td>Smart Cities</td><td>Traffic, waste, energy sensors</td><td>Traffic &amp; waste management</td><td>Efficient urban living</td></tr>
+          <tr><td>Retail</td><td>RFID, beacons, cameras</td><td>Inventory management</td><td>Reduced losses</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Smart Agriculture — Detailed Example</div>
+      <p class="p"><strong>Problem:</strong> Traditional farming wastes water; unpredictable crop yields.</p>
+      <ul class="ul">
+        <li>Soil moisture sensors detect moisture below 30%</li>
+        <li>MCU triggers drip irrigation valve actuator automatically</li>
+        <li>Drone with camera uses AI to detect diseased plants</li>
+        <li>Cloud dashboard shows farmer real-time field status on mobile</li>
+        <li><strong>Result:</strong> 30% water saving, 20% yield increase, 15% less crop loss</li>
+      </ul>
+
+      <div class="h2">Smart Grid IoT</div>
+      <ul class="ul">
+        <li><strong>Smart Meters:</strong> Real-time electricity usage monitoring and remote billing</li>
+        <li><strong>Demand Response:</strong> Auto-reduce power to non-critical devices during peak hours</li>
+        <li><strong>Fault Detection:</strong> Sensors detect power line faults and auto-reroute power</li>
+        <li><strong>Renewable Integration:</strong> Balance solar/wind variable generation with demand</li>
+      </ul>
+
+      <div class="h2">Healthcare Activity Monitoring</div>
+      <ul class="ul">
+        <li>Heart rate monitoring — alert cardiologist if irregular rhythm detected (Apple Watch)</li>
+        <li>Fall detection — auto-call emergency services for elderly patients</li>
+        <li>Blood glucose monitoring — continuous CGM alerts diabetic patients instantly</li>
+        <li>Sleep quality tracking — analyze patterns for personalized health insights</li>
+      </ul>
+
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>IoT applications span virtually every industry. Each domain benefits from real-time data collection, automated responses, and data-driven decision making. The integration of IoT with AI and cloud computing continues to accelerate impact across all sectors.</p></div>
+    </div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="q18">
+    <div class="q-header" onclick="toggleCard('q18')">
+      <span class="q-num sec-c-num">Q18</span>
+      <div class="q-title-wrap">
+        <div class="q-title">IoT Case Studies — Healthcare, Agriculture, Transportation</div>
+        <div class="q-marks">Section C · 10 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">Case Study 1: Healthcare — Remote Patient Monitoring</div>
+      <div class="h3">Background</div>
+      <p class="p">Post-COVID hospitals were overcrowded. Stable patients needed continuous monitoring but occupied beds at $2,000/day.</p>
+      <div class="h3">IoT Architecture</div>
+      <div class="code-block">[Patient at Home]
+      ↓
+[Wearable IoT Devices]
+  - ECG patch (heart monitoring)
+  - SpO2 sensor (blood oxygen)
+  - BP monitor (blood pressure)
+      ↓ Bluetooth
+[Patient Smartphone Gateway]
+      ↓ 4G/LTE (HTTPS)
+[HIPAA-compliant Cloud Platform]
+      ↓
+[Doctor Dashboard + AI Alert System]</div>
+      <div class="h3">Results</div>
+      <ul class="ul">
+        <li>60% reduction in hospital readmissions</li>
+        <li>Cost reduced from $2,000/day to $50/day</li>
+        <li>12-hour early warning before cardiac events</li>
+        <li>90% patient satisfaction — monitor from home comfort</li>
+      </ul>
+
+      <div class="h2">Case Study 2: Agriculture — Smart Irrigation</div>
+      <div class="h3">IoT Devices Used</div>
+      <ul class="ul">
+        <li>Soil moisture sensors (capacitive) at various field depths</li>
+        <li>Weather station (temp, humidity, wind, rainfall)</li>
+        <li>Drone with multispectral camera for crop health imaging</li>
+        <li>Solenoid valve actuators for automated drip irrigation</li>
+      </ul>
+      <div class="code-block">[Soil Sensors] → [NodeMCU Edge] → [Cloud] → [Farmer App]
+     ↓                  ↓                          ↓
+Moisture data    If moisture &lt;30%            Alerts & Reports
+                 → Open valve 30 min</div>
+      <div class="h3">Outcomes</div>
+      <ul class="ul">
+        <li>32% reduction in water consumption</li>
+        <li>28% increase in crop yield due to optimal moisture</li>
+        <li>Early pest detection via drone + AI image analysis</li>
+      </ul>
+
+      <div class="h2">Case Study 3: Transportation — Smart Traffic Management</div>
+      <div class="h3">IoT Components</div>
+      <ul class="ul">
+        <li>Inductive loop sensors in road — detect vehicle count and speed</li>
+        <li>Traffic cameras with AI vision — count vehicles, detect violations</li>
+        <li>RFID readers for vehicle identification</li>
+        <li>Variable Message Signs — display dynamic traffic info</li>
+      </ul>
+      <div class="h3">How It Works</div>
+      <p class="p">IoT sensors continuously monitor traffic at all intersections. AI dynamically adjusts signal timing. Accidents detected via cameras → traffic automatically rerouted. Emergency vehicle approach triggers Signal Preemption (all lights green on its route).</p>
+      <div class="h3">Results</div>
+      <ul class="ul">
+        <li>23% reduction in average commute time</li>
+        <li>15% reduction in vehicle emissions</li>
+        <li>40% faster emergency vehicle response times</li>
+      </ul>
+
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>All three case studies follow the same pattern: sensors collect data → edge/cloud processes it → AI generates insights → automated action improves outcomes. IoT creates measurable, life-improving impact in healthcare, agriculture, and transportation.</p></div>
+    </div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="q19">
+    <div class="q-header" onclick="toggleCard('q19')">
+      <span class="q-num sec-c-num">Q19</span>
+      <div class="q-title-wrap">
+        <div class="q-title">IoT Interoperability — Definition, Challenges &amp; Solutions</div>
+        <div class="q-marks">Section C · 10 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">Definition</div>
+      <p class="p"><strong>IoT Interoperability</strong> is the ability of different IoT devices, systems, and platforms from different manufacturers — using different protocols — to work together seamlessly, exchange data, and take coordinated actions.</p>
+      <div class="info-box">Example: A Philips smart bulb should work with Amazon Echo, controlled via Samsung SmartThings hub, and monitored on Apple HomeKit — despite different protocols and manufacturers.</div>
+
+      <div class="h2">Types of Interoperability</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Type</th><th>Description</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Technical</td><td>Devices communicate at protocol level</td><td>HTTP REST APIs between devices</td></tr>
+          <tr><td>Syntactic</td><td>Same data format understood by all</td><td>JSON used by all devices</td></tr>
+          <tr><td>Semantic</td><td>Same meaning of data understood</td><td>Temperature field always in °C</td></tr>
+          <tr><td>Organizational</td><td>Business processes across organizations</td><td>Hospital + insurance data sharing</td></tr>
+          <tr><td>Cross-platform</td><td>Work across different cloud platforms</td><td>AWS device works on Azure IoT</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Challenges</div>
+      <ul class="ul">
+        <li><strong>Protocol Fragmentation:</strong> Zigbee, Z-Wave, Wi-Fi, BLE, LoRa, NB-IoT all different — cannot directly communicate</li>
+        <li><strong>Data Format Diversity:</strong> JSON vs XML vs Binary — unified parser needed</li>
+        <li><strong>Security Conflicts:</strong> Different auth mechanisms — interoperability can weaken security</li>
+        <li><strong>Vendor Lock-in:</strong> Apple, Google, Amazon create closed ecosystems</li>
+        <li><strong>Scalability:</strong> Millions of devices from hundreds of vendors — exponentially complex</li>
+        <li><strong>Semantic Gap:</strong> Device A: "temp", Device B: "temperature" — cannot auto-merge data</li>
+      </ul>
+
+      <div class="h2">Solutions for Interoperability</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Solution</th><th>Description</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Middleware/Gateway</td><td>Translate between protocols</td><td>Samsung SmartThings hub</td></tr>
+          <tr><td>Open Standards</td><td>Common protocols all vendors adopt</td><td>Matter protocol (2022)</td></tr>
+          <tr><td>API Gateways</td><td>Universal REST API interface</td><td>AWS IoT, Azure IoT Hub</td></tr>
+          <tr><td>Semantic Web/Ontology</td><td>Common data meaning definitions</td><td>W3C Web of Things (WoT)</td></tr>
+          <tr><td>Cloud Platforms</td><td>Aggregate all device data</td><td>Google Home, Apple HomeKit</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">Matter Protocol — Industry Solution</div>
+      <p class="p"><strong>Matter (2022)</strong> is an open-source smart home standard backed by Apple, Google, Amazon, and Samsung. It provides a single unified protocol — any Matter-certified device works with any Matter-compatible platform, solving the smart home fragmentation problem.</p>
+
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>IoT interoperability is one of the industry's biggest challenges, requiring coordination at technical, semantic, and organizational levels. Open standards like Matter and middleware gateways are current solutions, but full cross-domain interoperability remains an ongoing effort.</p></div>
+    </div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="q20">
+    <div class="q-header" onclick="toggleCard('q20')">
+      <span class="q-num sec-c-num">Q20</span>
+      <div class="q-title-wrap">
+        <div class="q-title">NodeMCU — Platform, Applications &amp; Comparison with Arduino</div>
+        <div class="q-marks">Section C · 10 Marks</div>
+      </div>
+      <span class="q-toggle">▾</span>
+    </div>
+    <div class="q-body">
+      <div class="h2">What is NodeMCU?</div>
+      <p class="p">NodeMCU is an <strong>open-source IoT firmware and development board</strong> based on the ESP8266 Wi-Fi chip. It combines a microcontroller with built-in Wi-Fi, making it ideal for connected IoT projects without needing a separate Wi-Fi module.</p>
+
+      <div class="h2">NodeMCU Hardware Specifications</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Specification</th><th>NodeMCU (ESP8266)</th></tr></thead>
+        <tbody>
+          <tr><td>Microcontroller</td><td>ESP8266 (80/160 MHz Xtensa LX106)</td></tr>
+          <tr><td>Wi-Fi</td><td>802.11 b/g/n (2.4 GHz) — BUILT-IN</td></tr>
+          <tr><td>Flash Memory</td><td>4 MB</td></tr>
+          <tr><td>RAM</td><td>64 KB instruction + 96 KB data</td></tr>
+          <tr><td>GPIO Pins</td><td>11 digital I/O pins (3.3V)</td></tr>
+          <tr><td>Analog Input</td><td>1 channel (10-bit, 0–3.3V)</td></tr>
+          <tr><td>Programming</td><td>Arduino IDE, Lua, MicroPython</td></tr>
+          <tr><td>Cost</td><td>~$2–5 USD (very affordable)</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">NodeMCU Pin Diagram</div>
+      <div class="code-block">┌──────────────────────────────────┐
+│    NodeMCU ESP8266 Dev Board     │
+│                                  │
+│  [USB Port]       [Reset Button] │
+│                                  │
+│  D0-D8 : Digital GPIO Pins       │
+│  A0    : Analog Input (1 pin)    │
+│  3V3, 5V, GND : Power Pins      │
+│  TX, RX : Serial Communication  │
+│                                  │
+│  [Built-in LED on D4]            │
+│  [Built-in Wi-Fi Antenna]        │
+└──────────────────────────────────┘</div>
+
+      <div class="h2">NodeMCU IoT Applications</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Application</th><th>Sensors</th><th>Cloud</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Home Automation</td><td>PIR, relay, DHT11</td><td>Blynk / MQTT</td><td>Auto light control via phone</td></tr>
+          <tr><td>Weather Station</td><td>DHT22, BMP280</td><td>ThingSpeak</td><td>Live temp/humidity dashboard</td></tr>
+          <tr><td>Smart Irrigation</td><td>Soil moisture sensor</td><td>Arduino Cloud</td><td>Auto water plants</td></tr>
+          <tr><td>Security System</td><td>PIR, door sensor</td><td>Firebase</td><td>WhatsApp alert on intrusion</td></tr>
+          <tr><td>Air Quality Monitor</td><td>MQ-135 gas sensor</td><td>ThingSpeak</td><td>Real-time AQI monitoring</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">NodeMCU vs Arduino — Detailed Comparison</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Feature</th><th>NodeMCU (ESP8266)</th><th>Arduino Uno</th></tr></thead>
+        <tbody>
+          <tr><td>Processor Speed</td><td>80/160 MHz</td><td>16 MHz</td></tr>
+          <tr><td>Built-in Wi-Fi</td><td>✅ YES (802.11 b/g/n)</td><td>❌ NO (needs shield)</td></tr>
+          <tr><td>Built-in Bluetooth</td><td>❌ NO (ESP32 has it)</td><td>❌ NO</td></tr>
+          <tr><td>RAM</td><td>96 KB</td><td>2 KB</td></tr>
+          <tr><td>Flash Storage</td><td>4 MB</td><td>32 KB</td></tr>
+          <tr><td>Digital GPIO Pins</td><td>11 pins (3.3V)</td><td>14 pins (5V)</td></tr>
+          <tr><td>Analog Inputs</td><td>1 pin (10-bit)</td><td>6 pins (10-bit)</td></tr>
+          <tr><td>Operating Voltage</td><td>3.3V</td><td>5V</td></tr>
+          <tr><td>Languages</td><td>Arduino C, Lua, MicroPython</td><td>Arduino C/C++ only</td></tr>
+          <tr><td>Cost</td><td>$2–5 USD</td><td>$5–25 USD</td></tr>
+          <tr><td>Power Consumption</td><td>~70–200 mA</td><td>~20–50 mA</td></tr>
+          <tr><td>IoT Connectivity</td><td>Native Wi-Fi ✅</td><td>Needs external module</td></tr>
+          <tr><td>Best For</td><td>Wi-Fi IoT projects</td><td>General electronics</td></tr>
+          <tr><td>Shields/Libraries</td><td>Fewer shields</td><td>Huge ecosystem of shields</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="h2">When to Choose Which?</div>
+      <ul class="ul">
+        <li><strong>Choose NodeMCU when:</strong> Project needs Wi-Fi, cloud dashboard, IoT features, and power efficiency is important</li>
+        <li><strong>Choose Arduino when:</strong> Need many analog pins, working with 5V sensors, need many shields, new to electronics, no wireless needed</li>
+      </ul>
+
+      <div class="h2">Sample NodeMCU Code (Temp Sensor → MQTT)</div>
+      <div class="code-block"><span class="cm">// NodeMCU: DHT11 Temperature → MQTT Broker</span>
+<span class="kw">#include</span> &lt;ESP8266WiFi.h&gt;
+<span class="kw">#include</span> &lt;PubSubClient.h&gt;
+<span class="kw">#include</span> &lt;DHT.h&gt;
+
+DHT dht(D4, DHT11);  <span class="cm">// Sensor on pin D4</span>
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+<span class="kw">void</span> setup() {
+  WiFi.begin(<span class="st">"SSID"</span>, <span class="st">"PASSWORD"</span>);
+  client.setServer(<span class="st">"broker.mqtt.org"</span>, <span class="nm">1883</span>);
+  dht.begin();
+}
+
+<span class="kw">void</span> loop() {
+  float temp = dht.readTemperature();
+  client.publish(<span class="st">"home/temperature"</span>, String(temp).c_str());
+  delay(<span class="nm">5000</span>);  <span class="cm">// Send every 5 seconds</span>
+}</div>
+
+      <div class="conclusion"><div class="conclusion-lbl">📌 Conclusion</div><p>NodeMCU is a game-changer for IoT due to built-in Wi-Fi, very low cost (~$3), and support for multiple programming languages. Compared to Arduino, it is superior for internet-connected IoT projects. Arduino remains preferred for general electronics and projects needing many analog pins or 5V compatibility. For modern IoT applications, NodeMCU (or upgraded ESP32) is the preferred platform.</p></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- BACK TO TOP -->
+<button id="back-top" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ── Data for search ──────────────────────────────────────────────
+const questions = [
+  { id:'q1', num:'Q01', title:'Zigbee Protocol and Applications', section:'Section A', marks:'1 Mark',
+    keywords:'zigbee ieee 802.15.4 home automation mesh low power wireless smart home coordinator router end device' },
+  { id:'q2', num:'Q02', title:'Edge Computing in IoT — Benefits', section:'Section A', marks:'1 Mark',
+    keywords:'edge computing latency bandwidth cloud data source processing real-time smart factory autonomous' },
+  { id:'q3', num:'Q03', title:'MQTT, CoAP, and HTTPS Protocols', section:'Section A', marks:'1 Mark',
+    keywords:'mqtt coap https protocol publish subscribe broker tcp udp lightweight iot communication secure' },
+  { id:'q4', num:'Q04', title:'IoT System Requirements & Challenges', section:'Section A', marks:'1 Mark',
+    keywords:'iot system requirements data processing connectivity security scalability power interoperability challenges' },
+  { id:'q5', num:'Q05', title:'IoT Gateway — Definition & Functions', section:'Section A', marks:'1 Mark',
+    keywords:'gateway iot protocol translation aggregation edge cloud bridge zigbee mqtt functions smart home hub' },
+  { id:'q6', num:'Q06', title:'Why MQTT is Preferred in IoT', section:'Section A', marks:'1 Mark',
+    keywords:'mqtt popular lightweight energy efficient publish subscribe battery qos broker http comparison' },
+  { id:'q7', num:'Q07', title:'Smart Homes — Concept & Architecture', section:'Section A', marks:'1 Mark',
+    keywords:'smart home automation energy security alexa google home thermostat lights door lock camera hub' },
+  { id:'q8', num:'Q08', title:'Real-Time IoT Applications', section:'Section A', marks:'1 Mark',
+    keywords:'real time health monitoring autonomous vehicle traffic industrial fire 5g edge stream kafka' },
+  { id:'q9', num:'Q09', title:'M2M Communication and SDN', section:'Section B', marks:'6 Marks',
+    keywords:'m2m machine to machine sdn software defined networking control data plane fleet meter healthcare m2m sdn iot' },
+  { id:'q10', num:'Q10', title:'Smart IoT Devices and Data Exchange', section:'Section B', marks:'6 Marks',
+    keywords:'smart device mcu sensor actuator data exchange json mqtt cloud analytics volume velocity variety security' },
+  { id:'q11', num:'Q11', title:'IoT Communication Protocols — Full Comparison', section:'Section B', marks:'6 Marks',
+    keywords:'wifi bluetooth zigbee z-wave lorawan nb-iot mqtt coap amqp protocol comparison range data rate power' },
+  { id:'q12', num:'Q12', title:'IoT in Connected Vehicles', section:'Section B', marks:'6 Marks',
+    keywords:'connected vehicle v2x v2v v2i lidar gps obd dsrc 5g autonomous navigation fleet emergency ecall tesla' },
+  { id:'q13', num:'Q13', title:'Sensors and Actuators in IoT', section:'Section B', marks:'6 Marks',
+    keywords:'sensor actuator dht11 dht22 pir hc-sr04 mq relay servo motor solenoid temperature humidity motion gas light' },
+  { id:'q14', num:'Q14', title:'IoT Architecture Layers — Diagram', section:'Section B', marks:'6 Marks',
+    keywords:'iot architecture perception network processing service application layer 3 5 layer diagram rfid sensor cloud' },
+  { id:'q15', num:'Q15', title:'IoT Data Analytics', section:'Section B', marks:'6 Marks',
+    keywords:'data analytics descriptive diagnostic predictive prescriptive kafka spark ml pipeline influxdb grafana maintenance' },
+  { id:'q16', num:'Q16', title:'Cloud IoT, Fog Computing, and Sensor Cloud', section:'Section C', marks:'10 Marks',
+    keywords:'cloud fog sensor cloud aws azure google iot hub device management analytics fog node latency sensing service seaas' },
+  { id:'q17', num:'Q17', title:'IoT Applications in Multiple Domains', section:'Section C', marks:'10 Marks',
+    keywords:'smart grid agriculture industrial healthcare city retail activity monitoring wearable crop irrigation energy' },
+  { id:'q18', num:'Q18', title:'IoT Case Studies — Healthcare, Agriculture, Transportation', section:'Section C', marks:'10 Marks',
+    keywords:'case study healthcare ecg spo2 bp remote monitoring agriculture soil moisture drone irrigation transportation traffic signal' },
+  { id:'q19', num:'Q19', title:'IoT Interoperability — Challenges & Solutions', section:'Section C', marks:'10 Marks',
+    keywords:'interoperability matter protocol semantic syntactic vendor lock-in zigbee z-wave gateway w3c wot middleware' },
+  { id:'q20', num:'Q20', title:'NodeMCU vs Arduino — Platform & Applications', section:'Section C', marks:'10 Marks',
+    keywords:'nodemcu esp8266 esp32 arduino uno wifi gpio adc mqtt blynk thingspeak lua micropython code comparison' }
+];
+
+// ── Card toggle ──────────────────────────────────────────────────
+function toggleCard(id) {
+  const card = document.getElementById(id);
+  const wasOpen = card.classList.contains('open');
+  card.classList.toggle('open');
+  updateNavActive(id);
+}
+
+function openCard(id) {
+  document.getElementById(id).classList.add('open');
+  updateNavActive(id);
+}
+
+function goTo(id) {
+  openCard(id);
+  setTimeout(() => {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
+  if (window.innerWidth < 900) closeNav();
+}
+
+// ── Nav ──────────────────────────────────────────────────────────
+document.getElementById('menu-toggle').addEventListener('click', () => {
+  document.body.classList.toggle('nav-open');
+});
+document.getElementById('nav-overlay').addEventListener('click', closeNav);
+function closeNav() { document.body.classList.remove('nav-open'); }
+
+function updateNavActive(id) {
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('onclick')?.includes(id));
+  });
+}
+
+// ── Progress bar & back-to-top ───────────────────────────────────
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progress-fill').style.width = (scrolled / total * 100) + '%';
+  document.getElementById('back-top').classList.toggle('visible', scrolled > 400);
+
+  // Update active nav based on scroll
+  const cards = document.querySelectorAll('.q-card');
+  let activeId = null;
+  cards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+    if (rect.top <= 80 && rect.bottom > 80) activeId = card.id;
+  });
+  if (activeId) updateNavActive(activeId);
+});
+
+// ── Search ───────────────────────────────────────────────────────
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+const searchClear = document.getElementById('search-clear');
+const noResults = document.getElementById('no-results');
+let searchTimeout;
+
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimeout);
+  const q = searchInput.value.trim();
+  searchClear.style.display = q ? 'block' : 'none';
+  if (!q) {
+    searchResults.classList.remove('active');
+    showAllCards();
+    return;
+  }
+  searchTimeout = setTimeout(() => doSearch(q), 200);
+});
+
+searchInput.addEventListener('keydown', e => {
+  if (e.key === 'Escape') clearSearch();
+});
+
+searchClear.addEventListener('click', clearSearch);
+
+function clearSearch() {
+  searchInput.value = '';
+  searchClear.style.display = 'none';
+  searchResults.classList.remove('active');
+  showAllCards();
+}
+
+function doSearch(q) {
+  const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+  const results = questions.filter(item => {
+    const haystack = (item.title + ' ' + item.keywords + ' ' + item.section + ' ' + item.num).toLowerCase();
+    return terms.every(t => haystack.includes(t));
+  });
+
+  // Show dropdown results
+  if (results.length === 0) {
+    searchResults.innerHTML = '<div class="sr-empty">No results found for "' + escHtml(q) + '"</div>';
+  } else {
+    searchResults.innerHTML = results.map(r => `
+      <div class="sr-item" onclick="selectResult('${r.id}')">
+        <div class="sr-title">${r.num} — ${highlightTerms(r.title, terms)}</div>
+        <div class="sr-section">${r.section} · ${r.marks}</div>
+      </div>`).join('');
+  }
+  searchResults.classList.add('active');
+
+  // Filter cards in page
+  filterCards(results.map(r => r.id));
+}
+
+function highlightTerms(text, terms) {
+  let result = escHtml(text);
+  terms.forEach(t => {
+    const re = new RegExp('(' + escRegex(t) + ')', 'gi');
+    result = result.replace(re, '<span class="highlight">$1</span>');
+  });
+  return result;
+}
+
+function selectResult(id) {
+  searchResults.classList.remove('active');
+  goTo(id);
+  document.getElementById(id).classList.add('highlighted');
+  setTimeout(() => document.getElementById(id).classList.remove('highlighted'), 2500);
+}
+
+function filterCards(ids) {
+  let anyVisible = false;
+  document.querySelectorAll('.q-card').forEach(card => {
+    const visible = ids.includes(card.id);
+    card.style.display = visible ? '' : 'none';
+    if (visible) anyVisible = true;
+  });
+  document.querySelectorAll('.section-banner').forEach(b => {
+    const secId = b.id;
+    const secCards = document.querySelectorAll(`.q-card[id^="q"]`);
+    // Show section banners only if at least one card in section is visible
+  });
+  noResults.classList.toggle('show', !anyVisible);
+}
+
+function showAllCards() {
+  document.querySelectorAll('.q-card').forEach(card => card.style.display = '');
+  noResults.classList.remove('show');
+}
+
+// Close search results on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('#search-wrap')) {
+    searchResults.classList.remove('active');
+  }
+});
+
+// ── Utils ────────────────────────────────────────────────────────
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function escRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// ── Keyboard shortcut: / to focus search ────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement !== searchInput) {
+    e.preventDefault();
+    searchInput.focus();
+    searchInput.select();
+  }
+});
+
+// Open all Section A by default (collapsed rest)
+document.addEventListener('DOMContentLoaded', () => {
+  // All cards start closed — user opens as needed
+});
+</script>
+</body>
+</html>

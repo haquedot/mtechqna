@@ -406,5 +406,125 @@ window.SEARCH_INDEX = [
     "paper": "MTCS231PET (2025)",
     "question": "Elliptic Curve Cryptography — Algorithm, Vulnerabilities & Applications",
     "url": "Blockchain_Technology/MTCS231PET-Blockchain Technology - 2025.html#q14"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q01 — Zigbee Protocol and Applications",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q1"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q02 — Edge Computing in IoT — Benefits",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q2"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q03 — MQTT, CoAP, and HTTPS Protocols",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q3"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q04 — IoT System Requirements & Challenges",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q4"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q05 — IoT Gateway — Definition & Functions",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q5"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q06 — Why MQTT is Preferred in IoT",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q6"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q07 — Smart Homes — Concept & Architecture",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q7"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q08 — Real-Time IoT Applications",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q8"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q09 — M2M Communication and SDN",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q9"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q10 — Smart IoT Devices and Data Exchange",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q10"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q11 — IoT Communication Protocols — Full Comparison",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q11"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q12 — IoT in Connected Vehicles",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q12"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q13 — Sensors and Actuators in IoT",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q13"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q14 — IoT Architecture Layers — Diagram",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q14"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q15 — IoT Data Analytics",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q15"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q16 — Cloud IoT, Fog Computing, and Sensor Cloud",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q16"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q17 — IoT Applications in Multiple Domains",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q17"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q18 — IoT Case Studies — Healthcare, Agriculture, Transportation",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q18"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q19 — IoT Interoperability — Challenges & Solutions",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q19"
+  },
+  {
+    "subject": "Internet of Things",
+    "paper": "MTCS212PCT (2025)",
+    "question": "Q20 — NodeMCU vs Arduino — Platform & Applications",
+    "url": "Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html#q20"
   }
 ];

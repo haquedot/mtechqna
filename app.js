@@ -28,6 +28,17 @@ const SUBJECTS = [
         href: 'Blockchain_Technology/MTCS231PET-Blockchain Technology - 2025.html'
       }
     ]
+  },
+  {
+    name: 'Internet of Things',
+    description: 'Comprehensive 2025 exam guide with interactive navigation, in-page search, and 20 solved questions.',
+    syllabus: 'syllabus/Internet_of_Things_syllabus.pdf',
+    papers: [
+      {
+        title: 'MTCS212PCT — 2025 (IoT Exam Guide)',
+        href: 'Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html'
+      }
+    ]
   }
 ];
 
@@ -60,6 +71,8 @@ function highlight(text, query) {
 
 function renderSubjectCards() {
   subjectGrid.innerHTML = SUBJECTS.map((subject) => {
+    const badgeClass = subject.name.includes('Big Data') ? 'primary' : 'green';
+
     const paperLinks = subject.papers
       .map((paper) => `
         <a class="link-btn" href="${encodeLink(paper.href)}">
@@ -69,15 +82,21 @@ function renderSubjectCards() {
       `)
       .join('');
 
+    const syllabusLink = subject.syllabus
+      ? `
+          <a class="link-btn ${badgeClass}" href="${encodeLink(subject.syllabus)}" target="_blank" rel="noopener noreferrer">
+            Open Syllabus (PDF)
+            <span class="sub">Quick revision outline</span>
+          </a>
+        `
+      : '';
+
     return `
       <article class="card">
         <h2>${escapeHtml(subject.name)}</h2>
         <p>${escapeHtml(subject.description)}</p>
         <div class="links">
-          <a class="link-btn ${subject.name.includes('Big Data') ? 'primary' : 'green'}" href="${encodeLink(subject.syllabus)}" target="_blank" rel="noopener noreferrer">
-            Open Syllabus (PDF)
-            <span class="sub">Quick revision outline</span>
-          </a>
+          ${syllabusLink}
           ${paperLinks}
         </div>
       </article>
@@ -89,12 +108,13 @@ function renderStats(index) {
   const subjects = new Set(index.map(item => item.subject)).size;
   const papers = new Set(index.map(item => item.paper)).size;
   const questions = index.length;
+  const syllabusCount = SUBJECTS.filter(subject => Boolean(subject.syllabus)).length;
 
   statsLine.innerHTML = `
     <span class="stat-chip">${subjects} Subjects</span>
     <span class="stat-chip">${papers} Papers</span>
     <span class="stat-chip">${questions} Searchable Questions</span>
-    <span class="stat-chip">2 Syllabus PDFs</span>
+    <span class="stat-chip">${syllabusCount} Syllabus PDFs</span>
   `;
 }
 
