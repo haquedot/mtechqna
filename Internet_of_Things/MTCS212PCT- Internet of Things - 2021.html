@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IoT Complete Exam Guide — MTCS212PCT</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0F1117;
+    --surface: #161B27;
+    --surface2: #1E2535;
+    --surface3: #252D40;
+    --border: #2A3347;
+    --border2: #364057;
+    --text: #E8EAF0;
+    --text2: #9BA3B8;
+    --text3: #5C6480;
+    --accent: #4ECDC4;
+    --accent2: #FF6B6B;
+    --accent3: #FFE66D;
+    --accent4: #A78BFA;
+    --accent5: #34D399;
+    --glow-teal: rgba(78,205,196,0.15);
+    --glow-red: rgba(255,107,107,0.12);
+    --glow-purple: rgba(167,139,250,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(78,205,196,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 30%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(167,139,250,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .header h1 span { color: var(--accent); }
+  .header p { color: var(--text2); font-size: 15px; }
+  .badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .badge {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .badge.teal { border-color: var(--accent); color: var(--accent); }
+  .badge.red { border-color: var(--accent2); color: var(--accent2); }
+  .badge.purple { border-color: var(--accent4); color: var(--accent4); }
+
+  /* TOC */
+  .toc {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 48px;
+  }
+  .toc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px 20px;
+  }
+  .toc a {
+    text-decoration: none;
+    color: var(--text2);
+    font-size: 13px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc a .qn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  /* MAIN */
+  .main { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* SECTION CARD */
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    padding: 18px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+    position: relative;
+    overflow: hidden;
+  }
+  .section-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at left center, var(--glow-color, rgba(78,205,196,0.08)) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .section-header.red { --glow-color: var(--glow-red); }
+  .section-header.purple { --glow-color: var(--glow-purple); }
+
+  .qnum {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--surface3);
+    border: 1px solid var(--border2);
+    padding: 4px 10px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .qnum.red { color: var(--accent2); }
+  .qnum.purple { color: var(--accent4); }
+  .qnum.yellow { color: var(--accent3); }
+  .qnum.green { color: var(--accent5); }
+
+  .section-header h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .marks-tag {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    flex-shrink: 0;
+    padding-top: 3px;
+  }
+
+  .section-body { padding: 28px; }
+
+  h3 {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    margin: 22px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h3::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 14px;
+    background: var(--accent);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  h3.red { color: var(--accent2); }
+  h3.red::before { background: var(--accent2); }
+  h3.purple { color: var(--accent4); }
+  h3.purple::before { background: var(--accent4); }
+  h3.yellow { color: var(--accent3); }
+  h3.yellow::before { background: var(--accent3); }
+  h3.green { color: var(--accent5); }
+  h3.green::before { background: var(--accent5); }
+  h3:first-child { margin-top: 0; }
+
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 16px 0 8px;
+  }
+
+  p { margin-bottom: 12px; color: var(--text); font-size: 14px; }
+
+  /* DEF BOX */
+  .def-box {
+    background: linear-gradient(135deg, rgba(78,205,196,0.08) 0%, var(--surface2) 100%);
+    border: 1px solid rgba(78,205,196,0.25);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+  }
+  .def-box .def-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .def-box.red {
+    background: linear-gradient(135deg, rgba(255,107,107,0.08) 0%, var(--surface2) 100%);
+    border-color: rgba(255,107,107,0.25);
+  }
+  .def-box.red .def-label { color: var(--accent2); }
+  .def-box.purple {
+    background: linear-gradient(135deg, rgba(167,139,250,0.08) 0%, var(--surface2) 100%);
+    border-color: rgba(167,139,250,0.25);
+  }
+  .def-box.purple .def-label { color: var(--accent4); }
+
+  /* KEY POINTS */
+  .key-box {
+    background: rgba(255,230,109,0.06);
+    border: 1px solid rgba(255,230,109,0.2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 18px 0;
+  }
+  .key-box .key-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--accent3);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .key-box ul { padding-left: 18px; }
+  .key-box li { color: var(--text2); font-size: 13px; margin-bottom: 5px; }
+  .key-box li strong { color: var(--text); }
+
+  /* CONCLUSION */
+  .conclusion {
+    background: rgba(52,211,153,0.06);
+    border: 1px solid rgba(52,211,153,0.2);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-top: 18px;
+  }
+  .conclusion .con-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--accent5);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .conclusion p { color: var(--text2); font-size: 14px; margin: 0; }
+
+  /* DIAGRAM */
+  .diagram {
+    background: #0A0D13;
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    overflow-x: auto;
+    white-space: pre;
+    line-height: 1.6;
+  }
+  .diagram.red { color: var(--accent2); }
+  .diagram.purple { color: var(--accent4); }
+  .diagram.yellow { color: var(--accent3); }
+  .diagram.green { color: var(--accent5); }
+  .diagram .dim { color: var(--text3); }
+  .diagram .hi { color: var(--accent3); }
+  .diagram .hi2 { color: var(--accent2); }
+  .diagram .hi3 { color: var(--accent4); }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--surface3);
+    color: var(--accent);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border2);
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    font-size: 13px;
+    vertical-align: top;
+  }
+  td strong { color: var(--text); }
+  tr:hover td { background: var(--surface2); }
+
+  /* STEPS */
+  .steps { margin: 16px 0; }
+  .step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .step-num {
+    background: var(--surface3);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-content strong { display: block; color: var(--text); font-size: 14px; margin-bottom: 3px; }
+  .step-content p { color: var(--text2); font-size: 13px; margin: 0; }
+
+  /* FLOW */
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 14px 0;
+  }
+  .flow-box {
+    background: var(--surface3);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .flow-box.teal { border-color: var(--accent); color: var(--accent); }
+  .flow-box.red { border-color: var(--accent2); color: var(--accent2); }
+  .flow-box.yellow { border-color: var(--accent3); color: var(--accent3); }
+  .flow-box.purple { border-color: var(--accent4); color: var(--accent4); }
+  .flow-box.green { border-color: var(--accent5); color: var(--accent5); }
+  .flow-arrow { color: var(--text3); font-size: 16px; }
+
+  /* GRID CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .card {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .card .card-icon { font-size: 20px; margin-bottom: 8px; }
+  .card .card-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .card .card-desc { font-size: 12px; color: var(--text3); line-height: 1.5; }
+
+  ul, ol { padding-left: 20px; margin-bottom: 12px; }
+  li { color: var(--text2); font-size: 14px; margin-bottom: 4px; }
+  li strong { color: var(--text); }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--surface3);
+    border: 1px solid var(--border2);
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: var(--accent3);
+  }
+
+  .inline-tag {
+    background: var(--surface3);
+    border: 1px solid var(--border2);
+    border-radius: 5px;
+    padding: 1px 8px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent2);
+    display: inline;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 14px 0;
+  }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  .mini-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .mini-card h4 { margin-top: 0; font-size: 13px; }
+  .mini-card ul { margin: 0; }
+  .mini-card li { font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">// exam_guide.html — IoT</div>
+  <h1>Internet of <span>Things</span><br>Complete Exam Guide</h1>
+  <p>Maulana Azad National Urdu University &nbsp;·&nbsp; M.Tech II Semester &nbsp;·&nbsp; MTCS212PCT &nbsp;·&nbsp; Aug 2021</p>
+  <div class="badges">
+    <span class="badge teal">70 Marks</span>
+    <span class="badge red">3 Hours</span>
+    <span class="badge purple">15 Questions Covered</span>
+    <span class="badge">Section A: 5 marks each</span>
+    <span class="badge">Section B: 10 marks each</span>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-label">// table_of_contents</div>
+  <div class="toc-grid">
+    <a href="#q1"><span class="qn">Q01</span> IoT Concept & WSN</a>
+    <a href="#q2"><span class="qn">Q02</span> Arduino — Block & Pin Diagram</a>
+    <a href="#q3"><span class="qn">Q03</span> IoT Architecture (3/4/5 Layer)</a>
+    <a href="#q4"><span class="qn">Q04</span> Sensors, Actuators & Classification</a>
+    <a href="#q5"><span class="qn">Q05</span> IoT Applications</a>
+    <a href="#q6"><span class="qn">Q06</span> IoT-Based Cloud Computing</a>
+    <a href="#q7"><span class="qn">Q07</span> Smart Grid & Industrial IoT</a>
+    <a href="#q8"><span class="qn">Q08</span> Data Handling & Analytics in IoT</a>
+    <a href="#q9"><span class="qn">Q09</span> SDN & Its Role in IoT</a>
+    <a href="#q10"><span class="qn">Q10</span> IoT Development Platforms & Tools</a>
+    <a href="#q11"><span class="qn">Q11</span> M2M, Fog Computing, Edge Computing</a>
+    <a href="#q12"><span class="qn">Q12</span> Raspberry Pi — Block Diagram & Working</a>
+    <a href="#q13"><span class="qn">Q13</span> IoT Communication Protocols</a>
+    <a href="#q14"><span class="qn">Q14</span> IoT Applications (Vehicles, Agri, Healthcare)</a>
+    <a href="#q15"><span class="qn">Q15</span> Sensor Networks, Interoperability & Challenges</a>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- Q1 -->
+<div class="section" id="q1">
+  <div class="section-header">
+    <span class="qnum">Q01</span>
+    <h2>IoT Concept, History & Relation with WSN</h2>
+    <span class="marks-tag">5/10 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <div class="def-label">// definition</div>
+      <p style="margin:0"><strong>Internet of Things (IoT)</strong> is a network of physical objects ("things") embedded with sensors, software, and connectivity, enabling them to collect and exchange data over the internet — without human-to-human or human-to-computer interaction.</p>
+    </div>
+
+    <h3>Origin & History</h3>
+    <ul>
+      <li><strong>Coined by:</strong> Kevin Ashton in 1999 at MIT Auto-ID Center</li>
+      <li>First practical IoT device: Internet-connected Coca-Cola vending machine (1982, Carnegie Mellon University)</li>
+      <li><strong>2000s:</strong> RFID-based tracking systems became mainstream</li>
+      <li><strong>2010s:</strong> Explosion of smart devices — smartphones, wearables, smart home</li>
+      <li><strong>Today:</strong> 15+ billion connected devices globally; expected to exceed 30 billion by 2030</li>
+    </ul>
+
+    <h3>Core Components of IoT</h3>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">🔌</div><div class="card-title">Things/Devices</div><div class="card-desc">Physical objects with embedded sensors (thermostats, wearables, cars)</div></div>
+      <div class="card"><div class="card-icon">📡</div><div class="card-title">Connectivity</div><div class="card-desc">WiFi, Bluetooth, Zigbee, 4G/5G, LoRa for data transmission</div></div>
+      <div class="card"><div class="card-icon">☁️</div><div class="card-title">Cloud/Fog</div><div class="card-desc">Stores and processes collected data remotely or at the edge</div></div>
+      <div class="card"><div class="card-icon">🧠</div><div class="card-title">Analytics</div><div class="card-desc">AI/ML extracts actionable insights from raw sensor data</div></div>
+      <div class="card"><div class="card-icon">📱</div><div class="card-title">User Interface</div><div class="card-desc">Mobile app, dashboard, or voice assistant to interact with devices</div></div>
+    </div>
+
+    <h3>IoT System Architecture — High Level</h3>
+    <div class="diagram">
+  [Physical World]
+       |
+  ┌────┴─────────────────────────────────────────────┐
+  │  THINGS LAYER                                     │
+  │  Sensors → Temperature, Humidity, GPS, Camera     │
+  │  Actuators → Motors, Valves, LEDs, Speakers       │
+  └────────────────────────┬─────────────────────────┘
+                           | (WiFi / BLE / Zigbee / 5G)
+  ┌────────────────────────┴─────────────────────────┐
+  │  GATEWAY / CONNECTIVITY LAYER                     │
+  │  IoT Gateway — Protocol Translation               │
+  └────────────────────────┬─────────────────────────┘
+                           |
+  ┌────────────────────────┴─────────────────────────┐
+  │  CLOUD PLATFORM (AWS IoT / Azure / Google Cloud)  │
+  │  Storage → Processing → Analytics → ML Models     │
+  └────────────────────────┬─────────────────────────┘
+                           |
+  ┌────────────────────────┴─────────────────────────┐
+  │  APPLICATION LAYER                                │
+  │  Smart Home App | Healthcare Dashboard | Smart City│
+  └───────────────────────────────────────────────────┘</div>
+
+    <h3 class="red">Wireless Sensor Network (WSN) — Definition</h3>
+    <div class="def-box red">
+      <div class="def-label">// WSN definition</div>
+      <p style="margin:0">A <strong>Wireless Sensor Network (WSN)</strong> is a network of spatially distributed autonomous sensor nodes that monitor physical or environmental conditions (temperature, pressure, motion) and wirelessly transmit data to a central point (sink/base station).</p>
+    </div>
+
+    <h3 class="red">Difference between IoT and WSN</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>IoT</th><th>WSN</th></tr>
+        <tr><td><strong>Scope</strong></td><td>Broad — any connected device/system</td><td>Narrow — specifically sensor-based networks</td></tr>
+        <tr><td><strong>Internet Access</strong></td><td>Mandatory — devices connect to internet</td><td>Optional — may be local only</td></tr>
+        <tr><td><strong>Intelligence</strong></td><td>High — AI, cloud computing, automation</td><td>Low to medium — data collection focused</td></tr>
+        <tr><td><strong>Power</strong></td><td>Often mains-powered or rechargeable</td><td>Battery-powered, ultra-low power</td></tr>
+        <tr><td><strong>Data Processing</strong></td><td>Edge + Cloud (distributed)</td><td>Sink node / base station (centralized)</td></tr>
+        <tr><td><strong>Examples</strong></td><td>Smart home, connected car, wearables</td><td>Forest fire detection, battlefield monitoring</td></tr>
+        <tr><td><strong>Scale</strong></td><td>Billions of devices globally</td><td>Limited area deployments</td></tr>
+      </table>
+    </div>
+
+    <h3>How WSN and IoT Relate</h3>
+    <p>WSN is a <strong>subset/component</strong> of IoT. Every WSN can be part of an IoT system, but IoT is much broader than WSN.</p>
+    <div class="flow">
+      <div class="flow-box teal">WSN (Sensors collect data)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box yellow">Gateway (Protocol bridge)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box red">Internet/Cloud (IoT backend)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box purple">Smart Application</div>
+    </div>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li><strong>IoT</strong> = physical devices + internet + intelligence + applications</li>
+        <li><strong>Kevin Ashton</strong> coined the term "Internet of Things" in <strong>1999</strong></li>
+        <li>WSN is a subset of IoT — forms the sensing layer</li>
+        <li>WSN nodes: <strong>Sensor + Processor + Radio + Power source</strong></li>
+        <li>IoT uses WSN for data collection but adds cloud, analytics, and user interface</li>
+        <li>Key IoT characteristics: Connectivity, Sensing, Intelligence, Action, Ecosystem</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>IoT is an ecosystem where physical devices connect to the internet to collect, share, and act on data intelligently. WSN forms the foundational sensing layer of IoT — providing raw environmental data that IoT systems process in the cloud to deliver smart applications.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="section" id="q2">
+  <div class="section-header red">
+    <span class="qnum red">Q02</span>
+    <h2>Arduino — Block Diagram, Pin Diagram & Working</h2>
+    <span class="marks-tag">5/10 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="def-box red">
+      <div class="def-label">// definition</div>
+      <p style="margin:0"><strong>Arduino</strong> is an open-source electronics prototyping platform consisting of a microcontroller board and a software IDE (Integrated Development Environment). It is widely used in IoT projects for reading sensor inputs, controlling actuators, and connecting to the internet. Arduino Uno (ATmega328P) is the most popular variant.</p>
+    </div>
+
+    <h3 class="red">Arduino Block Diagram</h3>
+    <div class="diagram red">
+  ┌─────────────────────────────────────────────────────────────┐
+  │                    ARDUINO UNO BOARD                         │
+  │                                                             │
+  │  ┌─────────────┐    ┌──────────────────────────────────┐   │
+  │  │  Power      │    │     ATmega328P MICROCONTROLLER    │   │
+  │  │  Supply     │───>│  ┌────────┐  ┌──────────────┐    │   │
+  │  │  Unit       │    │  │  CPU   │  │  Flash (32KB)│    │   │
+  │  │(7-12V DC or │    │  │(16 MHz)│  │  SRAM (2KB)  │    │   │
+  │  │  USB 5V)    │    │  └────────┘  │  EEPROM (1KB)│    │   │
+  │  └─────────────┘    │              └──────────────┘    │   │
+  │                     │  ┌──────────────────────────────┐│   │
+  │  ┌─────────────┐    │  │  Timers/Counters             ││   │
+  │  │  Crystal    │───>│  │  PWM Generator               ││   │
+  │  │  Oscillator │    │  │  ADC (10-bit, 6 channels)    ││   │
+  │  │  (16 MHz)   │    │  │  UART / SPI / I2C            ││   │
+  │  └─────────────┘    │  └──────────────────────────────┘│   │
+  │                     └──────────────────────────────────┘   │
+  │                                                             │
+  │  ┌─────────────┐    ┌──────────────────────────────────┐   │
+  │  │ USB-to-     │    │  I/O PINS                        │   │
+  │  │ Serial      │    │  Digital: 14 pins (0-13)         │   │
+  │  │ Chip        │    │  Analog:   6 pins (A0-A5)        │   │
+  │  │(ATmega16U2) │    │  PWM: 6 pins (3,5,6,9,10,11)    │   │
+  │  └─────────────┘    └──────────────────────────────────┘   │
+  └─────────────────────────────────────────────────────────────┘</div>
+
+    <h3 class="red">Arduino Pin Diagram (Arduino Uno)</h3>
+    <div class="diagram red">
+                         ┌──────────────┐
+            ──────────── │  RESET  │AREF│ ────────
+   Digital  ──── D0/RX ──│         │GND │ ────────  Power
+   Pins     ──── D1/TX ──│         │D13 │──── LED
+            ──── D2   ──│         │D12 │────
+            ──── D3~  ──│ ARDUINO │D11~│──── [SPI MOSI]
+            ──── D4   ──│   UNO   │D10~│──── [SPI SS]
+            ──── D5~  ──│         │D9~ │────
+            ──── D6~  ──│         │D8  │────
+            ──── D7   ──│         │    │
+            ──── D8   ──│         │D7  │────
+            ──── D9~  ──│         │D6~ │────
+            ─────────── │         │D5~ │────
+                        │         │D4  │────
+        A0 ─────────── │ [USB]   │D3~ │────
+        A1 ─────────── │         │D2  │────
+        A2 ─────────── │         │D1  │────
+        A3 ─────────── │         │D0  │────
+        A4 ─────────── │         │    │
+        A5 ─────────── │[POWER]  │    │
+                        └──────────────┘
+   Power Pins: 5V, 3.3V, GND, VIN, RESET
+   ~ = PWM capable   RX/TX = Serial Communication</div>
+
+    <h3>Pin Functions Table</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Pin Type</th><th>Count</th><th>Function</th><th>Example Use</th></tr>
+        <tr><td><strong>Digital I/O</strong></td><td>14 (D0–D13)</td><td>Read/write digital HIGH(5V)/LOW(0V)</td><td>LED on/off, Button input</td></tr>
+        <tr><td><strong>PWM Pins</strong></td><td>6 (~3,5,6,9,10,11)</td><td>Pulse Width Modulation (analog-like)</td><td>Servo motor, LED dimming</td></tr>
+        <tr><td><strong>Analog Input</strong></td><td>6 (A0–A5)</td><td>Read analog voltage (0–5V) as 0–1023</td><td>Potentiometer, temperature sensor</td></tr>
+        <tr><td><strong>UART (Serial)</strong></td><td>D0(RX), D1(TX)</td><td>Serial communication with PC/modules</td><td>HC-05 Bluetooth, GPS module</td></tr>
+        <tr><td><strong>SPI</strong></td><td>D10,11,12,13</td><td>SPI bus communication</td><td>SD card, display</td></tr>
+        <tr><td><strong>I2C</strong></td><td>A4(SDA), A5(SCL)</td><td>I2C bus communication</td><td>OLED display, MPU6050</td></tr>
+        <tr><td><strong>Power Pins</strong></td><td>5V, 3.3V, GND, VIN</td><td>Supply power to components</td><td>Powering sensors</td></tr>
+      </table>
+    </div>
+
+    <h3>How Arduino Works (Step-by-Step)</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Write Code in Arduino IDE</strong><p>Write a sketch (program) in C/C++ syntax. Functions: setup() runs once; loop() runs forever.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Compile the Sketch</strong><p>IDE compiles code into machine-level hex file for the ATmega328P microcontroller.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Upload via USB</strong><p>Compiled code is uploaded via USB using the onboard USB-to-Serial chip (ATmega16U2).</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Sensor Data Collection</strong><p>Sensors connected to analog/digital pins send data; Arduino reads values using analogRead()/digitalRead().</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Processing & Decision</strong><p>ATmega328P processor executes code — makes decisions (if temperature > 30, turn fan ON).</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><strong>Actuator Control / Communication</strong><p>Output commands sent to actuators (motors, LEDs) or data sent via Serial/WiFi module to cloud.</p></div></div>
+    </div>
+
+    <h4>Simple IoT Example — Temperature Monitor:</h4>
+    <div class="diagram green">
+  DHT11 Sensor → Arduino Analog Pin A0
+  Arduino reads temperature value
+  if (temp > 35°C) → turn ON Fan (via relay on D2)
+  Send data to cloud via ESP8266 WiFi module (on D3,D4)
+  Dashboard shows live temperature graph</div>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>Arduino Uno uses <strong>ATmega328P</strong> microcontroller running at <strong>16 MHz</strong></li>
+        <li>Memory: Flash 32KB (program), SRAM 2KB (runtime), EEPROM 1KB (permanent)</li>
+        <li>Operating voltage: <strong>5V</strong>; Input voltage: 7–12V DC</li>
+        <li><strong>14 digital pins</strong> (6 PWM), <strong>6 analog pins</strong></li>
+        <li>Two main functions: <code>setup()</code> — runs once; <code>loop()</code> — runs repeatedly</li>
+        <li>Arduino is open-source hardware + software — free to use and modify</li>
+        <li>Common IoT shields: WiFi (ESP8266), GSM, GPS, Ethernet, Bluetooth</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>Arduino is the most beginner-friendly IoT development platform. Its simple programming model (setup + loop), abundant libraries, and extensive community support make it ideal for rapid prototyping of IoT solutions from smart home devices to industrial sensors.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="section" id="q3">
+  <div class="section-header purple">
+    <span class="qnum purple">Q03</span>
+    <h2>IoT Architecture — 3-Layer, 4-Layer & 5-Layer Models</h2>
+    <span class="marks-tag">10 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="def-box purple">
+      <div class="def-label">// definition</div>
+      <p style="margin:0">IoT architecture defines the structural framework that describes how IoT devices, networks, and applications interact with each other. Different layered models provide different levels of abstraction for designing IoT systems.</p>
+    </div>
+
+    <h3 class="purple">Model 1: Three-Layer Architecture (Basic)</h3>
+    <div class="diagram purple">
+  ┌─────────────────────────────────────┐
+  │         APPLICATION LAYER           │  ← Layer 3
+  │   Smart Home | Healthcare | City    │
+  │   Delivers specific services        │
+  └────────────────┬────────────────────┘
+                   │
+  ┌────────────────┴────────────────────┐
+  │          NETWORK LAYER              │  ← Layer 2
+  │   Internet | WiFi | 4G/5G | Zigbee  │
+  │   Transmits & routes data           │
+  └────────────────┬────────────────────┘
+                   │
+  ┌────────────────┴────────────────────┐
+  │        PERCEPTION LAYER             │  ← Layer 1
+  │   Sensors | RFID | Cameras          │
+  │   Collects physical world data      │
+  └─────────────────────────────────────┘</div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Layer</th><th>Name</th><th>Function</th><th>Examples</th></tr>
+        <tr><td>Layer 1</td><td><strong>Perception Layer</strong></td><td>Sense physical environment</td><td>Sensors, RFID, Cameras, GPS</td></tr>
+        <tr><td>Layer 2</td><td><strong>Network Layer</strong></td><td>Transmit data between devices</td><td>WiFi, Bluetooth, 4G, Internet</td></tr>
+        <tr><td>Layer 3</td><td><strong>Application Layer</strong></td><td>Deliver smart services to users</td><td>Smart Home App, Health Monitor</td></tr>
+      </table>
+    </div>
+
+    <h3 class="yellow">Model 2: Four-Layer Architecture</h3>
+    <div class="diagram yellow">
+  ┌─────────────────────────────────────┐
+  │         APPLICATION LAYER           │  ← Layer 4
+  │   End-user services & dashboards    │
+  └────────────────┬────────────────────┘
+                   │
+  ┌────────────────┴────────────────────┐
+  │         PROCESSING LAYER            │  ← Layer 3
+  │  Cloud / Middleware / Data Analysis │
+  │  Database, ML models, Rules Engine  │
+  └────────────────┬────────────────────┘
+                   │
+  ┌────────────────┴────────────────────┐
+  │          NETWORK LAYER              │  ← Layer 2
+  │  Data transmission and routing      │
+  │  WiFi, Cellular, Bluetooth, LPWAN   │
+  └────────────────┬────────────────────┘
+                   │
+  ┌────────────────┴────────────────────┐
+  │         PERCEPTION LAYER            │  ← Layer 1
+  │  Physical devices, sensors          │
+  │  Temperature, Pressure, Motion      │
+  └─────────────────────────────────────┘</div>
+
+    <h3 class="green">Model 3: Five-Layer Architecture (Most Detailed)</h3>
+    <div class="diagram green">
+  ┌─────────────────────────────────────┐
+  │         BUSINESS LAYER              │  ← Layer 5
+  │  Business models, ROI, Strategies   │
+  │  Flowcharts, graphs for management  │
+  └────────────────┬────────────────────┘
+                   │
+  ┌────────────────┴────────────────────┐
+  │         APPLICATION LAYER           │  ← Layer 4
+  │  User-facing smart services         │
+  │  Smart home, Healthcare, Industry   │
+  └────────────────┬────────────────────┘
+                   │
+  ┌────────────────┴────────────────────┐
+  │         PROCESSING LAYER            │  ← Layer 3
+  │  Data storage, analysis, database   │
+  │  Cloud/Fog computing, Big Data, ML  │
+  └────────────────┬────────────────────┘
+                   │
+  ┌────────────────┴────────────────────┐
+  │          TRANSPORT LAYER            │  ← Layer 2
+  │  Transmit sensor data to layer 3    │
+  │  WiFi, Bluetooth, Zigbee, 4G/5G    │
+  └────────────────┬────────────────────┘
+                   │
+  ┌────────────────┴────────────────────┐
+  │         PERCEPTION LAYER            │  ← Layer 1
+  │  Physical devices & sensors         │
+  │  RFID, GPS, Camera, Temperature     │
+  └─────────────────────────────────────┘</div>
+
+    <h3>Comparison of All Three Models</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Layer</th><th>3-Layer</th><th>4-Layer</th><th>5-Layer</th></tr>
+        <tr><td>1</td><td>Perception</td><td>Perception</td><td>Perception</td></tr>
+        <tr><td>2</td><td>Network</td><td>Network</td><td>Transport</td></tr>
+        <tr><td>3</td><td>Application</td><td>Processing</td><td>Processing</td></tr>
+        <tr><td>4</td><td>—</td><td>Application</td><td>Application</td></tr>
+        <tr><td>5</td><td>—</td><td>—</td><td>Business</td></tr>
+        <tr><td><strong>Use Case</strong></td><td>Simple overview</td><td>Enterprise IoT</td><td>Industrial IoT</td></tr>
+      </table>
+    </div>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>3-layer: Perception → Network → Application (basic model)</li>
+        <li>4-layer adds <strong>Processing Layer</strong> for cloud/data analytics</li>
+        <li>5-layer adds <strong>Business Layer</strong> for ROI, strategy, and management</li>
+        <li><strong>Perception Layer</strong> = sensing layer (sensors, RFID, cameras)</li>
+        <li><strong>Business Layer</strong> = manages overall IoT system and provides reports to management</li>
+        <li>Most exam questions prefer the <strong>5-layer model</strong> for detailed answers</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>IoT architecture models define how data flows from physical sensors to end-user applications. The 5-layer model is the most comprehensive, adding Processing and Business layers to handle real-world enterprise requirements like data analytics, cloud management, and business intelligence.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="section" id="q4">
+  <div class="section-header">
+    <span class="qnum">Q04</span>
+    <h2>Sensors, Actuators & Classification of Sensors</h2>
+    <span class="marks-tag">5/10 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="two-col">
+      <div class="def-box">
+        <div class="def-label">// sensor definition</div>
+        <p style="margin:0">A <strong>Sensor</strong> is a device that detects changes in the physical environment (temperature, pressure, light, motion) and converts them into electrical signals that can be read by a microcontroller or computer.</p>
+      </div>
+      <div class="def-box red">
+        <div class="def-label">// actuator definition</div>
+        <p style="margin:0">An <strong>Actuator</strong> is a device that receives electrical/digital signals from a controller and converts them into physical actions — movement, heat, sound, or light. Actuators are the "output" side of IoT.</p>
+      </div>
+    </div>
+
+    <h3>Classification of Sensors</h3>
+
+    <h4>A. Based on Physical Quantity Measured:</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Measures</th><th>Examples</th><th>IoT Use Case</th></tr>
+        <tr><td><strong>Temperature Sensor</strong></td><td>Heat/cold</td><td>DHT11, LM35, DS18B20</td><td>Smart thermostat, cold-chain</td></tr>
+        <tr><td><strong>Pressure Sensor</strong></td><td>Force/pressure</td><td>BMP180, MPX5050</td><td>Weather station, tyre pressure</td></tr>
+        <tr><td><strong>Light/Optical Sensor</strong></td><td>Light intensity</td><td>LDR, Photodiode, BH1750</td><td>Smart lighting, security</td></tr>
+        <tr><td><strong>Motion/PIR Sensor</strong></td><td>Movement, IR</td><td>HC-SR501, MPU6050</td><td>Security alarm, automated doors</td></tr>
+        <tr><td><strong>Proximity Sensor</strong></td><td>Nearby objects</td><td>HC-SR04 (ultrasonic)</td><td>Parking sensors, obstacle avoidance</td></tr>
+        <tr><td><strong>Gas/Air Sensor</strong></td><td>Gas concentration</td><td>MQ-2, MQ-135</td><td>Air quality monitor, gas leak detection</td></tr>
+        <tr><td><strong>Humidity Sensor</strong></td><td>Moisture in air</td><td>DHT22, SHT31</td><td>Smart farming, HVAC</td></tr>
+        <tr><td><strong>Accelerometer</strong></td><td>Vibration, tilt</td><td>ADXL345, MPU6050</td><td>Wearables, crash detection</td></tr>
+        <tr><td><strong>GPS Sensor</strong></td><td>Location</td><td>NEO-6M</td><td>Fleet tracking, asset monitoring</td></tr>
+        <tr><td><strong>Sound Sensor</strong></td><td>Audio level</td><td>KY-037, MAX4466</td><td>Noise monitoring, voice control</td></tr>
+      </table>
+    </div>
+
+    <h4>B. Based on Signal Output Type:</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Output Signal</th><th>Example</th></tr>
+        <tr><td><strong>Analog Sensor</strong></td><td>Continuous voltage (0–5V)</td><td>LM35 temperature, LDR light sensor</td></tr>
+        <tr><td><strong>Digital Sensor</strong></td><td>Binary output (0 or 1)</td><td>PIR motion sensor, push button</td></tr>
+        <tr><td><strong>PWM Sensor</strong></td><td>Pulse Width Modulated signal</td><td>Servo position feedback</td></tr>
+      </table>
+    </div>
+
+    <h4>C. Based on Energy Source:</h4>
+    <ul>
+      <li><strong>Active Sensors:</strong> Require external power supply (e.g., ultrasonic sensor)</li>
+      <li><strong>Passive Sensors:</strong> Generate their own signal from measured energy (e.g., thermocouple, LDR)</li>
+    </ul>
+
+    <h3 class="red">Actuators — Classification</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Input Energy</th><th>Output Action</th><th>Examples</th><th>IoT Use</th></tr>
+        <tr><td><strong>Electrical</strong></td><td>Electrical</td><td>Electrical switching</td><td>Relay, solenoid</td><td>Smart switch, water valve</td></tr>
+        <tr><td><strong>Pneumatic</strong></td><td>Compressed air</td><td>Mechanical movement</td><td>Air cylinder</td><td>Industrial automation</td></tr>
+        <tr><td><strong>Hydraulic</strong></td><td>Pressurized fluid</td><td>Heavy mechanical movement</td><td>Hydraulic cylinder</td><td>Construction, robots</td></tr>
+        <tr><td><strong>Thermal</strong></td><td>Heat/electricity</td><td>Heating/cooling</td><td>Peltier module, heater</td><td>Smart HVAC</td></tr>
+        <tr><td><strong>Mechanical</strong></td><td>Electrical</td><td>Rotation/movement</td><td>DC motor, servo, stepper</td><td>Robotics, drones, locks</td></tr>
+        <tr><td><strong>Light (Optical)</strong></td><td>Electrical</td><td>Light emission</td><td>LED, LCD, laser</td><td>Display, indicators</td></tr>
+        <tr><td><strong>Sound</strong></td><td>Electrical</td><td>Sound waves</td><td>Buzzer, speaker</td><td>Alarms, voice alerts</td></tr>
+      </table>
+    </div>
+
+    <h3>Sensor–Actuator Flow in IoT</h3>
+    <div class="diagram">
+  Physical World
+       |
+  [SENSOR] — detects temperature, motion, gas, etc.
+       | (analog/digital signal)
+  [MICROCONTROLLER / Arduino / RPi] — processes signal
+       | (decision: if gas > threshold → alert)
+  [ACTUATOR] — triggers fan, valve, alarm, LED
+       |
+  Real-world action (fan turns ON, valve closes)</div>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>Sensor = input device (physical → electrical); Actuator = output device (electrical → physical)</li>
+        <li>Sensors classified by: quantity measured, signal type (analog/digital), energy source (active/passive)</li>
+        <li>Most popular IoT sensor: <strong>DHT11/DHT22</strong> (temperature + humidity)</li>
+        <li>Most popular actuator: <strong>Servo motor, Relay</strong></li>
+        <li>Passive sensors include: LDR, thermocouple, piezoelectric</li>
+        <li>Active sensors include: ultrasonic (HC-SR04), radar, GPS</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>Sensors and actuators are the hardware foundation of IoT. Sensors collect real-world data while actuators take actions based on processed decisions. Together, they form the complete sensing-actuation loop that gives IoT systems the ability to interact with and control the physical world.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="section" id="q5">
+  <div class="section-header">
+    <span class="qnum green">Q05</span>
+    <h2>Applications of IoT</h2>
+    <span class="marks-tag">5/10 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <div class="def-label">// overview</div>
+      <p style="margin:0">IoT applications span virtually every domain of human life. IoT systems connect devices, collect data, analyze it, and automate actions — transforming traditional industries into smart, data-driven systems.</p>
+    </div>
+
+    <h3>Major IoT Application Areas</h3>
+
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">🏠</div><div class="card-title">Smart Home</div><div class="card-desc">Automated lighting, smart locks, voice assistants (Alexa), security cameras</div></div>
+      <div class="card"><div class="card-icon">🏥</div><div class="card-title">Healthcare</div><div class="card-desc">Remote patient monitoring, smart pills, wearable health devices</div></div>
+      <div class="card"><div class="card-icon">🌾</div><div class="card-title">Smart Agriculture</div><div class="card-desc">Soil moisture monitoring, drone spraying, precision irrigation</div></div>
+      <div class="card"><div class="card-icon">🏭</div><div class="card-title">Industrial IoT</div><div class="card-desc">Predictive maintenance, factory automation, supply chain tracking</div></div>
+      <div class="card"><div class="card-icon">🚗</div><div class="card-title">Smart Transport</div><div class="card-desc">Connected vehicles, traffic management, fleet tracking</div></div>
+      <div class="card"><div class="card-icon">🌆</div><div class="card-title">Smart City</div><div class="card-desc">Smart parking, waste management, air quality monitoring</div></div>
+      <div class="card"><div class="card-icon">⚡</div><div class="card-title">Smart Energy</div><div class="card-desc">Smart meters, smart grid, renewable energy management</div></div>
+      <div class="card"><div class="card-icon">🛒</div><div class="card-title">Retail & Supply Chain</div><div class="card-desc">RFID inventory, smart shelves, cold-chain monitoring</div></div>
+    </div>
+
+    <h3>Smart Home — Detailed Example</h3>
+    <div class="diagram">
+  USER VOICE: "Hey Alexa, turn off lights"
+       |
+  [Voice Assistant / Smart Hub]
+       |
+  ┌────┴──────────────────────────────────────┐
+  │  Smart Devices in Home                    │
+  │  Light bulbs → TURNED OFF                 │
+  │  Thermostat → Set to 22°C                 │
+  │  Security Camera → Motion detected → Alert│
+  │  Smart Lock → Auto-lock at 10 PM         │
+  │  Smart Plug → Turn off TV at midnight     │
+  └────────────────────────────────────────────┘
+  All controlled via smartphone app or voice!</div>
+
+    <h3>Healthcare IoT — Example</h3>
+    <ul>
+      <li><strong>Wearables:</strong> Apple Watch monitors heart rate, SpO2, ECG continuously</li>
+      <li><strong>Remote Patient Monitoring:</strong> Hospital monitors ICU patients remotely; alerts doctors instantly</li>
+      <li><strong>Smart Pills:</strong> Ingestible sensors confirm when medication is taken</li>
+      <li><strong>Smart Insulin Pump:</strong> Continuously monitors blood sugar and auto-adjusts insulin</li>
+    </ul>
+
+    <h3>Smart Agriculture — Example</h3>
+    <ul>
+      <li>Soil sensors measure moisture and nutrients → automatically trigger drip irrigation</li>
+      <li>Weather stations predict rainfall → delay scheduled watering</li>
+      <li>Drones spray pesticides only on affected crop zones (precision agriculture)</li>
+      <li>Cold-chain sensors ensure food quality from farm to consumer</li>
+    </ul>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>Smart Home: Amazon Echo, Google Home, Philips Hue, Ring doorbell</li>
+        <li>Healthcare: Remote Patient Monitoring (RPM), telemedicine, wearables</li>
+        <li>Agriculture: Precision farming reduces water usage by up to 30%</li>
+        <li>IIoT (Industrial IoT): Predictive maintenance saves billions in downtime costs</li>
+        <li>Smart City: Barcelona IoT saved €75 million/year in water costs</li>
+        <li>IoT in retail: Amazon Go stores use IoT for cashier-less checkout</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>IoT applications are transforming every sector — making homes smarter, cities greener, farms more efficient, and healthcare more accessible. The impact of IoT is measured not just in convenience but in cost savings, sustainability, and improved quality of life.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="section" id="q6">
+  <div class="section-header red">
+    <span class="qnum red">Q06</span>
+    <h2>IoT-Based Cloud Computing</h2>
+    <span class="marks-tag">5/10 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="def-box red">
+      <div class="def-label">// definition</div>
+      <p style="margin:0"><strong>IoT-based Cloud Computing</strong> is the integration of IoT devices with cloud infrastructure for storing, processing, and analyzing the massive amounts of data generated by IoT devices. Cloud provides scalable, on-demand resources that IoT devices cannot handle locally.</p>
+    </div>
+
+    <h3>Why Cloud is Essential for IoT</h3>
+    <ul>
+      <li>IoT devices are resource-constrained (limited CPU, RAM, storage)</li>
+      <li>Data volume is enormous — billions of sensor readings per day</li>
+      <li>Cloud provides unlimited scalable storage and compute power</li>
+      <li>Cloud enables real-time analytics, ML model execution, and alerting</li>
+      <li>Anywhere access — control and monitor IoT devices globally</li>
+    </ul>
+
+    <h3 class="red">IoT Cloud Architecture</h3>
+    <div class="diagram red">
+  IoT Devices (Sensors, Cameras, Wearables)
+       |
+       | (MQTT / HTTP / AMQP / CoAP)
+       v
+  ┌─────────────────────────────────────────────────┐
+  │              IoT CLOUD PLATFORM                  │
+  │                                                  │
+  │  ┌─────────────┐  ┌──────────────┐  ┌────────┐  │
+  │  │  Data       │  │   Analytics  │  │  ML /  │  │
+  │  │  Ingestion  │  │   Engine     │  │   AI   │  │
+  │  │  (Gateway)  │  │  (Real-time) │  │  Models│  │
+  │  └─────────────┘  └──────────────┘  └────────┘  │
+  │                                                  │
+  │  ┌──────────────────────────────────────────┐   │
+  │  │           Cloud Storage                   │   │
+  │  │  Time-series DB | Object Store | Data Lake│   │
+  │  └──────────────────────────────────────────┘   │
+  └─────────────────────────────────────────────────┘
+       |
+  Dashboard / Mobile App / Alerts / API</div>
+
+    <h3>Cloud Service Models for IoT</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Service Model</th><th>What IoT Uses It For</th><th>Example</th></tr>
+        <tr><td><strong>IaaS</strong> (Infrastructure)</td><td>Virtual machines, storage for raw IoT data</td><td>AWS EC2, Azure VMs</td></tr>
+        <tr><td><strong>PaaS</strong> (Platform)</td><td>IoT middleware, development platforms</td><td>AWS IoT Core, Azure IoT Hub</td></tr>
+        <tr><td><strong>SaaS</strong> (Software)</td><td>Ready-made IoT dashboards, analytics tools</td><td>ThingSpeak, Ubidots</td></tr>
+      </table>
+    </div>
+
+    <h3>Popular IoT Cloud Platforms</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Platform</th><th>Provider</th><th>Key Features</th></tr>
+        <tr><td><strong>AWS IoT Core</strong></td><td>Amazon</td><td>MQTT broker, Lambda functions, Greengrass (edge)</td></tr>
+        <tr><td><strong>Azure IoT Hub</strong></td><td>Microsoft</td><td>Device management, Stream Analytics, Digital Twins</td></tr>
+        <tr><td><strong>Google Cloud IoT</strong></td><td>Google</td><td>Pub/Sub messaging, BigQuery, TensorFlow ML</td></tr>
+        <tr><td><strong>IBM Watson IoT</strong></td><td>IBM</td><td>AI analytics, blockchain integration</td></tr>
+        <tr><td><strong>ThingSpeak</strong></td><td>MathWorks</td><td>Free, MATLAB analytics, open-source</td></tr>
+      </table>
+    </div>
+
+    <h4>Real-Life Example — Smart Factory:</h4>
+    <p>Factory machines have IoT sensors → send vibration, temperature data via MQTT → AWS IoT Core ingests data → Lambda function detects anomaly → triggers maintenance alert → engineer sees alert on mobile dashboard — all in under 1 second.</p>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>Cloud + IoT = unlimited scalability, global access, real-time analytics</li>
+        <li>IoT devices typically use <strong>MQTT protocol</strong> to communicate with cloud</li>
+        <li>3 cloud models: IaaS (infrastructure), PaaS (platform), SaaS (software)</li>
+        <li>Cloud functions: data ingestion, storage, analytics, ML, alerting</li>
+        <li>Challenges: latency, security, bandwidth cost, data privacy</li>
+        <li>Solution to latency: <strong>Fog/Edge computing</strong> (process closer to device)</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>Cloud computing is the backbone of scalable IoT deployments. It provides the storage, compute, and analytical capabilities that IoT devices lack. Together, IoT + Cloud enables real-time intelligent systems that can manage billions of devices and generate actionable insights automatically.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="section" id="q7">
+  <div class="section-header purple">
+    <span class="qnum purple">Q07</span>
+    <h2>Smart Grid & Industrial IoT (IIoT)</h2>
+    <span class="marks-tag">10 marks</span>
+  </div>
+  <div class="section-body">
+
+    <h3 class="purple">Part A: Smart Grid</h3>
+    <div class="def-box purple">
+      <div class="def-label">// smart grid definition</div>
+      <p style="margin:0">A <strong>Smart Grid</strong> is an electricity supply network that uses IoT, digital communication, and automation to monitor, manage, and optimize the production, distribution, and consumption of electrical energy in real-time.</p>
+    </div>
+
+    <h4>Traditional Grid vs Smart Grid:</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>Traditional Grid</th><th>Smart Grid</th></tr>
+        <tr><td>Communication</td><td>One-way (utility → consumer)</td><td>Two-way (utility ↔ consumer)</td></tr>
+        <tr><td>Monitoring</td><td>Manual meter reading</td><td>Automatic real-time monitoring</td></tr>
+        <tr><td>Fault Detection</td><td>Hours to detect</td><td>Seconds to detect and isolate</td></tr>
+        <tr><td>Power Flow</td><td>Centralized only</td><td>Distributed (includes solar, wind)</td></tr>
+        <tr><td>Consumer Role</td><td>Passive consumer</td><td>Active prosumer (produce + consume)</td></tr>
+        <tr><td>Energy Efficiency</td><td>Low (~65%)</td><td>High (~90%+)</td></tr>
+      </table>
+    </div>
+
+    <h4>Smart Grid Components:</h4>
+    <div class="diagram purple">
+  Power Generation (Coal / Solar / Wind / Nuclear)
+          |
+  [Smart Sensors + AMI (Advanced Metering Infrastructure)]
+          |
+          v
+  High-Voltage Transmission Lines
+          |
+  [IoT Monitoring — Fault Detection, Load Balancing]
+          |
+          v
+  Distribution Substations
+          |
+  [Smart Meters in each home/building]
+          |
+  Consumer (sees real-time usage on app)
+          |
+  [Demand Response — auto reduce usage during peak hours]</div>
+
+    <h4>Key IoT Technologies in Smart Grid:</h4>
+    <ul>
+      <li><strong>Smart Meters:</strong> Digital meters that report consumption every 15 minutes</li>
+      <li><strong>AMI (Advanced Metering Infrastructure):</strong> Two-way communication network for meters</li>
+      <li><strong>Demand Response:</strong> Automatically reduces consumption during peak demand</li>
+      <li><strong>SCADA systems:</strong> Monitor and control grid infrastructure remotely</li>
+      <li><strong>Energy Storage Integration:</strong> Smart management of battery storage systems</li>
+    </ul>
+
+    <h3 class="red">Part B: Industrial IoT (IIoT)</h3>
+    <div class="def-box red">
+      <div class="def-label">// iiot definition</div>
+      <p style="margin:0"><strong>Industrial IoT (IIoT)</strong> refers to the application of IoT technology in industrial settings — manufacturing, oil & gas, mining, utilities — to automate processes, improve safety, and increase efficiency. IIoT is also called <strong>Industry 4.0</strong>.</p>
+    </div>
+
+    <h4>IIoT Architecture:</h4>
+    <div class="diagram red">
+  Industrial Machines / Equipment
+       |
+  [Industrial Sensors — vibration, temperature, pressure]
+       |
+  [PLC / DCS / Industrial Gateway]
+       |
+       | (Industrial protocols: OPC-UA, Modbus, PROFIBUS)
+       v
+  [Edge Computing — local pre-processing]
+       |
+  [Cloud Platform — AI analytics, dashboards]
+       |
+  [Predictive Maintenance Alert → Engineer Notified]</div>
+
+    <h4>IIoT Applications:</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Application</th><th>Description</th><th>Benefit</th></tr>
+        <tr><td><strong>Predictive Maintenance</strong></td><td>Sensors detect abnormal vibration/heat → predict machine failure before it happens</td><td>Reduces downtime by 50%</td></tr>
+        <tr><td><strong>Asset Tracking</strong></td><td>RFID + GPS tracks machines, tools, products in real time</td><td>Prevents loss, improves utilization</td></tr>
+        <tr><td><strong>Quality Control</strong></td><td>Cameras + AI inspect products on conveyor belt for defects</td><td>Reduces defect rate by 90%</td></tr>
+        <tr><td><strong>Remote Operations</strong></td><td>Operate oil rigs, mines, hazardous plants remotely</td><td>Improves worker safety</td></tr>
+        <tr><td><strong>Supply Chain</strong></td><td>Track goods from factory to customer; cold chain monitoring</td><td>Reduces spoilage, improves delivery</td></tr>
+      </table>
+    </div>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>Smart Grid = traditional power grid + IoT + two-way communication</li>
+        <li>Smart meters report usage in <strong>real time</strong> — not monthly like traditional meters</li>
+        <li>IIoT = Industry 4.0; cyber-physical systems in industrial context</li>
+        <li>Key IIoT protocol: <strong>OPC-UA</strong> (industrial standard for machine communication)</li>
+        <li>IIoT uses <strong>Predictive Maintenance</strong> — the biggest cost-saving application</li>
+        <li>Smart Grid uses <strong>AMI + Demand Response + Renewable integration</strong></li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>Smart Grid modernizes energy infrastructure with real-time monitoring and two-way communication. IIoT transforms manufacturing and industrial operations through automation, predictive analytics, and remote management — both being critical applications that demonstrate IoT's power at infrastructure scale.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="section" id="q8">
+  <div class="section-header">
+    <span class="qnum yellow">Q08</span>
+    <h2>Data Handling & Analytics in IoT</h2>
+    <span class="marks-tag">5/10 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <div class="def-label">// definition</div>
+      <p style="margin:0">IoT systems generate massive volumes of data continuously. <strong>IoT Data Handling</strong> refers to the processes of collecting, filtering, storing, and transmitting IoT data efficiently. <strong>IoT Analytics</strong> refers to extracting meaningful insights and making intelligent decisions from that data.</p>
+    </div>
+
+    <h3>IoT Data Characteristics</h3>
+    <ul>
+      <li><strong>Volume:</strong> A single smart factory can generate terabytes of data per day</li>
+      <li><strong>Velocity:</strong> Data arrives in real-time streams — milliseconds between readings</li>
+      <li><strong>Variety:</strong> Temperature values, images, audio, GPS coordinates — all types</li>
+      <li><strong>Veracity:</strong> Sensor data can be noisy or incomplete — needs filtering</li>
+    </ul>
+
+    <h3>Data Handling Pipeline in IoT</h3>
+    <div class="diagram">
+  [IoT Sensors generate raw data]
+          |
+  ┌───────┴──────────────────────────────────────┐
+  │  DATA COLLECTION LAYER                        │
+  │  • Polling: read sensor at fixed intervals    │
+  │  • Event-driven: read when threshold crossed  │
+  └───────────────────┬──────────────────────────┘
+                      |
+  ┌───────────────────┴──────────────────────────┐
+  │  DATA PRE-PROCESSING (Edge / Gateway)         │
+  │  • Filtering: remove noise/outliers           │
+  │  • Aggregation: average over 10 readings      │
+  │  • Compression: reduce data size before send  │
+  └───────────────────┬──────────────────────────┘
+                      |
+  ┌───────────────────┴──────────────────────────┐
+  │  DATA STORAGE (Cloud)                         │
+  │  • Time-series DB: InfluxDB, TimescaleDB      │
+  │  • Object Storage: Amazon S3                  │
+  │  • NoSQL: MongoDB, Cassandra                  │
+  └───────────────────┬──────────────────────────┘
+                      |
+  ┌───────────────────┴──────────────────────────┐
+  │  ANALYTICS LAYER                              │
+  │  • Descriptive: What happened?                │
+  │  • Diagnostic: Why did it happen?             │
+  │  • Predictive: What will happen?              │
+  │  • Prescriptive: What should we do?           │
+  └───────────────────┬──────────────────────────┘
+                      |
+  ┌───────────────────┴──────────────────────────┐
+  │  ACTION / RESPONSE                            │
+  │  • Alert sent to user                         │
+  │  • Actuator triggered automatically           │
+  │  • Dashboard updated                          │
+  └───────────────────────────────────────────────┘</div>
+
+    <h3>Types of IoT Analytics</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Question Answered</th><th>Technique</th><th>IoT Example</th></tr>
+        <tr><td><strong>Descriptive</strong></td><td>What happened?</td><td>Data visualization, reports</td><td>Daily energy usage chart</td></tr>
+        <tr><td><strong>Diagnostic</strong></td><td>Why did it happen?</td><td>Root cause analysis, correlation</td><td>Why did machine overheat?</td></tr>
+        <tr><td><strong>Predictive</strong></td><td>What will happen?</td><td>ML models, time-series forecast</td><td>Machine will fail in 3 days</td></tr>
+        <tr><td><strong>Prescriptive</strong></td><td>What should we do?</td><td>Optimization, decision trees</td><td>Schedule maintenance tomorrow</td></tr>
+      </table>
+    </div>
+
+    <h4>Technologies Used:</h4>
+    <ul>
+      <li><strong>Apache Kafka:</strong> Real-time data streaming pipeline for IoT data</li>
+      <li><strong>Apache Spark:</strong> Fast big data processing engine for IoT analytics</li>
+      <li><strong>TensorFlow / Edge AI:</strong> ML models deployed on edge for local analytics</li>
+      <li><strong>InfluxDB:</strong> Time-series database optimized for IoT sensor data</li>
+      <li><strong>Grafana:</strong> Real-time visualization dashboard for IoT metrics</li>
+    </ul>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>IoT data is characterized by <strong>4 V's</strong>: Volume, Velocity, Variety, Veracity</li>
+        <li>Data handling steps: Collection → Pre-processing → Storage → Analytics → Action</li>
+        <li>4 analytics types: Descriptive, Diagnostic, Predictive, Prescriptive</li>
+        <li>Time-series databases (InfluxDB) are optimized for IoT sensor data</li>
+        <li>Edge analytics reduces cloud bandwidth by <strong>90%+</strong> (process locally first)</li>
+        <li>Real-time streaming with <strong>Apache Kafka</strong> handles millions of messages/second</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>IoT data handling and analytics form the intelligence layer of any IoT system. Raw sensor data becomes business value only after proper processing, storage, and analysis. With predictive analytics, IoT systems can anticipate problems before they occur — making them proactive rather than reactive.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="section" id="q9">
+  <div class="section-header">
+    <span class="qnum red">Q09</span>
+    <h2>SDN (Software Defined Networking) & Its Role in IoT</h2>
+    <span class="marks-tag">5/10 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <div class="def-label">// SDN definition</div>
+      <p style="margin:0"><strong>Software Defined Networking (SDN)</strong> is a network architecture approach that separates the network's control plane (decisions about where traffic goes) from the data plane (actual movement of traffic). The control is centralized in a software-based SDN Controller, making networks programmable and flexible.</p>
+    </div>
+
+    <h3>Traditional Network vs SDN</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>Traditional Network</th><th>SDN</th></tr>
+        <tr><td>Control</td><td>Distributed (in each router/switch)</td><td>Centralized (SDN Controller)</td></tr>
+        <tr><td>Configuration</td><td>Manual, device-by-device</td><td>Programmatic (via APIs)</td></tr>
+        <tr><td>Flexibility</td><td>Low (static routing rules)</td><td>High (dynamic, software-driven)</td></tr>
+        <tr><td>Visibility</td><td>Limited, per-device view</td><td>Global network view</td></tr>
+        <tr><td>Innovation</td><td>Slow (vendor-dependent)</td><td>Fast (open APIs)</td></tr>
+      </table>
+    </div>
+
+    <h3>SDN Architecture</h3>
+    <div class="diagram">
+  ┌──────────────────────────────────────────┐
+  │  APPLICATION LAYER (Northbound APIs)      │
+  │  Network Apps: Routing, QoS, Security    │
+  └────────────────────┬─────────────────────┘
+                       │
+  ┌────────────────────┴─────────────────────┐
+  │  CONTROL PLANE (SDN Controller)          │
+  │  OpenDaylight / ONOS / Ryu               │
+  │  Makes ALL traffic routing decisions     │
+  └────────────────────┬─────────────────────┘
+                       │ (OpenFlow protocol)
+  ┌────────────────────┴─────────────────────┐
+  │  DATA PLANE (Network Devices)            │
+  │  Switches, Routers (just forward data)   │
+  │  Execute instructions from controller    │
+  └──────────────────────────────────────────┘</div>
+
+    <h3 class="red">SDN's Role in IoT</h3>
+
+    <h4>Why IoT Needs SDN:</h4>
+    <ul>
+      <li>IoT has <strong>millions of heterogeneous devices</strong> — managing manually is impossible</li>
+      <li>IoT traffic varies wildly — some devices send bursts, others are constant streams</li>
+      <li>IoT requires dynamic <strong>QoS (Quality of Service)</strong> for critical data (health sensors)</li>
+      <li>Security of IoT networks needs dynamic enforcement (SDN can isolate compromised devices instantly)</li>
+    </ul>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>SDN Feature</th><th>IoT Benefit</th></tr>
+        <tr><td>Centralized Control</td><td>Manage all IoT devices from one controller</td></tr>
+        <tr><td>Dynamic Traffic Management</td><td>Prioritize critical IoT data (e.g., medical alerts)</td></tr>
+        <tr><td>Programmable Security</td><td>Automatically isolate compromised IoT devices</td></tr>
+        <tr><td>Network Slicing</td><td>Separate virtual networks for different IoT applications</td></tr>
+        <tr><td>Scalability</td><td>Easily add/remove IoT devices without manual network config</td></tr>
+        <tr><td>Energy Efficiency</td><td>Sleep/wake network segments based on IoT activity</td></tr>
+      </table>
+    </div>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>SDN = separates Control Plane from Data Plane</li>
+        <li>SDN Controller = brain of the network (OpenDaylight, ONOS, Ryu)</li>
+        <li>Protocol: <strong>OpenFlow</strong> is the standard SDN protocol</li>
+        <li>SDN enables <strong>network slicing</strong> — critical for 5G + IoT integration</li>
+        <li>SDN can detect and isolate compromised IoT devices in milliseconds</li>
+        <li>NFV (Network Function Virtualization) often paired with SDN for IoT</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>SDN is an enabling technology for large-scale IoT deployments. By centralizing network control and making it programmable, SDN can dynamically manage millions of heterogeneous IoT devices, ensure QoS for critical data, and enforce security policies at network speed.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="section" id="q10">
+  <div class="section-header">
+    <span class="qnum">Q10</span>
+    <h2>IoT Development Platforms & Tools</h2>
+    <span class="marks-tag">5 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="def-box">
+      <div class="def-label">// overview</div>
+      <p style="margin:0">IoT development requires hardware platforms (microcontrollers/SBCs), software tools (IDEs, firmware), cloud platforms, and communication protocol libraries. Choosing the right platform depends on the application, power requirements, and connectivity needs.</p>
+    </div>
+
+    <h3>Hardware Platforms</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Platform</th><th>Type</th><th>Processor</th><th>Connectivity</th><th>Best For</th></tr>
+        <tr><td><strong>Arduino Uno</strong></td><td>Microcontroller</td><td>ATmega328P (8-bit)</td><td>None (needs shields)</td><td>Beginners, simple sensors</td></tr>
+        <tr><td><strong>ESP8266 / ESP32</strong></td><td>WiFi microcontroller</td><td>Xtensa 32-bit</td><td>Built-in WiFi + BT (ESP32)</td><td>Low-cost WiFi IoT</td></tr>
+        <tr><td><strong>Raspberry Pi 4</strong></td><td>Single Board Computer</td><td>ARM Cortex-A72</td><td>WiFi + BT + Ethernet</td><td>Complex IoT, AI at edge</td></tr>
+        <tr><td><strong>BeagleBone Black</strong></td><td>Single Board Computer</td><td>ARM Cortex-A8</td><td>Ethernet, USB</td><td>Industrial IoT</td></tr>
+        <tr><td><strong>STM32</strong></td><td>Microcontroller</td><td>ARM Cortex-M (32-bit)</td><td>Varies by variant</td><td>Professional embedded</td></tr>
+        <tr><td><strong>Particle Photon</strong></td><td>WiFi module</td><td>ARM Cortex-M3</td><td>Built-in WiFi</td><td>Cloud-connected products</td></tr>
+      </table>
+    </div>
+
+    <h3>Software / Cloud Platforms</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Platform</th><th>Type</th><th>Key Feature</th><th>Protocol</th></tr>
+        <tr><td><strong>AWS IoT Core</strong></td><td>Cloud</td><td>MQTT broker, rules engine, Greengrass</td><td>MQTT, HTTP</td></tr>
+        <tr><td><strong>Azure IoT Hub</strong></td><td>Cloud</td><td>Device twins, Stream Analytics</td><td>MQTT, AMQP</td></tr>
+        <tr><td><strong>ThingSpeak</strong></td><td>Cloud (free tier)</td><td>MATLAB analytics, easy API</td><td>HTTP, MQTT</td></tr>
+        <tr><td><strong>Blynk</strong></td><td>Mobile IoT platform</td><td>Drag-and-drop mobile UI builder</td><td>Blynk protocol</td></tr>
+        <tr><td><strong>Node-RED</strong></td><td>Visual flow tool</td><td>Flow-based visual programming for IoT</td><td>Any</td></tr>
+        <tr><td><strong>Home Assistant</strong></td><td>Home IoT</td><td>Open-source home automation hub</td><td>Zigbee, MQTT, Z-Wave</td></tr>
+        <tr><td><strong>Mosquitto</strong></td><td>MQTT Broker</td><td>Open-source MQTT broker</td><td>MQTT</td></tr>
+      </table>
+    </div>
+
+    <h3>Development Tools</h3>
+    <ul>
+      <li><strong>Arduino IDE:</strong> C/C++ based IDE for Arduino microcontrollers</li>
+      <li><strong>PlatformIO:</strong> Professional IDE (built on VS Code) for all embedded platforms</li>
+      <li><strong>Thonny / MicroPython:</strong> Python-based development for ESP32, Raspberry Pi Pico</li>
+      <li><strong>Eclipse IDE + CDT:</strong> Professional C/C++ development for embedded</li>
+      <li><strong>MQTT.fx / MQTT Explorer:</strong> Testing MQTT connections to IoT devices</li>
+      <li><strong>Postman:</strong> Testing REST APIs for IoT cloud platforms</li>
+    </ul>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>Arduino = best for beginners; ESP32 = best for WiFi+BT IoT; RPi = best for complex AI/IoT</li>
+        <li>ThingSpeak = free IoT cloud platform good for student projects</li>
+        <li>Node-RED = visual programming tool (flows) — extremely popular for IoT prototyping</li>
+        <li>MQTT broker = Mosquitto (open-source, self-hosted)</li>
+        <li>MicroPython allows running Python on microcontrollers (ESP32, RPi Pico)</li>
+        <li>PlatformIO supports 1000+ embedded boards — professional choice over Arduino IDE</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>The choice of IoT platform depends on the application complexity, connectivity requirements, power budget, and development expertise. From Arduino for beginners to AWS IoT for enterprise deployments, the IoT ecosystem provides a rich set of tools for every use case.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="section" id="q11">
+  <div class="section-header purple">
+    <span class="qnum purple">Q11</span>
+    <h2>M2M Communication, Fog Computing & Edge Computing</h2>
+    <span class="marks-tag">10 marks</span>
+  </div>
+  <div class="section-body">
+
+    <h3 class="purple">Part A: Machine-to-Machine (M2M) Communication</h3>
+    <div class="def-box purple">
+      <div class="def-label">// M2M definition</div>
+      <p style="margin:0"><strong>M2M (Machine-to-Machine) Communication</strong> is direct communication between devices using wired or wireless networks, without human involvement. One machine automatically exchanges data with another machine and triggers actions.</p>
+    </div>
+
+    <h4>M2M vs IoT:</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>M2M</th><th>IoT</th></tr>
+        <tr><td>Connectivity</td><td>Point-to-point (device to device)</td><td>Device to cloud to many services</td></tr>
+        <tr><td>Intelligence</td><td>Limited (predefined rules)</td><td>High (AI, cloud analytics)</td></tr>
+        <tr><td>Scalability</td><td>Limited (closed system)</td><td>Massively scalable (open)</td></tr>
+        <tr><td>Standards</td><td>Proprietary, siloed</td><td>Open standards (MQTT, HTTP, CoAP)</td></tr>
+        <tr><td>Example</td><td>ATM talking to bank server</td><td>Smart home ecosystem</td></tr>
+      </table>
+    </div>
+
+    <h4>M2M Communication Flow:</h4>
+    <div class="diagram purple">
+  Machine A                              Machine B
+  (Smart Meter)                         (Utility Server)
+       |                                      |
+       |─── Measures power usage ────────────|
+       |─── Sends data via GPRS ─────────────>|
+       |                              Server processes
+       |                              Sends bill automatically
+       |<─── Confirmation ────────────────────|
+  No human involved at any step!</div>
+
+    <h4>M2M Technologies:</h4>
+    <ul>
+      <li><strong>SCADA systems</strong> — industrial M2M for monitoring pipelines, power plants</li>
+      <li><strong>Telematics</strong> — vehicle-to-server communication (fleet management)</li>
+      <li><strong>Smart metering</strong> — utility meters reporting to servers automatically</li>
+    </ul>
+
+    <h3 class="yellow">Part B: Fog Computing</h3>
+    <div class="def-box">
+      <div class="def-label">// fog computing definition</div>
+      <p style="margin:0"><strong>Fog Computing</strong> is an extension of cloud computing that brings computation, storage, and networking closer to the devices that generate data. Fog nodes are intermediate computing nodes between IoT devices and the distant cloud. Coined by Cisco in 2014.</p>
+    </div>
+
+    <div class="diagram yellow">
+  IoT Devices (Sensors, Cameras)
+       |
+  ┌────┴──────────────────────────────────┐
+  │  FOG LAYER (Local Network)             │
+  │  Fog Nodes: Routers, Gateways,        │
+  │  Local Servers, Access Points         │
+  │  → Pre-process data locally           │
+  │  → Real-time local decisions          │
+  │  → Send only summary to cloud         │
+  └────────────────┬──────────────────────┘
+                   |
+  ┌────────────────┴──────────────────────┐
+  │  CLOUD (Remote Data Center)           │
+  │  Long-term storage, Big Data, ML      │
+  └───────────────────────────────────────┘</div>
+
+    <h3 class="red">Part C: Edge Computing</h3>
+    <div class="def-box red">
+      <div class="def-label">// edge computing definition</div>
+      <p style="margin:0"><strong>Edge Computing</strong> places the computation directly ON or very close to the IoT device itself (on the device or adjacent hardware). Unlike fog which uses intermediate nodes, edge processing happens at the very "edge" — at the data source.</p>
+    </div>
+
+    <h3>Three-Tier Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>Cloud Computing</th><th>Fog Computing</th><th>Edge Computing</th></tr>
+        <tr><td><strong>Location</strong></td><td>Distant data center</td><td>Local network (LAN/gateway)</td><td>On/near the device</td></tr>
+        <tr><td><strong>Latency</strong></td><td>High (100-500ms)</td><td>Medium (10-50ms)</td><td>Ultra-low (&lt;10ms)</td></tr>
+        <tr><td><strong>Bandwidth</strong></td><td>High (all data sent)</td><td>Medium (filtered data)</td><td>Minimal (only results)</td></tr>
+        <tr><td><strong>Intelligence</strong></td><td>Full ML/AI capabilities</td><td>Moderate analytics</td><td>Limited (simple rules)</td></tr>
+        <tr><td><strong>Security</strong></td><td>Centralized security</td><td>Distributed security</td><td>Local security</td></tr>
+        <tr><td><strong>Cost</strong></td><td>High (data transfer costs)</td><td>Medium</td><td>Low (after hardware)</td></tr>
+        <tr><td><strong>Example</strong></td><td>Netflix, Dropbox</td><td>Smart City gateway</td><td>Self-driving car AI</td></tr>
+        <tr><td><strong>Use Case</strong></td><td>Long-term storage, ML training</td><td>Smart buildings, factories</td><td>Autonomous vehicles, surgery robots</td></tr>
+      </table>
+    </div>
+
+    <div class="diagram">
+  COMPLETE PICTURE:
+  
+  [Sensor] → [EDGE: instant local AI]
+                    |
+              [FOG: local gateway, pre-processing]
+                    |
+              [CLOUD: global analytics, storage]
+  
+  Example — Autonomous Car:
+  Camera detects pedestrian → EDGE AI brakes in 1ms
+  Journey data logged      → FOG gateway summarizes trip
+  Route patterns analyzed  → CLOUD updates map AI models</div>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li><strong>M2M</strong> = device-to-device, closed, no cloud; predecessor to IoT</li>
+        <li><strong>Fog Computing</strong> = intermediate layer between devices and cloud (coined by Cisco)</li>
+        <li><strong>Edge Computing</strong> = processing at or on the IoT device itself</li>
+        <li>Edge latency: &lt;10ms; Fog: 10-50ms; Cloud: 100-500ms</li>
+        <li>Edge/Fog reduce cloud bandwidth by pre-processing data locally</li>
+        <li>Real-time applications (autonomous vehicles, robotic surgery) NEED edge computing</li>
+        <li>AWS Greengrass = edge computing extension of AWS IoT Core</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>M2M, Fog, and Edge computing represent the evolution toward distributed intelligence in IoT. Edge handles real-time ultra-low-latency decisions, Fog aggregates and pre-processes nearby data, and Cloud provides powerful analytics and storage. Together, they form a three-tier intelligence architecture for modern IoT systems.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="section" id="q12">
+  <div class="section-header red">
+    <span class="qnum red">Q12</span>
+    <h2>Raspberry Pi — Block Diagram, IoT Implementation & Working</h2>
+    <span class="marks-tag">10 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="def-box red">
+      <div class="def-label">// definition</div>
+      <p style="margin:0"><strong>Raspberry Pi (RPi)</strong> is a small, low-cost, single-board computer (SBC) developed by the Raspberry Pi Foundation (UK). Unlike Arduino (a microcontroller), Raspberry Pi is a full computer running Linux OS. It is widely used in IoT projects requiring image processing, AI, networking, and complex data processing.</p>
+    </div>
+
+    <h3 class="red">Raspberry Pi Block Diagram</h3>
+    <div class="diagram red">
+  ┌─────────────────────────────────────────────────────────────┐
+  │                   RASPBERRY Pi 4 (SBC)                      │
+  │                                                             │
+  │  ┌──────────────────────────────────────────────────────┐  │
+  │  │           SoC: BCM2711 (Broadcom)                    │  │
+  │  │  ┌─────────────────┐   ┌──────────────────────────┐  │  │
+  │  │  │  CPU             │   │  GPU (VideoCore VI)       │  │  │
+  │  │  │  Quad-core ARM   │   │  OpenGL ES 3.1           │  │  │
+  │  │  │  Cortex-A72      │   │  4K video decode         │  │  │
+  │  │  │  (1.5 GHz)       │   └──────────────────────────┘  │  │
+  │  │  └─────────────────┘                                 │  │
+  │  └──────────────────────────────────────────────────────┘  │
+  │                                                             │
+  │  ┌────────────┐  ┌────────────┐  ┌──────────────────────┐  │
+  │  │  RAM        │  │ Storage    │  │  I/O PORTS           │  │
+  │  │  4/8 GB     │  │ MicroSD    │  │  4× USB 3.0/2.0     │  │
+  │  │  LPDDR4     │  │ Card Slot  │  │  2× Micro HDMI      │  │
+  │  └────────────┘  └────────────┘  │  3.5mm Audio         │  │
+  │                                  │  USB-C Power         │  │
+  │  ┌────────────────────────────┐  └──────────────────────┘  │
+  │  │  CONNECTIVITY              │                             │
+  │  │  WiFi: 802.11ac (2.4+5GHz) │  ┌──────────────────────┐  │
+  │  │  Bluetooth 5.0             │  │  GPIO: 40 pins       │  │
+  │  │  Gigabit Ethernet          │  │  UART, SPI, I2C, PWM │  │
+  │  └────────────────────────────┘  └──────────────────────┘  │
+  └─────────────────────────────────────────────────────────────┘</div>
+
+    <h3>GPIO Pin Diagram (40-pin Header)</h3>
+    <div class="diagram">
+  40-PIN GPIO HEADER (Raspberry Pi 4)
+    3V3  ── [01] [02] ── 5V
+   SDA1  ── [03] [04] ── 5V
+   SCL1  ── [05] [06] ── GND
+  GPIO4  ── [07] [08] ── UART TXD
+    GND  ── [09] [10] ── UART RXD
+  GPIO17 ── [11] [12] ── GPIO18 (PCM_CLK)
+  GPIO27 ── [13] [14] ── GND
+  GPIO22 ── [15] [16] ── GPIO23
+    3V3  ── [17] [18] ── GPIO24
+  MOSI   ── [19] [20] ── GND
+  MISO   ── [21] [22] ── GPIO25
+  SCLK   ── [23] [24] ── SPI_CE0
+    GND  ── [25] [26] ── SPI_CE1
+   ID_SD ── [27] [28] ── ID_SC
+  GPIO5  ── [29] [30] ── GND
+  GPIO6  ── [31] [32] ── GPIO12
+  GPIO13 ── [33] [34] ── GND
+  GPIO19 ── [35] [36] ── GPIO16
+  GPIO26 ── [37] [38] ── GPIO20
+    GND  ── [39] [40] ── GPIO21</div>
+
+    <h3>Arduino vs Raspberry Pi (Key Difference)</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>Arduino Uno</th><th>Raspberry Pi 4</th></tr>
+        <tr><td><strong>Type</strong></td><td>Microcontroller</td><td>Single-Board Computer</td></tr>
+        <tr><td><strong>OS</strong></td><td>No OS (bare metal)</td><td>Raspberry Pi OS (Linux)</td></tr>
+        <tr><td><strong>Processor</strong></td><td>ATmega328P (8-bit, 16MHz)</td><td>Cortex-A72 (64-bit, 1.5GHz)</td></tr>
+        <tr><td><strong>RAM</strong></td><td>2 KB</td><td>4 or 8 GB</td></tr>
+        <tr><td><strong>Power</strong></td><td>Very low (50mA)</td><td>Higher (700mA-3A)</td></tr>
+        <tr><td><strong>Real-time</strong></td><td>Excellent (deterministic)</td><td>Not suitable (OS interruptions)</td></tr>
+        <tr><td><strong>AI/ML</strong></td><td>Not possible</td><td>TensorFlow Lite, OpenCV</td></tr>
+        <tr><td><strong>Cost</strong></td><td>~$25</td><td>$35–$75</td></tr>
+        <tr><td><strong>Best for</strong></td><td>Simple sensor reading, real-time control</td><td>Image processing, web server, AI IoT</td></tr>
+      </table>
+    </div>
+
+    <h3>How to Implement IoT Using Raspberry Pi</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Install OS</strong><p>Flash Raspberry Pi OS (or Ubuntu) to microSD card using Raspberry Pi Imager tool.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Connect Sensors to GPIO</strong><p>Wire sensors (DHT22, PIR, ultrasonic) to GPIO pins. Use breadboard and jumper wires.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Write Python Code</strong><p>Use Python with RPi.GPIO library to read sensors. Install packages via pip.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Connect to Network</strong><p>WiFi or Ethernet for internet access. Configure via raspi-config or NetworkManager.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Send Data to Cloud</strong><p>Use MQTT (paho-mqtt library) or HTTP requests to send sensor data to AWS/Azure/ThingSpeak.</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><strong>Deploy AI Model</strong><p>Run TensorFlow Lite models locally for face detection, object recognition, anomaly detection.</p></div></div>
+    </div>
+
+    <h4>Real IoT Example — Smart Security Camera:</h4>
+    <div class="diagram green">
+  RPi 4 + Camera Module V2
+       |
+  [Python + OpenCV detects motion in frame]
+       |
+  [If face detected → TensorFlow Lite recognizes person]
+       |
+  [Unknown person → MQTT alert → AWS IoT → Push notification]
+  [Save image to Google Drive via API]
+  [Turn on relay → siren via GPIO pin]
+  All running on $55 Raspberry Pi!</div>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>RPi = <strong>Single Board Computer</strong>; Arduino = <strong>Microcontroller</strong></li>
+        <li>Raspberry Pi runs full Linux OS — can run web servers, databases, ML models</li>
+        <li>GPIO has <strong>40 pins</strong> with digital I/O, UART, SPI, I2C support</li>
+        <li>Power: RPi needs 5V/3A via USB-C (RPi 4)</li>
+        <li>Primary language: <strong>Python</strong> (most IoT libraries available)</li>
+        <li>Key IoT libraries: <code>RPi.GPIO</code>, <code>paho-mqtt</code>, <code>requests</code>, <code>picamera</code></li>
+        <li>Raspberry Pi Pico = separate low-power microcontroller (NOT Linux-based)</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>Raspberry Pi is the most powerful open-source IoT platform for edge computing, AI-powered applications, and complex data processing. Its full Linux environment, rich I/O, built-in networking, and strong Python ecosystem make it ideal for advanced IoT projects from smart security to industrial automation.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="section" id="q13">
+  <div class="section-header purple">
+    <span class="qnum purple">Q13</span>
+    <h2>IoT Communication Protocols (Network + Data Protocols)</h2>
+    <span class="marks-tag">10 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="def-box purple">
+      <div class="def-label">// overview</div>
+      <p style="margin:0">IoT communication protocols define the rules for how IoT devices exchange data. They are divided into two categories: <strong>Network Protocols</strong> (how data travels across the network — physical/link/network layer) and <strong>Data Protocols</strong> (how data is formatted and exchanged between applications — application layer).</p>
+    </div>
+
+    <h3 class="purple">Network Protocols (Physical & Link Layer)</h3>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Protocol</th><th>Range</th><th>Data Rate</th><th>Power</th><th>IoT Use Case</th></tr>
+        <tr><td><strong>WiFi (802.11)</strong></td><td>~100m</td><td>Up to 9.6 Gbps</td><td>High</td><td>Smart home, IP cameras</td></tr>
+        <tr><td><strong>Bluetooth / BLE</strong></td><td>~10-100m</td><td>1-3 Mbps</td><td>Very Low (BLE)</td><td>Wearables, fitness trackers</td></tr>
+        <tr><td><strong>Zigbee</strong></td><td>~10-100m</td><td>250 Kbps</td><td>Very Low</td><td>Smart home mesh, factory sensors</td></tr>
+        <tr><td><strong>Z-Wave</strong></td><td>~30m</td><td>100 Kbps</td><td>Low</td><td>Smart home automation</td></tr>
+        <tr><td><strong>LoRa / LoRaWAN</strong></td><td>2-15 km</td><td>0.3-50 Kbps</td><td>Ultra-Low</td><td>Agriculture, smart city, tracking</td></tr>
+        <tr><td><strong>NB-IoT</strong></td><td>~10 km (cellular)</td><td>~50 Kbps</td><td>Ultra-Low</td><td>Smart meters, parking sensors</td></tr>
+        <tr><td><strong>4G LTE / 5G</strong></td><td>Wide area</td><td>Gbps</td><td>Medium-High</td><td>Connected vehicles, drones</td></tr>
+        <tr><td><strong>RFID</strong></td><td>&lt;1m (passive)</td><td>Low</td><td>Zero (passive)</td><td>Supply chain, access control</td></tr>
+        <tr><td><strong>Ethernet</strong></td><td>Wired ~100m</td><td>1 Gbps</td><td>Medium</td><td>Industrial IoT, gateways</td></tr>
+        <tr><td><strong>Thread</strong></td><td>~100m</td><td>250 Kbps</td><td>Low</td><td>Smart home (Google, Apple)</td></tr>
+      </table>
+    </div>
+
+    <h3 class="red">Data Protocols (Application Layer)</h3>
+
+    <h4>1. MQTT (Message Queuing Telemetry Transport)</h4>
+    <div class="def-box red">
+      <div class="def-label">// MQTT — most important IoT protocol</div>
+      <p style="margin:0"><strong>MQTT</strong> is a lightweight publish-subscribe messaging protocol designed for constrained devices and low-bandwidth, high-latency networks. It uses a <strong>broker</strong> to route messages between publishers (sensors) and subscribers (applications).</p>
+    </div>
+    <div class="diagram red">
+  Publisher (Temperature Sensor)
+       |
+       | publishes to topic: "home/temperature"
+       |
+  ┌────┴──────────────────────────────┐
+  │     MQTT BROKER (Mosquitto)       │
+  └────────────────┬──────────────────┘
+                   |
+       ┌───────────┴──────────────┐
+       |                          |
+  Subscriber 1              Subscriber 2
+  (Mobile App)              (AWS IoT Core)
+  receives temp data         stores in DB</div>
+
+    <h4>2. CoAP (Constrained Application Protocol)</h4>
+    <ul>
+      <li>Lightweight REST-like protocol for constrained IoT devices</li>
+      <li>Works over UDP (unlike HTTP which uses TCP)</li>
+      <li>Supports GET, POST, PUT, DELETE (like HTTP)</li>
+      <li><strong>Use case:</strong> Smart energy meters, embedded sensors with very limited resources</li>
+    </ul>
+
+    <h4>3. HTTP / HTTPS</h4>
+    <ul>
+      <li>Standard web protocol — used when IoT devices have enough resources</li>
+      <li>RESTful APIs are commonly used for IoT cloud platforms</li>
+      <li><strong>Limitation:</strong> Too heavy for battery-powered constrained devices</li>
+    </ul>
+
+    <h4>4. AMQP (Advanced Message Queuing Protocol)</h4>
+    <ul>
+      <li>Enterprise-grade messaging protocol with reliability features</li>
+      <li>Supports message acknowledgment, transactions, security</li>
+      <li><strong>Use case:</strong> Industrial IoT, financial IoT applications</li>
+    </ul>
+
+    <h4>5. WebSocket</h4>
+    <ul>
+      <li>Full-duplex (two-way simultaneous) communication over a single TCP connection</li>
+      <li>Used for real-time IoT dashboards and live monitoring</li>
+    </ul>
+
+    <h3>Protocol Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Protocol</th><th>Pattern</th><th>Transport</th><th>Weight</th><th>Best For</th></tr>
+        <tr><td><strong>MQTT</strong></td><td>Pub/Sub</td><td>TCP</td><td>Ultra-light</td><td>Most IoT devices</td></tr>
+        <tr><td><strong>CoAP</strong></td><td>Request/Response</td><td>UDP</td><td>Light</td><td>Constrained devices</td></tr>
+        <tr><td><strong>HTTP</strong></td><td>Request/Response</td><td>TCP</td><td>Heavy</td><td>IoT with good resources</td></tr>
+        <tr><td><strong>AMQP</strong></td><td>Pub/Sub + Queuing</td><td>TCP</td><td>Medium</td><td>Enterprise IoT</td></tr>
+        <tr><td><strong>WebSocket</strong></td><td>Full-duplex</td><td>TCP</td><td>Medium</td><td>Real-time dashboards</td></tr>
+      </table>
+    </div>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li><strong>MQTT</strong> is the most popular IoT protocol — runs on port 1883 (8883 for TLS)</li>
+        <li>MQTT QoS levels: 0 (at most once), 1 (at least once), 2 (exactly once)</li>
+        <li><strong>LoRa</strong> = best for long-range, low-power, wide area IoT (smart agriculture)</li>
+        <li><strong>Zigbee</strong> = best for low-power mesh networking (smart home)</li>
+        <li><strong>BLE</strong> = best for wearables (Bluetooth Low Energy)</li>
+        <li><strong>NB-IoT</strong> = cellular IoT for smart meters and parking</li>
+        <li>CoAP uses <strong>UDP</strong> (not TCP) — so it's faster but less reliable than MQTT</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>IoT communication protocols are fundamental to system design. The right protocol choice depends on range (LoRa vs WiFi), power budget (BLE vs 4G), data volume (MQTT vs HTTP), and reliability requirements (AMQP vs CoAP). MQTT has emerged as the dominant application-layer protocol for IoT due to its extreme efficiency and simplicity.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="section" id="q14">
+  <div class="section-header">
+    <span class="qnum green">Q14</span>
+    <h2>IoT Applications — Vehicles, Agriculture, Healthcare & Activity Monitoring</h2>
+    <span class="marks-tag">10 marks</span>
+  </div>
+  <div class="section-body">
+
+    <h3 class="green">A. IoT-Based Connected Vehicles</h3>
+    <div class="def-box">
+      <div class="def-label">// connected vehicles</div>
+      <p style="margin:0">Connected vehicles use IoT sensors, GPS, and wireless connectivity to communicate with each other (V2V), infrastructure (V2I), and the internet (V2X — Vehicle to Everything), enabling safer, more efficient transportation.</p>
+    </div>
+
+    <div class="diagram green">
+  ┌─────────────────────────────────────────────────────────┐
+  │                 CONNECTED VEHICLE                        │
+  │  Sensors: GPS, Accelerometer, Lidar, Camera, OBD-II    │
+  │  Connectivity: 4G/5G, DSRC (V2V/V2I), WiFi             │
+  └────────┬──────────────────────────────┬─────────────────┘
+           |                              |
+    ┌──────┴──────┐              ┌────────┴────────┐
+    │  Other      │              │  Cloud Backend  │
+    │  Vehicles   │              │  Fleet Mgmt     │
+    │  (V2V comm) │              │  OTA Updates    │
+    └─────────────┘              │  Insurance Data │
+                                 └─────────────────┘</div>
+
+    <h4>Connected Vehicle Applications:</h4>
+    <ul>
+      <li><strong>Fleet Management:</strong> Track bus/truck locations, fuel, driver behavior in real-time</li>
+      <li><strong>Predictive Maintenance:</strong> OBD-II reads engine data → predicts maintenance needs</li>
+      <li><strong>Emergency Response:</strong> Accident detection → automatic SOS call → location to emergency services</li>
+      <li><strong>Traffic Optimization:</strong> Vehicles share traffic data → GPS reroutes in real-time</li>
+      <li><strong>Pay-as-you-drive Insurance:</strong> Telematics box records driving behavior → fair insurance pricing</li>
+      <li><strong>Autonomous Driving:</strong> Tesla, Waymo use IoT sensors for self-driving capabilities</li>
+    </ul>
+
+    <h3 class="yellow">B. IoT-Based Agriculture (Smart Farming)</h3>
+    <div class="diagram yellow">
+  ┌─────────────────────────────────────────────────────┐
+  │              SMART FARM IoT SYSTEM                   │
+  │                                                     │
+  │  Field Sensors:                                     │
+  │  • Soil moisture sensor → detect dry areas          │
+  │  • pH sensor → detect nutrient deficiency           │
+  │  • Weather station → temperature, rain, humidity    │
+  │  • Crop health camera → detect disease              │
+  │                                                     │
+  │  Actuators:                                         │
+  │  • Drip irrigation valve → auto water when dry      │
+  │  • Drone → precise pesticide spraying               │
+  │  • Greenhouse ventilator → auto climate control     │
+  └─────────────────────┬───────────────────────────────┘
+                        |
+                  [LoRa Network]
+                        |
+               [Cloud Platform]
+                        |
+               [Farmer's Mobile App]
+  "Soil moisture at 30% in Zone A → irrigating now"</div>
+
+    <h4>Smart Agriculture Benefits:</h4>
+    <ul>
+      <li>Water usage reduced by <strong>30-50%</strong> with precision irrigation</li>
+      <li>Pesticide usage reduced by <strong>20-30%</strong> with drone precision spraying</li>
+      <li>Early disease detection saves up to <strong>40%</strong> of crop losses</li>
+      <li>Livestock monitoring: GPS + health sensors for cattle tracking</li>
+    </ul>
+
+    <h3 class="red">C. IoT-Based Healthcare</h3>
+    <div class="diagram red">
+  ┌─────────────────────────────────────────────────────┐
+  │            IoT HEALTHCARE ECOSYSTEM                  │
+  │                                                     │
+  │  WEARABLES:                                         │
+  │  Smartwatch → Heart Rate, SpO2, ECG, Steps          │
+  │  Glucose Monitor → Continuous blood sugar            │
+  │  Smart Patch → Body temp, posture                   │
+  │                                                     │
+  │  HOSPITAL:                                          │
+  │  ICU monitors → Vital signs streamed to nurse       │
+  │  Smart bed → Weight, position, sleep quality        │
+  │  RFID wristband → Patient ID, medication tracking   │
+  │                                                     │
+  │  REMOTE:                                            │
+  │  Telemedicine → Doctor consult via video + IoT data │
+  │  Medication dispenser → Alerts if missed dose       │
+  └─────────────────────────────────────────────────────┘</div>
+
+    <h4>Healthcare IoT Use Cases:</h4>
+    <ul>
+      <li><strong>Remote Patient Monitoring (RPM):</strong> Patients at home monitored 24/7 by hospital</li>
+      <li><strong>Smart Insulin Pump:</strong> Continuously measures glucose + auto-adjusts insulin delivery</li>
+      <li><strong>Fall Detection:</strong> Accelerometer in smartwatch detects fall → alerts family/hospital</li>
+      <li><strong>Asset Tracking:</strong> Hospitals track IV pumps, wheelchairs, defibrillators via RFID</li>
+      <li><strong>Surgical Robots:</strong> Remote robotic surgery with IoT-connected precision tools</li>
+    </ul>
+
+    <h3>D. Activity Monitoring</h3>
+    <ul>
+      <li><strong>Fitness Trackers:</strong> Fitbit, Apple Watch — steps, calories, sleep stages, heart rate</li>
+      <li><strong>Elderly Care:</strong> Motion sensors in home detect falls or inactivity → alert family</li>
+      <li><strong>Workplace Safety:</strong> Worker wearables monitor heat stress, fatigue, dangerous postures</li>
+      <li><strong>Sports Performance:</strong> Athletes use IoT sensors to optimize training — speed, technique</li>
+      <li><strong>Mental Health:</strong> HRV (Heart Rate Variability) monitoring detects stress levels</li>
+    </ul>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>Connected Vehicles use V2V, V2I, V2X communication standards</li>
+        <li>Smart Agriculture uses <strong>LoRa</strong> for long-range, low-power field connectivity</li>
+        <li>Healthcare IoT: RPM reduces hospital readmissions by <strong>25%</strong></li>
+        <li>IoT agriculture reduces water usage by <strong>30-50%</strong></li>
+        <li>Activity monitoring uses <strong>accelerometer + gyroscope + heart rate sensor</strong></li>
+        <li>RFID wristbands in hospitals improve patient safety and asset tracking</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>IoT applications in vehicles, agriculture, healthcare, and activity monitoring are transforming industries and improving quality of life. From reducing road accidents to detecting crop disease early, from continuous health monitoring to energy-efficient farming, IoT delivers measurable, life-saving benefits across all these domains.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="section" id="q15">
+  <div class="section-header">
+    <span class="qnum">Q15</span>
+    <h2>Sensor Networks, Interoperability in IoT & Challenges</h2>
+    <span class="marks-tag">10 marks</span>
+  </div>
+  <div class="section-body">
+
+    <h3>Sensor Networks vs IoT</h3>
+    <div class="def-box">
+      <div class="def-label">// sensor network definition</div>
+      <p style="margin:0">A <strong>Sensor Network</strong> is a collection of sensor nodes deployed in an area to monitor physical conditions and transmit data to a central collection point. Sensor networks can be wired (industrial SCADA) or wireless (WSN — Wireless Sensor Network).</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>Sensor Network</th><th>IoT</th></tr>
+        <tr><td>Connectivity</td><td>Local or limited area</td><td>Global internet connectivity</td></tr>
+        <tr><td>Intelligence</td><td>Simple data collection</td><td>AI, cloud analytics, automation</td></tr>
+        <tr><td>Protocols</td><td>Proprietary, specific</td><td>Open standards (IP-based)</td></tr>
+        <tr><td>Data flow</td><td>Sensor → Base station</td><td>Sensor → Cloud → Apps</td></tr>
+        <tr><td>Relationship</td><td>Subset of IoT</td><td>Superset — includes sensor networks</td></tr>
+      </table>
+    </div>
+
+    <h3>Sensor Network Architecture</h3>
+    <div class="diagram">
+  ┌─────────────────────────────────────────────────────┐
+  │              SENSOR FIELD                           │
+  │  [Node] [Node] [Node] [Node] [Node] [Node]         │
+  │  Each node: Sensor + Processor + Radio + Battery    │
+  └────────────────────┬────────────────────────────────┘
+                       |
+               Multi-hop routing
+                       |
+               ┌───────┴───────┐
+               │  SINK / BASE  │
+               │  STATION      │
+               └───────┬───────┘
+                       |
+               ┌───────┴───────┐
+               │  INTERNET /   │
+               │  SERVER       │
+               └───────────────┘</div>
+
+    <h3 class="red">Interoperability in IoT</h3>
+    <div class="def-box red">
+      <div class="def-label">// interoperability definition</div>
+      <p style="margin:0"><strong>Interoperability</strong> is the ability of different IoT devices, platforms, and systems from different manufacturers to communicate, exchange data, and work together seamlessly without special adaptation.</p>
+    </div>
+
+    <h4>Why Interoperability is a Problem in IoT:</h4>
+    <ul>
+      <li>IoT ecosystem has <strong>hundreds of vendors</strong> with proprietary protocols</li>
+      <li>A Samsung smart TV cannot natively talk to an LG smart AC</li>
+      <li>Different physical layers (WiFi, Zigbee, Z-Wave) don't communicate directly</li>
+      <li>Data formats vary (JSON, XML, proprietary binary) across platforms</li>
+    </ul>
+
+    <h4>Levels of Interoperability:</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Level</th><th>Name</th><th>Description</th><th>Solution</th></tr>
+        <tr><td>1</td><td><strong>Technical</strong></td><td>Physical + data link connectivity</td><td>Standardized radio protocols (Zigbee, Matter)</td></tr>
+        <tr><td>2</td><td><strong>Syntactic</strong></td><td>Data format compatibility</td><td>JSON, XML standards; REST APIs</td></tr>
+        <tr><td>3</td><td><strong>Semantic</strong></td><td>Shared meaning/understanding of data</td><td>Ontologies, W3C WoT standards</td></tr>
+        <tr><td>4</td><td><strong>Organizational</strong></td><td>Cross-organization data sharing</td><td>Data governance policies, open APIs</td></tr>
+      </table>
+    </div>
+
+    <h4>Solutions for Interoperability:</h4>
+    <ul>
+      <li><strong>Matter Protocol:</strong> New unified smart home standard by Apple, Google, Amazon, Samsung</li>
+      <li><strong>oneM2M:</strong> Global IoT interoperability standard for M2M communications</li>
+      <li><strong>W3C Web of Things (WoT):</strong> W3C standard for semantic IoT descriptions</li>
+      <li><strong>IoT Gateways:</strong> Act as protocol translators between incompatible devices</li>
+      <li><strong>Middleware platforms:</strong> OpenIoT, FIWARE — enable cross-platform integration</li>
+    </ul>
+
+    <h3 class="yellow">Challenges in IoT</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Challenge</th><th>Description</th><th>Solution</th></tr>
+        <tr><td><strong>Security</strong></td><td>Billions of devices are attack targets; weak passwords, unpatched firmware</td><td>End-to-end encryption, TLS, regular OTA updates</td></tr>
+        <tr><td><strong>Privacy</strong></td><td>IoT collects sensitive personal data (health, location, habits)</td><td>Data minimization, consent management, GDPR compliance</td></tr>
+        <tr><td><strong>Scalability</strong></td><td>Managing millions/billions of devices simultaneously</td><td>Cloud + Edge + SDN architecture</td></tr>
+        <tr><td><strong>Interoperability</strong></td><td>Devices from different vendors don't communicate</td><td>Open standards (Matter, oneM2M, MQTT)</td></tr>
+        <tr><td><strong>Power Management</strong></td><td>Battery-powered devices need years of battery life</td><td>LoRa, NB-IoT, energy harvesting, duty cycling</td></tr>
+        <tr><td><strong>Connectivity</strong></td><td>Reliable connectivity in remote areas (agriculture, mining)</td><td>LoRa, satellite IoT (Starlink)</td></tr>
+        <tr><td><strong>Data Management</strong></td><td>Processing massive real-time data streams</td><td>Edge + Fog + Cloud; Apache Kafka, Spark</td></tr>
+        <tr><td><strong>Standardization</strong></td><td>No single dominant IoT standard exists</td><td>Industry consortiums: IEEE, IETF, W3C, oneM2M</td></tr>
+        <tr><td><strong>Reliability</strong></td><td>Failures in critical IoT (medical, industrial) are dangerous</td><td>Redundancy, fail-safe designs, watchdog timers</td></tr>
+        <tr><td><strong>Cost</strong></td><td>Large-scale deployment is expensive</td><td>Low-cost chipsets, open-source platforms</td></tr>
+      </table>
+    </div>
+
+    <h4>IoT Security Threats (Exam Focus):</h4>
+    <ul>
+      <li><strong>Mirai Botnet Attack (2016):</strong> 600,000 IoT devices (cameras, routers) hijacked → largest DDoS attack in history</li>
+      <li><strong>Default Credentials:</strong> Many IoT devices ship with "admin/admin" passwords</li>
+      <li><strong>Man-in-the-Middle:</strong> Attacker intercepts unencrypted IoT data</li>
+      <li><strong>Firmware Attacks:</strong> Malicious firmware updates pushed to IoT devices</li>
+    </ul>
+
+    <div class="key-box">
+      <div class="key-label">⭐ key_points_for_revision</div>
+      <ul>
+        <li>Sensor network = subset of IoT; collects data and sends to base station</li>
+        <li>Interoperability = different devices/platforms working together seamlessly</li>
+        <li><strong>Matter</strong> protocol (2022) = new unified smart home standard by Big Tech</li>
+        <li>4 levels of interoperability: Technical, Syntactic, Semantic, Organizational</li>
+        <li>Top IoT challenges: Security, Privacy, Scalability, Interoperability, Power</li>
+        <li>Mirai Botnet (2016) = most famous IoT security attack; used IoT cameras as botnet</li>
+        <li>oneM2M = global M2M/IoT standard; supported by telecom companies worldwide</li>
+        <li>IoT gateway solves interoperability by translating between incompatible protocols</li>
+      </ul>
+    </div>
+
+    <div class="conclusion">
+      <div class="con-label">// conclusion</div>
+      <p>Sensor networks provide the data collection foundation for IoT, while interoperability remains the biggest challenge for seamless device integration. Addressing security vulnerabilities, standardization gaps, and power constraints are critical for the safe, scalable, and reliable IoT deployments that the future demands.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center; padding:40px 0 20px; color:var(--text3); font-size:12px; font-family:'JetBrains Mono',monospace;">
+  <p>// IoT_exam_guide.html &nbsp;|&nbsp; MTCS212PCT &nbsp;|&nbsp; M.Tech II Semester &nbsp;|&nbsp; Maulana Azad National Urdu University</p>
+  <p style="margin-top:6px;">// 15 questions · Section A (5 marks) + Section B (10 marks) · 70 total marks</p>
+</div>
+
+</div><!-- /main -->
+</body>
+</html>

@@ -35,6 +35,10 @@ const SUBJECTS = [
     syllabus: 'syllabus/Internet_of_Things_syllabus.pdf',
     papers: [
       {
+        title: 'MTCS212PCT — 2021 (Solved Q&A)',
+        href: 'Internet_of_Things/MTCS212PCT- Internet of Things - 2021.html'
+      },
+      {
         title: 'MTCS212PCT — 2025 (IoT Exam Guide)',
         href: 'Internet_of_Things/MTCS212PCT- Internet of Things - 2025.html'
       }
